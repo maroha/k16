@@ -1,8 +1,11 @@
 k16 - Hääletamissüsteem
 =======================
 
-Rühm:
+Rühm k16:
 
+Jevgeni Kremm, jevgeni.kremm@gmail.com
+Taavo-Taur Tammur, taavot@gmail.com
+Konstantin Arutjunov, maroha@yandex.ru
 
 
 1. Etapp
