@@ -12,3 +12,10 @@ Rühm k16:
 --------
 
 * [Prototüüp](https://k16.mybalsamiq.com/projects/k16/grid)
+
+Arhitektuursed otsused:
+
+* Serveri keel: php
+* Andmebaas: MySql
+* Rakendusserver: Apache
+* Raamistik: laravel
