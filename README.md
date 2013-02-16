@@ -3,9 +3,9 @@ k16 - Hääletamissüsteem
 
 Rühm k16:
 
-* Jevgeni Kremm, jevgeni.kremm@gmail.com
-* Taavo-Taur Tammur, taavot@gmail.com
-* Konstantin Arutjunov, maroha@yandex.ru
+* Jevgeni Kremm [@ekremm], jevgeni.kremm@gmail.com
+* Taavo-Taur Tammur [@t2t2], taavot@gmail.com
+* Konstantin Arutjunov [@maroha], maroha@yandex.ru
 
 
 1. Etapp
@@ -13,9 +13,15 @@ Rühm k16:
 
 * [Prototüüp](https://k16.mybalsamiq.com/projects/k16/grid)
 
-Arhitektuursed otsused:
+###Arhitektuursed otsused:
 
 * Serveri keel: php
 * Andmebaas: MySql
 * Rakendusserver: Apache
 * Raamistik: laravel
+
+###Projektiplaan:
+
+* [Etapp 2](https://github.com/t2t2/k16/issues?milestone=1&state=open)
+* [Etapp 3](https://github.com/t2t2/k16/issues?milestone=2&state=open)
+* [Etapp 4](https://github.com/t2t2/k16/issues?milestone=3&state=open)
