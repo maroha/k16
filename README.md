@@ -7,6 +7,7 @@ Rühm k16:
 * Taavo-Taur Tammur [@t2t2], taavot@gmail.com
 * Konstantin Arutjunov [@maroha], maroha@yandex.ru
 
+Testkeskond: http://k16.t2t2.eu/
 
 1. Etapp
 --------
@@ -15,10 +16,12 @@ Rühm k16:
 
 ###Arhitektuursed otsused:
 
-* Serveri keel: php
-* Andmebaas: MySql
-* Rakendusserver: Apache
-* Raamistik: laravel
+* Serveri keel: php (versioon 5.4)
+* Andmebaas: MySql (ja muu ühilduv)
+* Rakendusserver: Apache (ja muu ühilduv)
+* Raamistik: [laravel](http://www.laravel.com/)
+
+Tänu suurele ühildusele on võimalik mõned komponendid vahetada jõulisemate komponentidega (nt. [MariaDB](https://mariadb.org/) mysql asemel ja [nginx](http://nginx.org/) apache asemel.)
 
 ###Projektiplaan:
 
