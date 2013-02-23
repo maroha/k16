@@ -65,13 +65,14 @@ textarea {
 body {
 	font: 16px/26px Helvetica, Helvetica Neue, Arial;
 	background: #333333 repeat fixed; /* Customised http://subtlepatterns.com/gplay/ */
-	color: #EEEEEE;
+	color: #ffffff;
 	font-family: 'Roboto', sans-serif;
 }
 
 .wrapper {
-	width: 90%;
-	margin: 0 5%;
+	width: auto;
+	min-width: 290px;
+	margin: 0 15px;
 }
 
 /* ===================
@@ -83,11 +84,24 @@ body {
 }
 .header-container .wrapper {
 }
+.title {
+	color: #ffffff;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+	margin: 10px 0;
+}
+.title a:link, .title a:visited {
+	color: #ffffff;
+	text-decoration: none;
+}
+.title a:hover, .title a:active {
+	text-decoration: underline;
+}
 .user {
 	font-size: 20px;
 	line-height: 28px;
 	text-align: right;
 	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
+	margin: 5px 0;
 }
 .user a:link, .user a:visited {
 	color: #cccccc;
@@ -96,10 +110,6 @@ body {
 	background: rgba(0, 0, 0, 0.6);
 }
 
-.title {
-	color: white;
-	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
 
 /* ==============
 	MOBILE
@@ -107,15 +117,22 @@ body {
 .user {
 	margin: 5px 0;
 }
-
+nav {
+	background-color: rgba(0, 127, 127, 0.4);
+	margin: 0 -15px;
+}
 nav ul {
 	margin: 0;
 	padding: 0;
 }
-
+nav li {
+	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
 nav a {
 	display: block;
-	margin-bottom: 10px;
+	padding: 5px 0;
+	font-size: 20px;
+	line-height: 30px;
 
 	text-align: center;
 	text-decoration: none;
@@ -127,8 +144,8 @@ nav a {
 	-webkit-transition: background-color .5s linear;
 	transition: background-color .5s linear;
 }
-nav a:hover, nav a:active {
-	background-color: rgba(0, 109, 157, 0.8);
+nav a:hover, nav a:active, nav .active a {
+	background-color: #006666;
 }
 
 
@@ -178,7 +195,7 @@ nav a:hover {
 @media only screen and (min-width: 480px) {
 
 /* ====================
-	INTERMEDIATE: Menu
+	INTERMEDIATE
    ==================== */
 	nav > ul {
 		display: table;
@@ -193,6 +210,8 @@ nav a:hover {
 		margin: 0 0;
 		padding: 5px 1%;
 		margin-bottom: 0;
+		font-size: 16px;
+		line-height: 26px;
 	}
 	nav li:first-child {
 		border-left: none;
@@ -207,12 +226,24 @@ nav a:hover {
 		border-radius: 0 20px 0 0;
 	}
 
+	.head-unit {
+		font-size: 22px;
+		line-height: 32px;
+		padding: 40px 30px;
+	}
+	.head-unit h1 {
+		font-size: 52px;
+		line-height: 60px;
+		margin: 0 0 30px;
+		text-align: center;
+	}
+
 }
 
 @media only screen and (min-width: 768px) {
 
 /* ====================
-	WIDE:
+	WIDE
    ==================== */
 	header.wrapper {
 		position: relative;
@@ -237,7 +268,6 @@ nav a:hover {
 		left: 270px;
 		bottom: 0;
 
-		background-color: rgba(0, 127, 127, 0.4);
 		border-radius: 20px 20px 0 0;
 	}
 
