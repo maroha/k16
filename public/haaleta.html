@@ -39,11 +39,48 @@
 
 		<div class="main-container">
 			<div class="main wrapper clearfix">
-				<article class="head-unit">
-					<h1>Teretulemast valimistele!</h1>
-					<p>Hääletamiseks <a href="#">logi sisse &#62;</a></p>
-				</article>
-
+				<article>
+					<header>
+						<p><a href="index.html">&#60;&#60; Tagasi pealehele</a></p>
+						<p>Soovid hääletada? <a href="#">Logi sisse &#62;</a></p>
+					</header>
+					<section>
+						<form action="">
+							<input type="text" name="kandidaadiNimi" value="Kandidaadi nimi">
+							<select name="valimisringkond">
+								<option value="koikValimisringkonnad">Kõik valimisringkonnad</option>
+								<option value="valimisringkond1">Valimisringkond 1</option>
+								<option value="valimisringkond2">Valimisringkond 2</option>
+							</select>
+							<select name="partei">
+								<option value="koikParteid">Kõik parteid</option>
+								<option value="partei1">Partei 1</option>
+								<option value="partei2">Partei 2</option>
+							</select>
+							<input id="otsiKandidaati" type="submit" value="Otsi" />
+						</form>
+						<table border="1">
+							<tr>
+								<th>Number</th>
+								<th>Nimi</th>
+								<th>Ringkond</th>
+								<th>Partei</th>
+							</tr>
+							<tr>
+								<td>0001</td>
+								<td>Eesnimi Perekonnanimi</td>
+								<td>Valimisringkond</td>
+								<td>Partei</td>
+							</tr>
+							<tr>
+								<td>0002</td>
+								<td>Eesnimi Perekonnanimi</td>
+								<td>Valimisringkond</td>
+								<td>Partei</td>
+							</tr>
+						</table>
+					</section>
+					
 			</div> <!-- #main -->
 		</div> <!-- #main-container -->
 
