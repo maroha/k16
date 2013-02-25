@@ -9,7 +9,7 @@ session_start();
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title></title>
+		<title>e-Valimised</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width">
 
@@ -26,15 +26,15 @@ session_start();
 
 		<div class="header-container">
 			<header class="wrapper clearfix">
-				<h1 class="title"><a href="index.html">Valimised</a></h1>
+				<h1 class="title"><a href="index.php">e-Valimised</a></h1>
 				<div class="user">
-					Pole sisse loginud -- <a href="#">Logi sisse &rsaquo;</a>
+					Pole sisse loginud &#150; <a href="#">logi sisse &rsaquo;</a>
 				</div>
 				<nav class="clearfix">
 					<ul>
-						<li><a href="kandidaadid.html">Kandidaadid</a></li>
-						<li><a href="tulemused.html">Tulemused</a></li>
-						<li><a href="haaleta.html">Hääleta</a></li>
+						<li><a href="kandidaadid.php">Kandidaadid</a></li>
+						<li><a href="tulemused.php">Tulemused</a></li>
+						<li><a href="haaleta.php">Hääleta</a></li>
 					</ul>
 				</nav>
 			</header>

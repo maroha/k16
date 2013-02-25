@@ -2,6 +2,7 @@
 
 		<div class="main-container">
 			<div class="main wrapper clearfix">
+				<p><a href="index.php">&#60;&#60; Tagasi pealehele</a></p>
 				<div class="row-left">
 					<img src="img/map.png" alt="Kaart" />
 					<small class="attrib">Kaart <a href="http://commons.wikimedia.org/wiki/File:Estonia_location_map.svg">CC-by-sa Wikipedia</a></small>
@@ -63,15 +64,4 @@
 			</div> <!-- #main -->
 		</div> <!-- #main-container -->
 
-		<div class="footer-container">
-			<footer class="wrapper">
-				<h3>footer</h3>
-			</footer>
-		</div>
-
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-
-		<script src="js/main.js"></script>
-	</body>
-</html>
+		<?php include "footer.php"; ?>
