@@ -1,7 +1,8 @@
-<?php include "header.php"; ?>
+<?php $menu_item = "tulemused"; include "header.php"; ?>
 
 		<div class="main-container">
 			<div class="main wrapper clearfix">
+				<h1 class="show-printer">Tulemused</h1>
 				<form>
 					<label for="filter-region">Piirkond:</label>
 					<select id="filter-region" name="region">

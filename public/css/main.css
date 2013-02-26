@@ -66,6 +66,7 @@ body {
 	font: 16px/26px Helvetica, Helvetica Neue, Arial;
 	background: #333333 repeat fixed; /* Customised http://subtlepatterns.com/gplay/ */
 	color: #ffffff;
+	text-shadow: 1px 1px 1px #000000;
 	font-family: 'Roboto', sans-serif;
 }
 a:link {
@@ -78,6 +79,10 @@ img {
 	display: block;
 	max-width: 100%;
 }
+h1, h2, h3, h4, h5, h6 {
+	margin: 0 0 15px;
+	line-height: 1.4em;
+}
 
 .wrapper {
 	width: auto;
@@ -89,6 +94,7 @@ table thead th {
 }
 table tbody th {
 	border-right: 1px solid rgba(255, 255, 255, 0.2);
+	background-color: rgba(255, 255, 255, 0.05);
 }
 table td {
 	padding: 2px;
@@ -100,10 +106,13 @@ table td {
 	border-style: solid solid solid none;
 	float: left;
 	height: 5px;
-	margin: 10px 5px 10px -2px;
+	margin: 10px 5px 10px -5px;
 }
 .result-text {
 	float: left;
+}
+.float-right {
+	float: right;
 }
 
 /* ===================
@@ -111,6 +120,62 @@ table td {
    =================== */
 table {
 	width: 100%;
+}
+
+/* Textbox selector based on bootstrap */
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+	padding: 3px 6px;
+	margin: 1px 3px;
+	border: 1px solid rgba(0, 0, 0, 0.6);
+	border-radius: 5px;
+}
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	padding: 3px 9px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 5px;
+	background-color: #1F5252;
+	color: #ffffff;
+	text-shadow: 1px 1px 1px #000000;
+	font-size: 110%;
+
+	-webkit-transition: background-color .5s linear, box-shadow .2s linear;
+	transition: background-color .5s linear, box-shadow .2s linear;
+}
+input[type="submit"]:hover, input[type="submit"]:focus,
+input[type="reset"]:hover, input[type="reset"]:focus,
+input[type="button"]:hover, input[type="button"]:focus,
+button:hover, button:focus {
+	background-color: #006666;
+}
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="button"]:active,
+button:active {
+	box-shadow: 2px 2px 3px #006666;
+}
+.button-large {
+	font-size: 24px;
+	line-height: 28px;
+	font-weight: bold;
 }
 
 .header-container {
@@ -154,6 +219,9 @@ table {
 }
 .attrib:hover {
 	opacity: 1;
+}
+.show-printer {
+	display: none;
 }
 
 /* ==============
@@ -218,10 +286,24 @@ nav a:hover {
 	color: white;
 	padding: 0px 5% 10px;
 }
+form {
+	margin-bottom: 10px;
+}
 
 .footer-container footer {
 	color: white;
 	padding: 20px 0;
+}
+table th, table td {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+	border-right: 1px solid rgba(255, 255, 255, 0.3);
+	padding: 2px 5px;
+}
+table th:last-child, table td:last-child {
+	border-right: none;
+}
+table tbody tr:last-child th, table tbody tr:last-child td {
+	border-bottom: none;
 }
 
 /* ===============
@@ -258,6 +340,7 @@ nav a:hover {
 		margin-bottom: 0;
 		font-size: 16px;
 		line-height: 26px;
+		color: #ffffff !important;
 	}
 	nav li:first-child {
 		border-left: none;
@@ -297,7 +380,7 @@ nav a:hover {
 	}
 	.title {
 		float: left;
-		width: 260px;
+		width: 270px;
 		font-size: 48px;
 		line-height: 60px;
 		margin: 10px 0 0;
@@ -311,7 +394,7 @@ nav a:hover {
 	nav {
 		position: absolute;
 		right: 0;
-		left: 270px;
+		left: 280px;
 		bottom: 0;
 
 		border-radius: 20px 20px 0 0;
@@ -338,6 +421,14 @@ nav a:hover {
 		float: right;
 		width: 50%;
 		margin-left: 2%;
+	}
+	.left-sidebar {
+		float: left;
+		width: 24%;
+	}
+	.right-content {
+		float: right;
+		width: 75%;
 	}
 }
 
@@ -446,7 +537,7 @@ nav a:hover {
 
 	.ir a:after,
 	a[href^="javascript:"]:after,
-	a[href^="#"]:after {
+	a[href^="#"]:after, .title a:after {
 		content: "";
 	}
 
@@ -484,4 +575,36 @@ nav a:hover {
 	h3 {
 		page-break-after: avoid;
 	}
+	.show-printer {
+		display: block;
+	}
+
+	.user, nav {
+		display: none;
+	}
+	.header-container {
+		border-bottom: none;
+	}
+	table th, table td {
+		border-bottom: 0.1cm solid #000000;
+		border-right: 0.1cm solid #000000;
+		padding: 2px 5px;
+	}
+	table th:last-child, table td:last-child {
+		border-right: none;
+	}
+	table tbody tr:last-child th, table tbody tr:last-child td {
+		border-bottom: none;
+	}
+
+	.result-row {
+		background-color: #006666;
+		border-width: 0.1cm;
+		border-color: #000000;
+		border-style: solid solid solid none;
+		float: left;
+		height: 5px;
+		margin: 10px 5px 10px -5px;
+	}
+
 }

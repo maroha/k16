@@ -4,7 +4,7 @@
 			<div class="main wrapper clearfix">
 				<article class="head-unit">
 					<h1>Teretulemast valimistele!</h1>
-					<p>Hääletamiseks <a href="#">logi sisse &#62;</a></p>
+					<p>Hääletamiseks <a href="user_switch.php">logi sisse &#62;</a></p>
 				</article>
 
 			</div> <!-- #main -->

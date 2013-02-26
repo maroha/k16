@@ -1,5 +1,11 @@
 <?php
+if(!isset($menu_item)) {
+	$menu_item = null;
+}
 session_start();
+if(!isset($_SESSION["logged_in"])) {
+	$_SESSION["logged_in"] = false;
+}
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -28,13 +34,17 @@ session_start();
 			<header class="wrapper clearfix">
 				<h1 class="title"><a href="index.php">e-Valimised</a></h1>
 				<div class="user">
-					Pole sisse loginud &#150; <a href="#">logi sisse &rsaquo;</a>
+					<?php if($_SESSION["logged_in"]) { ?>
+					Pole sisse loginud &ndash; <a href="user_switch.php">logi sisse &rsaquo;</a>
+					<?php } else { ?>
+					Tere Isik Isikuline! &ndash; <a href="user_switch.php">logi välja &rsaquo;</a>
+					<?php } ?>
 				</div>
 				<nav class="clearfix">
 					<ul>
-						<li><a href="kandidaadid.php">Kandidaadid</a></li>
-						<li><a href="tulemused.php">Tulemused</a></li>
-						<li><a href="haaleta.php">Hääleta</a></li>
+						<li<?php if($menu_item == "kandidaadid") echo ' class="active"'; ?>><a href="kandidaadid.php">Kandidaadid</a></li>
+						<li<?php if($menu_item == "tulemused") echo ' class="active"'; ?>><a href="tulemused.php">Tulemused</a></li>
+						<li<?php if($menu_item == "haaleta") echo ' class="active"'; ?>><a href="haaleta.php">Hääleta</a></li>
 					</ul>
 				</nav>
 			</header>
