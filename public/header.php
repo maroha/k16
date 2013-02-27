@@ -29,15 +29,14 @@ if(!isset($_SESSION["logged_in"])) {
 		<!--[if lt IE 7]>
 			<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 		<![endif]-->
-
 		<div class="header-container">
 			<header class="wrapper clearfix">
 				<h1 class="title"><a href="index.php">e-Valimised</a></h1>
 				<div class="user">
 					<?php if($_SESSION["logged_in"]) { ?>
-					Pole sisse loginud &ndash; <a href="user_switch.php">logi sisse &rsaquo;</a>
-					<?php } else { ?>
 					Tere Isik Isikuline! &ndash; <a href="user_switch.php">logi välja &rsaquo;</a>
+					<?php } else { ?>
+					Pole sisse loginud &ndash; <a href="user_switch.php">logi sisse &rsaquo;</a>
 					<?php } ?>
 				</div>
 				<nav class="clearfix">
