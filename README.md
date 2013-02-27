@@ -28,3 +28,8 @@ Tänu suurele ühildusele on võimalik mõned komponendid vahetada jõulisemate 
 * [Etapp 2](https://github.com/t2t2/k16/issues?milestone=1&state=open)
 * [Etapp 3](https://github.com/t2t2/k16/issues?milestone=2&state=open)
 * [Etapp 4](https://github.com/t2t2/k16/issues?milestone=3&state=open)
+
+2. Etapp
+--------
+
+[Tag 2](https://github.com/t2t2/k16/tree/2)
