@@ -138,6 +138,7 @@ input[type="color"],
 	margin: 1px 3px;
 	border: 1px solid rgba(0, 0, 0, 0.6);
 	border-radius: 5px;
+	max-width: 90%;
 }
 input[type="submit"],
 input[type="reset"],
@@ -180,7 +181,7 @@ label {
 
 .wrapper {
 	width: auto;
-	min-width: 290px;
+	min-width: 275px;
 	margin: 0 15px;
 }
 .result-row {
