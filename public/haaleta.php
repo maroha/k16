@@ -4,11 +4,12 @@
 			<div class="main wrapper clearfix">
 				<article>
 					<header>
-						<p><a href="index.php">&#60;&#60; Pealehele</a></p>
+						<p class="hide-printer"><a href="index.php">&#60;&#60; Pealehele</a></p>
+						<h1>Hääleta</h1>
 						<?php if($_SESSION["logged_in"]) { ?>
-						<p>Hääletamiseks kliki sobiva kandidaadi peale.</p>
+						<p class="hide-printer">Hääletamiseks kliki sobiva kandidaadi peale.</p>
 						<?php } else { ?>
-						<p>Soovid hääletada? <a href="user_switch.php">Logi sisse &#62;</a></p>
+						<p class="hide-printer">Soovid hääletada? <a href="user_switch.php">Logi sisse &#62;</a></p>
 						<?php } ?>
 					</header>
 					<section>

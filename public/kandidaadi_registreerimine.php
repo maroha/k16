@@ -31,7 +31,7 @@
 					</TR>
 					<TR><TD>Kontakttelefon</TD><TD><INPUT type="text" size="25" placeholder="Number" name="number">
 					</TR>
-					<TR><TD>Pilt</TD><TD><input type="submit" name="button" id="button" value="Vali pilt">
+					<TR><TD>Pilt</TD><TD><input type="file" name="picture" size="20">
 					</TR>
 					</TABLE>
 					<input type="submit" name="button" id="button" value="Registreeru">
