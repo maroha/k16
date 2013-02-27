@@ -4,38 +4,106 @@
 			<div class="main wrapper clearfix">
 				<p><a href="kandidaadid.php">&#60;&#60; Kandidaatide nimekirja</a></p>
 				<article>
-					<div align="center">
-					<h3>Kandidaadi registreerimine</h3>
-					<TABLE>
-					<TR><TD>Eesnimi</TD><TD><INPUT type="text" size="25" placeholder="Sisesta eesnimi" name="firstname">
-					</TR>
-					<TR><TD>Perekonnanimi</TD><TD><INPUT type="text" size="25" placeholder="Sisesta perekonnanimi" name="lastname">
-					</TR>
-					<TR><TD>Sünnikoht</TD><TD><INPUT type="text" size="25" placeholder="Linn, Riik" name="birthplace">
-					</TR>
-					<TR><TD>Isikukood</TD><TD><INPUT type="text" size="25" placeholder="Isikukood" name="idnum">
-					</TR>
-					<TR><TD>Erakond</TD><TD><INPUT type="text" size="25" placeholder="Erakond" name="party">
-					</TR>
-					 <TR><TD>Elukoha aadress</TD><TD><INPUT type="text" size="25" placeholder="Tänav, maja nr, korter, linn" name="adress">
-					</TR>
-					 <TR><TD>Haridus</TD><TD><INPUT type="text" size="25" placeholder="Sisesta haridus" name="education">
-					</TR>
-					<TR><TD>Teaduslik kraad</TD><TD><INPUT type="text" size="25" placeholder="Teaduslik kraad" name="sciensegrade">
-					</TR>
-					<TR><TD>Elukutse<TD><INPUT type="text" size="25" placeholder="Sisesta elukutse" name="ocupation">
-					</TR>
-					<TR><TD>Töökoht</TD><TD><INPUT type="text" size="25" placeholder="Sisesta töökoht" name="work">
-					</TR>
-					<TR><TD>E-mail</TD><TD><INPUT type="text" size="25" placeholder="E-mail" name="mail">
-					</TR>
-					<TR><TD>Kontakttelefon</TD><TD><INPUT type="text" size="25" placeholder="Number" name="number">
-					</TR>
-					<TR><TD>Pilt</TD><TD><input type="file" name="picture" size="20">
-					</TR>
-					</TABLE>
-					<input type="submit" name="button" id="button" value="Registreeru">
-					</div>
+					<header>
+						<h1>Kandidaadi registreerimine</h1>
+					</header>
+					<section>
+						<form class="form-horizontal">
+							<div class="form-row">
+								<label class="form-label" for="register-firstname">Eesnimi</label>
+								<div class="form-field">
+									<input type="text" size="30" name="firstname" id="register-firstname" />
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-lastname">Perekonnanimi</label>
+								<div class="form-field">
+									<input type="text" size="30" name="lastname" id="register-lastname" />
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-birthplace">Sünnikoht</label>
+								<div class="form-field">
+									<input type="text" size="30" name="birthplace" id="register-birthplace" />
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-idnumber">Isikukood</label>
+								<div class="form-field">
+									<input type="text" size="30" name="idnumber" id="register-idnumber" />
+									<p class="form-help">(Peidetud)</p>
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-address">Elukoha aadress</label>
+								<div class="form-field">
+									<input type="text" size="30" name="address" id="register-address" />
+									<p class="form-help">(Peidetud)</p>
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-party">Erakond</label>
+								<div class="form-field">
+									<select name="party" id="register-party">
+										<option value="0">Valige erakond</option>
+										<option value="1">Erakond 1</option>
+										<option value="2">Erakond 2</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-haridus">Haridus</label>
+								<div class="form-field">
+									<input type="text" size="30" name="haridus" id="register-haridus" />
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-academic-degree">Akadeemiline kraad</label>
+								<div class="form-field">
+									<input type="text" size="30" name="academic-degree" id="register-academic-degree" />
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-occupation">Elukutse</label>
+								<div class="form-field">
+									<input type="text" size="30" name="occupation" id="register-occupation" />
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-occupation">Elukutse</label>
+								<div class="form-field">
+									<input type="text" size="30" name="occupation" id="register-occupation" />
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-work">Töökoht</label>
+								<div class="form-field">
+									<input type="text" size="30" name="work" id="register-work" />
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-email">E-mail</label>
+								<div class="form-field">
+									<input type="text" size="30" name="email" id="register-email" />
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-phone">Telefoninumber</label>
+								<div class="form-field">
+									<input type="text" size="30" name="phone" id="register-phone" />
+								</div>
+							</div>
+							<div class="form-row">
+								<label class="form-label" for="register-occupation">Pilt</label>
+								<div class="form-field">
+									<input type="file" name="picture" size="20" />
+								</div>
+							</div>
+							<div class="form-buttons">
+								<button type="submit">Registeeru</button> <button type="reset">Nulli</button>
+							</div>
+						</form>
+					</section>
 				</article>
 
 			</div> <!-- #main -->

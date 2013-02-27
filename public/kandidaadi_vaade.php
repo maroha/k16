@@ -7,7 +7,7 @@
 				<div class="left-sidebar">
 					<img src="img/1424.jpg" />
 					E-mail: mail@example.com<br />
-					Number: +372 5555555
+					Telefon: +372 5555555
 				</div>
 				<div class="right-content">
 					<button class="button-large float-right">Hääleta</button>
@@ -27,7 +27,7 @@
 								<td>Kõrgem haridus</td>
 							</tr>
 							<tr>
-								<th>Teaduslik kraad</th>
+								<th>Akadeemiline kraad</th>
 								<td>PhD (arhitektuur)</td>
 							</tr>
 							<tr>

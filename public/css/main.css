@@ -169,6 +169,12 @@ button:active {
 form {
 	margin-bottom: 10px;
 }
+label {
+	cursor: pointer;
+}
+.form-horizontal .form-row {
+	margin-bottom: 10px;
+}
 
 /* Generic styles */
 
@@ -415,6 +421,22 @@ nav a:hover {
 	.right-content {
 		float: right;
 		width: 75%;
+	}
+	.form-horizontal .form-label {
+		float: left;
+		padding-top: 3px;
+		text-align: right;
+		width: 200px;
+	}
+	.form-horizontal .form-field {
+		margin-left: 210px;
+	}
+	.form-horizontal .form-help {
+		display: inline;
+		margin-left: 5px;
+	}
+	.form-horizontal .form-buttons {
+		padding-left: 210px;
 	}
 }
 
