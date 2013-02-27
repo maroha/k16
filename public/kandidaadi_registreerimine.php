@@ -2,7 +2,7 @@
 
 		<div class="main-container">
 			<div class="main wrapper clearfix">
-				<p><a href="kandidaadid.php">&#60;&#60; Tagasi kandidaatide nimekirja</a></p>
+				<p><a href="kandidaadid.php">&#60;&#60; Kandidaatide nimekirja</a></p>
 				<article>
 					<div align="center">
 					<h3>Kandidaadi registreerimine</h3>

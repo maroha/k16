@@ -2,6 +2,7 @@
 
 		<div class="main-container">
 			<div class="main wrapper clearfix">
+				<p><a href="index.php">&#60;&#60; Pealehele</a></p>
 				<h1 class="show-printer">Tulemused</h1>
 				<form>
 					<label for="filter-region">Piirkond:</label>

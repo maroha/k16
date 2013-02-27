@@ -4,8 +4,12 @@
 			<div class="main wrapper clearfix">
 				<article>
 					<header>
-						<p><a href="index.php">&#60;&#60; Tagasi pealehele</a></p>
-						<p>Soovid kandideerida? <a href="#">Logi sisse &#62;</a></p>
+						<p><a href="index.php">&#60;&#60; Pealehele</a></p>
+						<?php if($_SESSION["logged_in"]) { ?>
+						<p><a href="kandidaadi_registreerimine.php">Kandideeri &rsaquo;</a></p>
+						<?php } else { ?>
+						<p>Soovid kandideerida? <a href="user_switch.php">Logi sisse &#62;</a></p>
+						<?php } ?>
 					</header>
 					<section>
 						<form action="">

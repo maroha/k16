@@ -1,7 +1,7 @@
 <?php include "header.php"; ?>
 		<div class="main-container">
 			<div class="main wrapper clearfix">
-				<a href="kandidaadid.php">&#60;&#60; Tagasi kandidaatide nimekirja</a>
+				<a href="kandidaadid.php">&#60;&#60; Kandidaatide nimekirja</a>
 				<h1>Andrus Ansip</h1>
 
 				<div class="left-sidebar">
