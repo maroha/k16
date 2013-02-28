@@ -175,6 +175,10 @@ label {
 }
 .form-horizontal .form-row {
 	margin-bottom: 10px;
+	background-color: #666666;
+	margin-left: 10px;
+	margin-right: 10px;
+	
 }
 
 /* Generic styles */
