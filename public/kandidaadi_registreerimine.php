@@ -1,4 +1,4 @@
-<?php include "header.php"; ?>
+<?php $javascript = array("candidates", "register"); include "header.php"; ?>
 
 		<div class="main-container">
 			<div class="main wrapper clearfix">

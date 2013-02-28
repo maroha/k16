@@ -1,4 +1,4 @@
-<?php $menu_item = "kandidaadid"; include "header.php"; ?>
+<?php $javascript = array("candidates", "list"); $menu_item = "kandidaadid"; include "header.php"; ?>
 
 		<div class="main-container">
 			<div class="main wrapper clearfix">

@@ -2,6 +2,9 @@
 if(!isset($menu_item)) {
 	$menu_item = null;
 }
+if(!isset($javascript)) {
+	$javascript = array();
+}
 session_start();
 if(!isset($_SESSION["logged_in"])) {
 	$_SESSION["logged_in"] = false;
@@ -25,7 +28,7 @@ if(!isset($_SESSION["logged_in"])) {
 
 		<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 	</head>
-	<body>
+	<body<?php if(isset($javascript[0])) echo " data-controller=\"{$javascript[0]}\""; if(isset($javascript[1])) echo " data-action=\"{$javascript[1]}\""; ?>>
 		<!--[if lt IE 7]>
 			<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 		<![endif]-->

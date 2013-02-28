@@ -1,4 +1,4 @@
-<?php include "header.php"; ?>
+<?php $javascript = array("home"); include "header.php"; ?>
 
 		<div class="main-container">
 			<div class="main wrapper clearfix">
