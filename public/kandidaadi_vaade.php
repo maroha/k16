@@ -1,4 +1,4 @@
-<?php include "header.php"; ?>
+<?php $javascript = array("candidates", "view"); include "header.php"; ?>
 		<div class="main-container">
 			<div class="main wrapper clearfix">
 				<a href="kandidaadid.php">&#60;&#60; Kandidaatide nimekirja</a>
