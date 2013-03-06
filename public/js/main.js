@@ -11,7 +11,7 @@ var K16 = {
 			// application-wide code
 			K16.config = $(document.body).data();
 			// if local add a tag to the title to remind the developer
-			if(location.hostname.indexOf(".dev") >= -1) {
+			if(location.hostname.indexOf(".dev") > -1) {
 				document.title = "[LOCAL] " + document.title
 			}
 		}
