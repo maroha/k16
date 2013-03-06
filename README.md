@@ -7,29 +7,18 @@ Rühm k16:
 * Taavo-Taur Tammur [@t2t2], taavot@gmail.com
 * Konstantin Arutjunov [@maroha], maroha@yandex.ru
 
-Testkeskond: http://k16.t2t2.eu/
+Testkeskond: http://k16.t2t2.eu/ (Tavaliselt sünkroniseeritud master haruga, esitluste ajal vastav tag)
+
+Teadetetahvel
+-------------
+
+* Eile - `mv Korsakov /Latvia`
+* Kui keegi leiab kaduma läinud andmeid, palun tagastage valvelauda.
 
 1. Etapp
 --------
-
-* [Prototüüp](https://k16.mybalsamiq.com/projects/k16/grid)
-
-###Arhitektuursed otsused:
-
-* Serveri keel: php (versioon 5.4)
-* Andmebaas: MySql (ja muu ühilduv)
-* Rakendusserver: Apache (ja muu ühilduv)
-* Raamistik: [laravel](http://www.laravel.com/)
-
-Tänu suurele ühildusele on võimalik mõned komponendid vahetada jõulisemate komponentidega (nt. [MariaDB](https://mariadb.org/) mysql asemel ja [nginx](http://nginx.org/) apache asemel.)
-
-###Projektiplaan:
-
-* [Etapp 2](https://github.com/t2t2/k16/issues?milestone=1&state=open)
-* [Etapp 3](https://github.com/t2t2/k16/issues?milestone=2&state=open)
-* [Etapp 4](https://github.com/t2t2/k16/issues?milestone=3&state=open)
+[Info arhiveeritud wiki-sse](https://github.com/t2t2/k16/wiki)
 
 2. Etapp
 --------
-
 [Tag 2](https://github.com/t2t2/k16/tree/2)
