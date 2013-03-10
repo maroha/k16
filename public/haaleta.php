@@ -15,7 +15,7 @@
 					<section>
 						<?php include "kandidaadid_tabel.php" ?>
 					</section>
-
+				</article>
 			</div> <!-- #main -->
 		</div> <!-- #main-container -->
 
