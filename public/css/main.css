@@ -312,6 +312,26 @@ nav a:hover {
 	padding: 20px 0;
 }
 
+/* Table sorter: general settings*/
+.sortable thead {
+	cursor:pointer;
+}
+
+/* Table sorter: arrows */
+.c_0_c td, .c_0_c th { 
+ background-image: url(/img/tableSortArrowsInactive.gif); 
+ background-repeat: no-repeat; 
+ background-position: right center; 
+}
+
+.c_0_c .d_1_d {
+	background-image: url(/img/tableSortArrowDown.gif);
+}
+
+.c_0_c .u_1_u {
+	background-image: url(/img/tableSortArrowUp.gif);
+}
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
