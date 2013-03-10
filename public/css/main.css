@@ -332,6 +332,19 @@ nav a:hover {
 	background-image: url(/img/tableSortArrowUp.gif);
 }
 
+/* AJAX loader */
+.ajax-loader {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-left: -50px; /* half width of the spinner gif */
+	margin-top: -50px; /* half height of the spinner gif */
+	text-align: center;
+	z-index: 1234;
+	overflow: auto;
+}
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */

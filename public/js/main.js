@@ -98,6 +98,13 @@ var K16 = {
 	results: {
 		init: function () {
 			// Results page
+			/* AJAX loader for submit button */
+			$(document).ready(function(){
+				$('#submit').click(function() {
+					$('#ajax-loader').show();
+				});
+			});
+			/* Table sorter */
 			(function(){
 				var a_re = /[cdu]\_\d+\_[cdu]/, a_color = 1
 				function hc(s, c) {return (" " + s + " ").indexOf(" " + c + " ") !== -1}

@@ -1,6 +1,9 @@
 <?php $javascript = array("results"); $menu_item = "tulemused"; include "header.php"; ?>
 
 		<div class="main-container">
+			<div id="ajax-loader" class="ajax-loader">
+				<img id="ajax-loader" src="/img/ajax-loader.gif" alt="Laen..."/>
+			</div>
 			<div class="main wrapper clearfix">
 				<article>
 					<header>
@@ -23,7 +26,7 @@
 							</select>
 							<label><input type="radio" name="type" value="party" checked="checked" /> Partei</label>
 							<label><input type="radio" name="type" value="person" /> Isik</label>
-							<button type="submit">Värskenda</button>
+							<button id="submit" type="submit">Värskenda</button>
 						</form>
 						<div class="row-left">
 							<img src="img/map.png" alt="Kaart" />
