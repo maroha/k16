@@ -1,6 +1,4 @@
 <?php $javascript = array("candidates", "view"); include "header.php"; ?>
-		<div class="main-container">
-			<div class="main wrapper clearfix">
 				<a href="kandidaadid.php">&#60;&#60; Kandidaatide nimekirja</a>
 				<h1>Andrus Ansip</h1>
 
@@ -45,7 +43,5 @@
 						</tbody>
 					</table>
 				</div>
-			</div> <!-- #main -->
-		</div> <!-- #main-container -->
 
 		<?php include "footer.php"; ?>

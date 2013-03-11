@@ -14,6 +14,44 @@ var K16 = {
 			if(location.hostname.indexOf(".dev") > -1) {
 				document.title = "[LOCAL] " + document.title
 			}
+			// ajax navigation
+			$(document).on("click", "a", function (event) { // Listen for all link tags, even in the future!
+				var targetURL = $(this).get(0).href;
+				if(targetURL.indexOf(location.protocol+"//"+location.hostname) > -1) {
+					// Ignores external links
+					K16.common.navigateTo(targetURL)
+					return false;
+				}
+			});
+			if(Modernizr.history) {
+				$(window).on("popstate", function (event) {
+					console.log(event);
+					K16.common.navigateTo(document.location, true)
+				});
+			}
+		},
+		navigateTo: function (targetURL, popstate) {
+			$("#ajax-loader").show();
+			$.get(targetURL, function (data, status, jqXHR) {
+				var metadata = $.parseJSON(jqXHR.getResponseHeader("K16-META"));
+				if(metadata.reload == true) {
+					location.reload(); return false;
+				}
+				if(Modernizr.history && !popstate) {
+					history.pushState({}, "", targetURL)
+				}
+				$("#ajax-loader").hide();
+				$("#content").html(data);
+				$("nav .active").removeClass("active")
+				if(metadata.menuItem) {
+					$('nav li[data-item="'+metadata.menuItem+'"]').addClass("active")
+				}
+				if(metadata.javascript.length > 0) {
+					// Execute related javascript
+					UTIL.exec(metadata.javascript[0]);
+					UTIL.exec(metadata.javascript[0], metadata.javascript[1]);
+				}
+			});
 		}
 	},
 	home: {
@@ -100,7 +138,8 @@ var K16 = {
 		},
 		rowListener: function () {
 			// Listens for click on full row and forwards it to the link
-			window.location = $("a", this).attr("href")
+			$(this).off("click", K16.candidates.rowListener)
+			$("a", this).click()
 			return false;
 		}
 	},

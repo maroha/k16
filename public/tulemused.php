@@ -1,7 +1,5 @@
 <?php $javascript = array("results"); $menu_item = "tulemused"; include "header.php"; ?>
 
-		<div class="main-container">
-			<div class="main wrapper clearfix">
 				<article>
 					<header>
 						<p class="hide-printer"><a href="index.php">&#60;&#60; Pealehele</a></p>
@@ -78,7 +76,5 @@
 						</div>
 					</section>
 				</article>
-			</div> <!-- #main -->
-		</div> <!-- #main-container -->
 
 		<?php include "footer.php"; ?>

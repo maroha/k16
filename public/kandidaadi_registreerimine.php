@@ -1,7 +1,5 @@
 <?php $javascript = array("candidates", "register"); include "header.php"; ?>
 
-		<div class="main-container">
-			<div class="main wrapper clearfix">
 				<p><a href="kandidaadid.php">&#60;&#60; Kandidaatide nimekirja</a></p>
 				<article>
 					<header>
@@ -105,8 +103,5 @@
 						</form>
 					</section>
 				</article>
-
-			</div> <!-- #main -->
-		</div> <!-- #main-container -->
 
 		<?php include "footer.php"; ?>

@@ -1,7 +1,5 @@
 <?php $javascript = array("home"); include "header.php"; ?>
 
-		<div class="main-container">
-			<div class="main wrapper clearfix">
 				<article class="head-unit">
 					<h1>Teretulemast valimistele!</h1>
 					<?php if($_SESSION["logged_in"]) { ?>
@@ -13,8 +11,5 @@
 					<p><a href="tulemused.php">Tulemused</a> on nähtavad ilma sisse logimata.</p>
 					<?php } ?>
 				</article>
-
-			</div> <!-- #main -->
-		</div> <!-- #main-container -->
 
 		<?php include "footer.php"; ?>
