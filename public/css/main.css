@@ -190,14 +190,15 @@ label {
 }
 .result-row {
 	background-color: #006666;
-	border-width: 1px;
+	border-width: 3px;
 	border-color: rgba(255, 255, 255, 0.3);
 	border-style: solid solid solid none;
 	float: left;
-	height: 5px;
+	height: 20px;
 	margin: 10px 5px 10px -5px;
 }
 .result-text {
+	margin-top: 7px;
 	float: left;
 }
 .float-right {
@@ -440,6 +441,12 @@ nav a:hover {
 		display: inline;
 		margin-left: 5px;
 	}
+	
+	.form-horizontal .error {
+		font-size: 15pt;
+		color: #FF6600; 
+	}
+	
 	.form-horizontal .form-buttons {
 		padding-left: 210px;
 	}
