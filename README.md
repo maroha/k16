@@ -7,13 +7,14 @@ Rühm k16:
 * Taavo-Taur Tammur [@t2t2], taavot@gmail.com
 * Konstantin Arutjunov [@maroha], maroha@yandex.ru
 
-Testkeskond: http://k16.t2t2.eu/ (Tavaliselt sünkroniseeritud master haruga, esitluste ajal vastav tag)
+Testkeskond: http://k16.t2t2.eu/ (Hetkel üleval versioon: ![Loading...](https://t2t2.eu/k16/test_status.php "viimati kasutatud tag - commiteid sellest tagist alates - commit SHA"))
 
-Teadetetahvel
+Teadetetahvle
 -------------
 
 * Eile - `mv Korsakov /Latvia`
 * Kui keegi leiab kaduma läinud andmeid, palun tagastage valvelauda.
+* Skype vestlus - Nüüd 72% lingid!
 
 1. Etapp
 --------
