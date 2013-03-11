@@ -1,5 +1,5 @@
 <form id="search-form" action="">
-	<input type="text" name="name" disabled title="Väljalülitatud kuna vajab serveri-poolset otsingut (või täielikku kandidaatide nimekirja)" placeholder="Sisesta kandidaadi nimi">
+	<input type="text" name="name" disabled title="Väljalülitatud kuna vajab serveri-poolset otsingut" placeholder="Sisesta kandidaadi nimi">
 	<select name="region" id="sorting">
 		<option value="0">Kõik valimisringkonnad</option>
 		<option value="1">Valimisringkond 1</option>
@@ -23,16 +23,116 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td><a href="kandidaadi_vaade.php">0001</a></td>
-			<td><a href="kandidaadi_vaade.php">Eesnimi Perekonnanimi</a></td>
-			<td><a href="kandidaadi_vaade.php">Valimisringkond</a></td>
-			<td><a href="kandidaadi_vaade.php">Partei</a></td>
+			<td>1234567855</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Janaida Jalutova</a>
+			</td>
+			<td>Tartumaa</td>
+			<td>Eesti Reformierakond</td>
 		</tr>
 		<tr>
-			<td>0002</td>
-			<td>Eesnimi Perekonnanimi</td>
-			<td>Valimisringkond</td>
-			<td>Partei</td>
+			<td>1234567894</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Ildegaard Ilumeel</a>
+			</td>
+			<td>Tartumaa</td>
+			<td>Sotsiaaldemokraatlik erakond</td>
+		</tr>
+		<tr>
+			<td>1234567893</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Harald Hamster</a>
+			</td>
+			<td>Tartumaa</td>
+			<td>Isamaa- ja Respublica Liit</td>
+		</tr>
+		<tr>
+			<td>1234567892</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Gerhard Gätegõverdus</a>
+			</td>
+			<td>Tartumaa</td>
+			<td>Sotsiaaldemokraatlik erakond</td>
+		</tr>
+		<tr>
+			<td>1234567891</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Ferdinand Fuksia</a>
+			</td>
+			<td>Tartumaa</td>
+			<td>Eesti Keskerakond</td>
+		</tr>
+		<tr>
+			<td>1234567890</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Eduard Ekskavaator</a>
+			</td>
+			<td>Tartumaa</td>
+			<td>Eesti Reformierakond</td>
+		</tr>
+		<tr>
+			<td>1234567857</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Leila Lagerfeld</a>
+			</td>
+			<td>Põlvamaa</td>
+			<td>Eesti Keskerakond</td>
+		</tr>
+		<tr>
+			<td>1234567856</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Kõikme Kannatameära</a>
+			</td>
+			<td>Põlvamaa</td>
+			<td>Sotsiaaldemokraatlik erakond</td>
+		</tr>
+		<tr>
+			<td>1234567855</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Janaida Jalutova</a>
+			</td>
+			<td>Põlvamaa</td>
+			<td>Isamaa- ja Respublica Liit</td>
+		</tr>
+		<tr>
+			<td>1234567894</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Ildegaard Ilumeel</a>
+			</td>
+			<td>Põlvamaa</td>
+			<td>Eesti Reformierakond</td>
+		</tr>
+		<tr>
+			<td>1234567893</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Harald Hamster</a>
+			</td>
+			<td>Jõgevamaa</td>
+			<td>Isamaa- ja Respublica Liit</td>
+		</tr>
+		<tr>
+			<td>1234567892</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Gerhard Gätegõverdus</a>
+			</td>
+			<td>Ida-Virumaa</td>
+			<td>Sotsiaaldemokraatlik erakond</td>
+		</tr>
+		<tr>
+			<td>1234567891</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Ferdinand Fuksia</a>
+			</td>
+			<td>Läänemaa</td>
+			<td>Eesti Keskerakond</td>
+		</tr>
+		<tr>
+			<td>1234567890</td>
+			<td>
+				<a href="kandidaadi_vaade.php">Eduard Ekskavaator</a>
+			</td>
+			<td>Harjumaa</td>
+			<td>Eesti Reformierakond</td>
 		</tr>
 	</tbody>
 </table>

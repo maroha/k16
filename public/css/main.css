@@ -178,7 +178,7 @@ label {
 	background-color: #666666;
 	margin-left: 10px;
 	margin-right: 10px;
-	
+
 }
 
 /* Generic styles */
@@ -225,6 +225,10 @@ label {
 	display: none;
 }
 
+/* Only if javascript is enabled */
+.js #candidate-list tbody tr:hover {
+	cursor: pointer;
+}
 /* Specific styles */
 
 .header-container {
@@ -312,6 +316,42 @@ nav a:hover {
 	color: white;
 	padding: 20px 0;
 }
+
+/* Table sorter: general settings*/
+.sortable thead {
+	cursor:pointer;
+}
+
+/* Table sorter: arrows */
+.c_0_c td, .c_0_c th {
+ background-image: url(/img/tableSortArrowsInactive.gif);
+ background-repeat: no-repeat;
+ background-position: right center;
+}
+
+.c_0_c .d_1_d {
+	background-image: url(/img/tableSortArrowDown.gif);
+}
+
+.c_0_c .u_1_u {
+	background-image: url(/img/tableSortArrowUp.gif);
+}
+
+/* AJAX loader */
+.ajax-loader {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -20px -130px -19px -130px;
+	padding: 20px;
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 20px;
+	text-align: center;
+	z-index: 1234;
+	overflow: auto;
+}
+
 
 /* ==========================================================================
    Media Queries

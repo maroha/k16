@@ -1,4 +1,4 @@
-/*
+﻿/*
  * The following implements The Garber-Irish Implementation for markup-based means of executing javascript on page load. This means only global and page-related javascript gets executed on page load. For more info check:
  * http://paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/
  * http://viget.com/inspire/extending-paul-irishs-comprehensive-dom-ready-execution
@@ -14,6 +14,44 @@ var K16 = {
 			if(location.hostname.indexOf(".dev") > -1) {
 				document.title = "[LOCAL] " + document.title
 			}
+			// ajax navigation
+			$(document).on("click", "a", function (event) { // Listen for all link tags, even in the future!
+				var targetURL = $(this).get(0).href;
+				if(targetURL.indexOf(location.protocol+"//"+location.hostname) > -1) {
+					// Ignores external links
+					K16.common.navigateTo(targetURL)
+					return false;
+				}
+			});
+			if(Modernizr.history) {
+				$(window).on("popstate", function (event) {
+					console.log(event);
+					K16.common.navigateTo(document.location, true)
+				});
+			}
+		},
+		navigateTo: function (targetURL, popstate) {
+			$("#ajax-loader").show();
+			$.get(targetURL, function (data, status, jqXHR) {
+				var metadata = $.parseJSON(jqXHR.getResponseHeader("K16-META"));
+				if(metadata.reload == true) {
+					location.reload(); return false;
+				}
+				if(Modernizr.history && !popstate) {
+					history.pushState({}, "", targetURL)
+				}
+				$("#ajax-loader").hide();
+				$("#content").html(data);
+				$("nav .active").removeClass("active")
+				if(metadata.menuItem) {
+					$('nav li[data-item="'+metadata.menuItem+'"]').addClass("active")
+				}
+				if(metadata.javascript.length > 0) {
+					// Execute related javascript
+					UTIL.exec(metadata.javascript[0]);
+					UTIL.exec(metadata.javascript[0], metadata.javascript[1]);
+				}
+			});
 		}
 	},
 	home: {
@@ -49,10 +87,12 @@ var K16 = {
 				} else if(search.party) {
 					ajaxroute = "/data/findCandidatesByParty.json"
 				} else {
-					ajaxroute = "/data/candidate.json" // Only due to lack of findAllCandidates
+					ajaxroute = "/data/findCandidates.json"
 				}
 				// console.log(search, ajaxroute);
+				$('#ajax-loader').show();
 				$.getJSON(ajaxroute, function (response) {
+					$('#ajax-loader').hide();
 					// Add missing stuff
 					if(!response.candidates)
 						var response = {candidates: [response]}
@@ -63,12 +103,14 @@ var K16 = {
 						if(!candidate.region)
 							candidate.region = {id: search.region, name: searchForm.region.options[searchForm.region.options.selectedIndex].text}
 					};
+					// console.log(response);
 					// Render results
 					K16.candidates.drawSearchResults(response.candidates)
-					console.log(response);
 				});
 				return false; // Don't submit it
-			})
+			});
+			// Row click listener
+			$("#candidate-list tbody tr").click(K16.candidates.rowListener)
 		},
 		register: function () {
 			// Candidate Register page
@@ -86,18 +128,82 @@ var K16 = {
 			tableBody.empty();
 			for (var i = candidates.length - 1; i >= 0; i--) {
 				// 5ft circle of hell: Making dom elements by hand (FUTURE: Use a templating engine, eg. mustache)
-				var candidateRow = $("<tr>").data("id", candidates[i].id)
+				var candidateRow = $("<tr>").data("id", candidates[i].id).click(K16.candidates.rowListener)
 				$("<td>").text(candidates[i].id).appendTo(candidateRow)
-				$("<td>").text(candidates[i].person.name).appendTo(candidateRow)
+				$("<td>").append($("<a>").attr({"href": "kandidaadi_vaade.php"}).text(candidates[i].person.name)).appendTo(candidateRow)
 				$("<td>").text(candidates[i].region.name).appendTo(candidateRow)
 				$("<td>").text(candidates[i].party.name).appendTo(candidateRow)
 				tableBody.append(candidateRow)
 			};
+		},
+		rowListener: function () {
+			// Listens for click on full row and forwards it to the link
+			$(this).off("click", K16.candidates.rowListener)
+			$("a", this).click()
+			return false;
 		}
 	},
 	results: {
 		init: function () {
 			// Results page
+			/* AJAX loader for submit button */
+			$('#submit').click(function() {
+				$('#ajax-loader').show();
+			});
+			/* Table sorter */
+			var a_re = /[cdu]\_\d+\_[cdu]/, a_color = 1
+			function hc(s, c) {return (" " + s + " ").indexOf(" " + c + " ") !== -1}
+			function ac(e, c) {var s = e.className; if (!hc(s, c)) e.className += " " + c}
+			prepTabs = function (t){
+				var el, th, cs, c, cell, axis, ts = (t && t.className) ? [t] : document.getElementsByTagName("table")
+				for (var e in ts) {
+					el = ts[e]
+					if (hc(el.className, "sortable")) {
+						if (!el.tHead) {
+							th = document.createElement("thead")
+							th.appendChild(el.rows[0])
+							el.appendChild(th)
+						}
+						th = el.tHead
+						ac(th, "c_0_c")
+						th.title = "Sorteeri selle veeru järgi"
+						th.onclick = clicktab
+						el.sorted = NaN
+					}
+				}
+			}
+			var clicktab = function (e) {
+				e = e || window.event
+				var obj = e.target || e.srcElement
+				while (!obj.tagName.match(/^(th|td)$/i)) obj = obj.parentNode
+				var i = obj.cellIndex, t = obj.parentNode
+				while (!t.tagName.match(/^table$/i)) t = t.parentNode
+				
+				var cn = obj.className, verse = /d\_\d+\_d/.test(cn),
+				dir = (verse) ? "u" : "d", new_cls = dir + "_" + a_color + "_" + dir
+				if (a_color < 0) a_color++
+				if (a_re.test(cn)) obj.className = cn.replace(a_re, new_cls)
+				else obj.className = new_cls
+				
+				var j = 0, tb = t.tBodies[0], rows = tb.rows, l = rows.length, c, v, vi
+				if (i !== t.sorted) {
+					t.sarr = []
+					for (j; j < l; j++) {
+						c = rows[j].cells[i]
+						v = (c) ? (c.innerHTML.replace(/\<[^<>]+?\>/g, "")) : ""
+						vi = Math.round(100 * parseFloat(v)).toString()
+						if (!isNaN(vi)) while (vi.length < 10) vi = "0" + vi
+						else vi = v
+						t.sarr[j] = [vi + (j/1000000000).toFixed(10), rows[j]]
+					}
+				}
+				t.sarr = t.sarr.sort()
+				if (verse) t.sarr = t.sarr.reverse()
+				t.sorted = i
+				for (j = 0; j < l; j++) tb.appendChild(t.sarr[j][1])
+				//obj.title = "Sorteeritud " + ((verse) ? "kahanevalt" : "kasvavalt")
+			}
+			window.onload = prepTabs
 		}
 	}
 };
