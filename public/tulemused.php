@@ -1,9 +1,6 @@
 <?php $javascript = array("results"); $menu_item = "tulemused"; include "header.php"; ?>
 
 		<div class="main-container">
-			<div id="ajax-loader" class="ajax-loader">
-				<img id="ajax-loader" src="/img/ajax-loader.gif" alt="Laen..."/>
-			</div>
 			<div class="main wrapper clearfix">
 				<article>
 					<header>

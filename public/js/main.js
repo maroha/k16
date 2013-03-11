@@ -52,7 +52,9 @@ var K16 = {
 					ajaxroute = "/data/findCandidates.json"
 				}
 				// console.log(search, ajaxroute);
+				$('#ajax-loader').show();
 				$.getJSON(ajaxroute, function (response) {
+					$('#ajax-loader').hide();
 					// Add missing stuff
 					if(!response.candidates)
 						var response = {candidates: [response]}
@@ -98,7 +100,6 @@ var K16 = {
 		},
 		rowListener: function () {
 			// Listens for click on full row and forwards it to the link
-			console.log($("a", this));
 			window.location = $("a", this).attr("href")
 			return false;
 		}
