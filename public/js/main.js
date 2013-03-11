@@ -49,7 +49,8 @@ var K16 = {
 				if(metadata.javascript.length > 0) {
 					// Execute related javascript
 					UTIL.exec(metadata.javascript[0]);
-					UTIL.exec(metadata.javascript[0], metadata.javascript[1]);
+					if(metadata.javascript[1])
+						UTIL.exec(metadata.javascript[0], metadata.javascript[1]);
 				}
 			});
 		}
@@ -178,13 +179,13 @@ var K16 = {
 				while (!obj.tagName.match(/^(th|td)$/i)) obj = obj.parentNode
 				var i = obj.cellIndex, t = obj.parentNode
 				while (!t.tagName.match(/^table$/i)) t = t.parentNode
-				
+
 				var cn = obj.className, verse = /d\_\d+\_d/.test(cn),
 				dir = (verse) ? "u" : "d", new_cls = dir + "_" + a_color + "_" + dir
 				if (a_color < 0) a_color++
 				if (a_re.test(cn)) obj.className = cn.replace(a_re, new_cls)
 				else obj.className = new_cls
-				
+
 				var j = 0, tb = t.tBodies[0], rows = tb.rows, l = rows.length, c, v, vi
 				if (i !== t.sorted) {
 					t.sarr = []
@@ -203,7 +204,7 @@ var K16 = {
 				for (j = 0; j < l; j++) tb.appendChild(t.sarr[j][1])
 				//obj.title = "Sorteeritud " + ((verse) ? "kahanevalt" : "kasvavalt")
 			}
-			window.onload = prepTabs
+			prepTabs()
 		}
 	}
 };
