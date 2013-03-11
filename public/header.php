@@ -9,6 +9,13 @@ session_start();
 if(!isset($_SESSION["logged_in"])) {
 	$_SESSION["logged_in"] = false;
 }
+
+if($ajax_request = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+	// Send metadata using headers
+	// No X- prefix: http://tools.ietf.org/html/rfc6648
+	$metadata = array("menuItem" => $menu_item, "javascript" => $javascript);
+	header("K16-META: ".json_encode($metadata));
+} else {
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -44,10 +51,13 @@ if(!isset($_SESSION["logged_in"])) {
 				</div>
 				<nav class="clearfix">
 					<ul>
-						<li<?php if($menu_item == "kandidaadid") echo ' class="active"'; ?>><a href="kandidaadid.php">Kandidaadid</a></li>
-						<li<?php if($menu_item == "tulemused") echo ' class="active"'; ?>><a href="tulemused.php">Tulemused</a></li>
-						<li<?php if($menu_item == "haaleta") echo ' class="active"'; ?>><a href="haaleta.php">Hääleta</a></li>
+						<li data-item="kandidaadid"<?php if($menu_item == "kandidaadid") echo ' class="active"'; ?>><a href="kandidaadid.php">Kandidaadid</a></li>
+						<li data-item="tulemused"<?php if($menu_item == "tulemused") echo ' class="active"'; ?>><a href="tulemused.php">Tulemused</a></li>
+						<li data-item="haaleta"<?php if($menu_item == "haaleta") echo ' class="active"'; ?>><a href="haaleta.php">Hääleta</a></li>
 					</ul>
 				</nav>
 			</header>
 		</div>
+		<div class="main-container">
+			<div id="content" class="main wrapper clearfix">
+<?php } ?>

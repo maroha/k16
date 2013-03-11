@@ -1,7 +1,5 @@
 <?php $javascript = array("candidates", "list"); $menu_item = "kandidaadid"; include "header.php"; ?>
 
-		<div class="main-container">
-			<div class="main wrapper clearfix">
 				<article>
 					<header>
 						<p class="hide-printer"><a href="index.php">&#60;&#60; Pealehele</a></p>
@@ -16,7 +14,5 @@
 						<?php include "kandidaadid_tabel.php" ?>
 					</section>
 				</article>
-			</div> <!-- #main -->
-		</div> <!-- #main-container -->
 
 		<?php include "footer.php"; ?>

@@ -1,4 +1,7 @@
-﻿		<div class="footer-container">
+﻿<?php if(!$ajax_request) { ?>
+			</div> <!-- #main -->
+		</div> <!-- #main-container -->
+		<div class="footer-container">
 			<footer class="wrapper">
 				<h3>&#169; K16</h3>
 			</footer>
@@ -14,3 +17,4 @@
 		<script src="js/main.js"></script>
 	</body>
 </html>
+<?php } ?>
