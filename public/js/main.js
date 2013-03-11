@@ -1,4 +1,4 @@
-/*
+﻿/*
  * The following implements The Garber-Irish Implementation for markup-based means of executing javascript on page load. This means only global and page-related javascript gets executed on page load. For more info check:
  * http://paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/
  * http://viget.com/inspire/extending-paul-irishs-comprehensive-dom-ready-execution
@@ -106,6 +106,68 @@ var K16 = {
 	results: {
 		init: function () {
 			// Results page
+			/* AJAX loader for submit button */
+			$(document).ready(function(){
+				$('#submit').click(function() {
+					$('#ajax-loader').show();
+				});
+			});
+			/* Table sorter */
+			(function(){
+				var a_re = /[cdu]\_\d+\_[cdu]/, a_color = 1
+				function hc(s, c) {return (" " + s + " ").indexOf(" " + c + " ") !== -1}
+				function ac(e, c) {var s = e.className; if (!hc(s, c)) e.className += " " + c}
+				prepTabs = function (t){
+					var el, th, cs, c, cell, axis, ts = (t && t.className) ? [t] : document.getElementsByTagName("table")
+					for (var e in ts) {
+						el = ts[e]
+						if (hc(el.className, "sortable")) {
+							if (!el.tHead) {
+								th = document.createElement("thead")
+								th.appendChild(el.rows[0])
+								el.appendChild(th)
+							}
+							th = el.tHead
+							ac(th, "c_0_c")
+							th.title = "Sorteeri selle veeru järgi"
+							th.onclick = clicktab
+							el.sorted = NaN
+						}
+					}
+				}
+				var clicktab = function (e) {
+					e = e || window.event
+					var obj = e.target || e.srcElement
+					while (!obj.tagName.match(/^(th|td)$/i)) obj = obj.parentNode
+					var i = obj.cellIndex, t = obj.parentNode
+					while (!t.tagName.match(/^table$/i)) t = t.parentNode
+					
+					var cn = obj.className, verse = /d\_\d+\_d/.test(cn),
+					dir = (verse) ? "u" : "d", new_cls = dir + "_" + a_color + "_" + dir
+					if (a_color < 0) a_color++
+					if (a_re.test(cn)) obj.className = cn.replace(a_re, new_cls)
+					else obj.className = new_cls
+					
+					var j = 0, tb = t.tBodies[0], rows = tb.rows, l = rows.length, c, v, vi
+					if (i !== t.sorted) {
+						t.sarr = []
+						for (j; j < l; j++) {
+							c = rows[j].cells[i]
+							v = (c) ? (c.innerHTML.replace(/\<[^<>]+?\>/g, "")) : ""
+							vi = Math.round(100 * parseFloat(v)).toString()
+							if (!isNaN(vi)) while (vi.length < 10) vi = "0" + vi
+							else vi = v
+							t.sarr[j] = [vi + (j/1000000000).toFixed(10), rows[j]]
+						}
+					}
+					t.sarr = t.sarr.sort()
+					if (verse) t.sarr = t.sarr.reverse()
+					t.sorted = i
+					for (j = 0; j < l; j++) tb.appendChild(t.sarr[j][1])
+					//obj.title = "Sorteeritud " + ((verse) ? "kahanevalt" : "kasvavalt")
+				}
+				window.onload = prepTabs
+			})()
 		}
 	}
 };
