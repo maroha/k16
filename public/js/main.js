@@ -49,7 +49,7 @@ var K16 = {
 				} else if(search.party) {
 					ajaxroute = "/data/findCandidatesByParty.json"
 				} else {
-					ajaxroute = "/data/candidate.json" // Only due to lack of findAllCandidates
+					ajaxroute = "/data/findCandidates.json"
 				}
 				// console.log(search, ajaxroute);
 				$.getJSON(ajaxroute, function (response) {
@@ -63,12 +63,14 @@ var K16 = {
 						if(!candidate.region)
 							candidate.region = {id: search.region, name: searchForm.region.options[searchForm.region.options.selectedIndex].text}
 					};
+					// console.log(response);
 					// Render results
 					K16.candidates.drawSearchResults(response.candidates)
-					console.log(response);
 				});
 				return false; // Don't submit it
-			})
+			});
+			// Row click listener
+			$("#candidate-list tbody tr").click(K16.candidates.rowListener)
 		},
 		register: function () {
 			// Candidate Register page
@@ -86,13 +88,19 @@ var K16 = {
 			tableBody.empty();
 			for (var i = candidates.length - 1; i >= 0; i--) {
 				// 5ft circle of hell: Making dom elements by hand (FUTURE: Use a templating engine, eg. mustache)
-				var candidateRow = $("<tr>").data("id", candidates[i].id)
+				var candidateRow = $("<tr>").data("id", candidates[i].id).click(K16.candidates.rowListener)
 				$("<td>").text(candidates[i].id).appendTo(candidateRow)
-				$("<td>").text(candidates[i].person.name).appendTo(candidateRow)
+				$("<td>").append($("<a>").attr({"href": "kandidaadi_vaade.php"}).text(candidates[i].person.name)).appendTo(candidateRow)
 				$("<td>").text(candidates[i].region.name).appendTo(candidateRow)
 				$("<td>").text(candidates[i].party.name).appendTo(candidateRow)
 				tableBody.append(candidateRow)
 			};
+		},
+		rowListener: function () {
+			// Listens for click on full row and forwards it to the link
+			console.log($("a", this));
+			window.location = $("a", this).attr("href")
+			return false;
 		}
 	},
 	results: {

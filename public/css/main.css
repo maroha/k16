@@ -178,7 +178,7 @@ label {
 	background-color: #666666;
 	margin-left: 10px;
 	margin-right: 10px;
-	
+
 }
 
 /* Generic styles */
@@ -224,6 +224,10 @@ label {
 	display: none;
 }
 
+/* Only if javascript is enabled */
+.js #candidate-list tbody tr:hover {
+	cursor: pointer;
+}
 /* Specific styles */
 
 .header-container {
