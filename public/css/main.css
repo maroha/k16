@@ -483,8 +483,9 @@ nav a:hover {
 	}
 	
 	.form-horizontal .error {
-		font-size: 15pt;
-		color: #FF6600; 
+		font-size: 13pt;
+		color: #FF6600;
+		font-weight:bold 
 	}
 	
 	.form-horizontal .form-buttons {

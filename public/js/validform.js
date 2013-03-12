@@ -40,7 +40,7 @@ function validate()
    if( document.myForm.address.value == "" )
    {
 	//	 alert( "Sisestage oma elukoha aadress!" );
-		 $(document.myForm.idnumber).after("<div class=\"error\">Sisestage oma elukoha aadress!</div>")
+		 $(document.myForm.address).after("<div class=\"error\">Sisestage oma elukoha aadress!</div>")
 		 document.myForm.address.focus() ;
 		 return false;
    }	
@@ -113,7 +113,7 @@ function validate()
 		}
 
 	 
-   alert( "Teie andmed olid eedukald sisestatud" );
+   alert( "Teie andmed olid eedukalt sisestatud" );
    return( true );
    
 }
