@@ -23,3 +23,9 @@ Teadetetahvle
 2. Etapp
 --------
 [Tag 2](https://github.com/t2t2/k16/tree/2)
+
+3. Etapp
+--------
+[Tag 3](https://github.com/t2t2/k16/tree/3)
+
+
