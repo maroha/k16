@@ -1,16 +1,11 @@
 <?php $javascript = array("candidates", "register"); include "header.php"; ?>
-
-
-		<script type="text/javascript" src="js/validform.js"></script>
-
-
 				<p><a href="kandidaadid.php">&#60;&#60; Kandidaatide nimekirja</a></p>
 				<article>
 					<header>
 						<h1>Kandidaadi registreerimine</h1>
 					</header>
 					<section>
-						<form class="form-horizontal" action="/k16/public/kandidaadi_registreerimine.php" name="myForm" onsubmit="return(validate());">
+						<form class="form-horizontal" action="kandidaadi_registreerimine.php" method="POST" id="register-form" name="register-form">
 							<div class="form-row">
 								<label class="form-label" for="register-firstname">Eesnimi</label>
 								<div class="form-field">
@@ -84,7 +79,7 @@
 									<input type="text" size="30" name="occupation" id="register-occupation" />
 								</div>
 							</div>
-	
+
 							<div class="form-row">
 								<label class="form-label" for="register-work">Töökoht</label>
 								<div class="form-field">
@@ -110,15 +105,9 @@
 								</div>
 							</div>
 							<div class="form-buttons">
-								
-							
-							
-							 <tr>
-								<td align="right"></td>
-								<td><input type="submit" value="Salvestamine" /></td>
-							</tr>		
+								<button type="submit">Registeeru</button> <button type="reset">Nulli</button>
 							</div>
-							
+
 						</form>
 					</section>
 				</article>
