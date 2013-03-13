@@ -178,8 +178,12 @@ label {
 	background-color: #666666;
 	margin-left: 10px;
 	margin-right: 10px;
-
 }
+.form-horizontal .error {
+	font-size: 15pt;
+	color: #FF6600;
+}
+
 
 /* Generic styles */
 
@@ -481,12 +485,7 @@ nav a:hover {
 		display: inline;
 		margin-left: 5px;
 	}
-	
-	.form-horizontal .error {
-		font-size: 15pt;
-		color: #FF6600; 
-	}
-	
+
 	.form-horizontal .form-buttons {
 		padding-left: 210px;
 	}
