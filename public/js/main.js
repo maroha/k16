@@ -150,6 +150,10 @@ var K16 = {
 			/* AJAX loader for submit button */
 			$('#submit').click(function() {
 				$('#ajax-loader').show();
+				setTimeout(function () {
+					$('#ajax-loader').hide()
+				}, 1000);
+				return false;
 			});
 			/* Table sorter */
 			var a_re = /[cdu]\_\d+\_[cdu]/, a_color = 1
