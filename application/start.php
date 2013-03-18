@@ -171,3 +171,11 @@ if ( ! Request::cli() and Config::get('session.driver') !== '')
 {
 	Session::load();
 }
+
+// Register shorter name for layout
+View::name("layouts.main", "layout");
+
+// Add defaults
+View::composer("layouts.main", function($view) {
+	$view->menu_item = null;
+});

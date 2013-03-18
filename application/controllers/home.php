@@ -2,37 +2,35 @@
 
 class Home_Controller extends Base_Controller {
 
-	/*
-	|--------------------------------------------------------------------------
-	| The Default Controller
-	|--------------------------------------------------------------------------
-	|
-	| Instead of using RESTful routes and anonymous functions, you might wish
-	| to use controllers to organize your application API. You'll love them.
-	|
-	| This controller responds to URIs beginning with "home", and it also
-	| serves as the default controller for the application, meaning it
-	| handles requests to the root of the application.
-	|
-	| You can respond to GET requests to "/home/profile" like so:
-	|
-	|		public function action_profile()
-	|		{
-	|			return "This is your profile!";
-	|		}
-	|
-	| Any extra segments are passed to the method as parameters:
-	|
-	|		public function action_profile($id)
-	|		{
-	|			return "This is the profile for user {$id}.";
-	|		}
-	|
-	*/
+	public $restful = true; // Require correct GET/POST/etc...
+	public $layout = "name: layout";
 
-	public function action_index()
-	{
-		return View::make('home.index');
+	public function get_index() {
+		$this->layout->content = View::make("kodu");
+		$this->layout->javascript = array("home");
 	}
 
+	public function get_login() {
+		// Need a (fake) user that gets logged in
+		if(Request::is_ajax()) {
+			$metadata = array("reload" => true);
+			return Response::make(null, 200, array(
+				"K16-META" => json_encode($metadata)
+			));
+		} else {
+			return Redirect::back();
+		}
+	}
+
+	public function get_logout() {
+		Auth::logout();
+		if(Request::is_ajax()) {
+			$metadata = array("reload" => true);
+			return Response::make(null, 200, array(
+				"K16-META" => json_encode($metadata)
+			));
+		} else {
+			return Redirect::back();
+		}
+	}
 }

@@ -17,8 +17,8 @@ var K16 = {
 			// ajax navigation
 			$(document).on("click", "a", function (event) { // Listen for all link tags, even in the future!
 				var targetURL = $(this).get(0).href;
-				if(targetURL.indexOf(location.protocol+"//"+location.hostname) > -1) {
-					// Ignores external links
+				if(targetURL.indexOf(location.protocol+"//"+location.hostname) > -1 && targetURL.indexOf(location.href+"#") == -1) {
+					// Ignores external links and links just #
 					K16.common.navigateTo(targetURL)
 					return false;
 				}

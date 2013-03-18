@@ -32,10 +32,10 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('home.index');
-});
+Route::controller(array("home"));
+// home actions besides index don't get mapped
+Route::get("login", "home@login");
+Route::get("logout", "home@logout");
 
 /*
 |--------------------------------------------------------------------------
@@ -107,5 +107,5 @@ Route::filter('csrf', function()
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::to('login');
+	if (Auth::guest()) return Redirect::home();
 });
