@@ -11,7 +11,7 @@ class Home_Controller extends Base_Controller {
 	}
 
 	public function get_login() {
-		// Need a (fake) user that gets logged in
+		Auth::login(1);
 		if(Request::ajax()) {
 			$metadata = array("reload" => true);
 			return Response::make(null, 200, array(

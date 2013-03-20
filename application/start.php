@@ -172,6 +172,11 @@ if ( ! Request::cli() and Config::get('session.driver') !== '')
 	Session::load();
 }
 
+// Fake login driver
+Auth::extend('faker', function() {
+	return new FakeLogin();
+});
+
 // Register shorter name for layout
 View::name("layouts.main", "layout");
 
