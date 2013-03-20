@@ -33,6 +33,8 @@
 */
 
 Route::controller(array("home", "tulemused", "kandidaadid"));
+// vote page is under kandidaadid controller
+Route::get("haaleta", "kandidaadid@haaleta");
 // home actions besides index don't get mapped
 Route::get("login", "home@login");
 Route::get("logout", "home@logout");

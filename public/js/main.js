@@ -31,10 +31,16 @@ var K16 = {
 			}
 		},
 		navigateTo: function (targetURL, popstate) {
+			// Some cache uniqueness just in case
+			if(targetURL.indexOf("?") > 0) {
+				ajaxURL = targetURL + "&a"
+			} else {
+				ajaxURL = targetURL +  "?a"
+			}
 			$("#ajax-loader").show();
-			$.get(targetURL, function (data, status, jqXHR) {
+			$.get(ajaxURL, function (data, status, jqXHR) {
 				var metadata = $.parseJSON(jqXHR.getResponseHeader("K16-META"));
-				if(metadata.reload == true) {
+				if(metadata.reload) {
 					location.reload(); return false;
 				}
 				if(Modernizr.history && !popstate) {
@@ -222,7 +228,7 @@ var K16 = {
 				// 5ft circle of hell: Making dom elements by hand (FUTURE: Use a templating engine, eg. mustache)
 				var candidateRow = $("<tr>").data("id", candidates[i].id).click(K16.candidates.rowListener)
 				$("<td>").text(candidates[i].id).appendTo(candidateRow)
-				$("<td>").append($("<a>").attr({"href": "kandidaadi_vaade.php"}).text(candidates[i].person.name)).appendTo(candidateRow)
+				$("<td>").append($("<a>").attr({"href": K16.config.url+"/kandidaadid/info/"+candidates[i].id}).text(candidates[i].person.name)).appendTo(candidateRow)
 				$("<td>").text(candidates[i].region.name).appendTo(candidateRow)
 				$("<td>").text(candidates[i].party.name).appendTo(candidateRow)
 				tableBody.append(candidateRow)

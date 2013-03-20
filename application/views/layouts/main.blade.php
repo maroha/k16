@@ -11,12 +11,12 @@
 		<meta name="viewport" content="width=device-width">
 
 		<link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="css/normalize.min.css">
-		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="{{ asset("css/normalize.min.css") }}">
+		<link rel="stylesheet" href="{{ asset("css/main.css") }}">
 
-		<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+		<script src="{{ asset("js/vendor/modernizr-2.6.2-respond-1.1.0.min.js") }}"></script>
 	</head>
-	<body{{ isset($javascript[0]) ? " data-controller=\"{$javascript[0]}\"" : null }}{{ isset($javascript[1]) ? " data-action=\"{$javascript[1]}\"" : null }}>
+	<body{{ isset($javascript[0]) ? " data-controller=\"{$javascript[0]}\"" : null }}{{ isset($javascript[1]) ? " data-action=\"{$javascript[1]}\"" : null }} data-url="{{ URL::base() }}">
 		<!--[if lt IE 7]>
 			<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 		<![endif]-->
@@ -34,7 +34,7 @@
 					<ul>
 						<li data-item="kandidaadid"{{ $menu_item == "kandidaadid" ? ' class="active"' : null }}><a href="{{ url("kandidaadid") }}">Kandidaadid</a></li>
 						<li data-item="tulemused"{{ $menu_item == "tulemused" ? ' class="active"' : null }}><a href="{{ url("tulemused") }}">Tulemused</a></li>
-						<li data-item="haaleta"{{ $menu_item == "haaleta" ? ' class="active"' : null }}><a href="haaleta.php">Hääleta</a></li>
+						<li data-item="haaleta"{{ $menu_item == "haaleta" ? ' class="active"' : null }}><a href="{{ url("haaleta") }}">Hääleta</a></li>
 					</ul>
 				</nav>
 			</header>

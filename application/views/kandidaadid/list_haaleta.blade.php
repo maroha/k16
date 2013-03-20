@@ -1,11 +1,11 @@
 <article>
 	<header>
 		<p class="hide-printer"><a href="index.php">&#60;&#60; Pealehele</a></p>
-		<h1>Kandidaadid</h1>
+		<h1>Hääleta</h1>
 		@if(Auth::check())
-			<p class="hide-printer"><a href="kandidaadi_registreerimine.php">Kandideeri &rsaquo;</a></p>
+			<p class="hide-printer">Hääletamiseks kliki sobiva kandidaadi peale.</p>
 		@else
-			<p class="hide-printer">Soovid kandideerida? <a href="user_switch.php">Logi sisse &#62;</a></p>
+			<p class="hide-printer">Soovid hääletada? <a href="user_switch.php">Logi sisse &#62;</a></p>
 		@endif
 	</header>
 	<section>
@@ -36,7 +36,7 @@
 				<tr>
 					<td>1234567855</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Janaida Jalutova</a>
+						<a href="{{ url("kandidaadid/info/1234567855") }}">Janaida Jalutova</a>
 					</td>
 					<td>Tartumaa</td>
 					<td>Eesti Reformierakond</td>
@@ -44,7 +44,7 @@
 				<tr>
 					<td>1234567894</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Ildegaard Ilumeel</a>
+						<a href="{{ url("kandidaadid/info/1234567894") }}">Ildegaard Ilumeel</a>
 					</td>
 					<td>Tartumaa</td>
 					<td>Sotsiaaldemokraatlik erakond</td>
@@ -52,7 +52,7 @@
 				<tr>
 					<td>1234567893</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Harald Hamster</a>
+						<a href="{{ url("kandidaadid/info/1234567893") }}">Harald Hamster</a>
 					</td>
 					<td>Tartumaa</td>
 					<td>Isamaa- ja Respublica Liit</td>
@@ -60,7 +60,7 @@
 				<tr>
 					<td>1234567892</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Gerhard Gätegõverdus</a>
+						<a href="{{ url("kandidaadid/info/1234567892") }}">Gerhard Gätegõverdus</a>
 					</td>
 					<td>Tartumaa</td>
 					<td>Sotsiaaldemokraatlik erakond</td>
@@ -68,7 +68,7 @@
 				<tr>
 					<td>1234567891</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Ferdinand Fuksia</a>
+						<a href="{{ url("kandidaadid/info/1234567891") }}">Ferdinand Fuksia</a>
 					</td>
 					<td>Tartumaa</td>
 					<td>Eesti Keskerakond</td>
@@ -76,7 +76,7 @@
 				<tr>
 					<td>1234567890</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Eduard Ekskavaator</a>
+						<a href="{{ url("kandidaadid/info/1234567890") }}">Eduard Ekskavaator</a>
 					</td>
 					<td>Tartumaa</td>
 					<td>Eesti Reformierakond</td>
@@ -84,7 +84,7 @@
 				<tr>
 					<td>1234567857</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Leila Lagerfeld</a>
+						<a href="{{ url("kandidaadid/info/1234567857") }}">Leila Lagerfeld</a>
 					</td>
 					<td>Põlvamaa</td>
 					<td>Eesti Keskerakond</td>
@@ -92,7 +92,7 @@
 				<tr>
 					<td>1234567856</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Kõikme Kannatameära</a>
+						<a href="{{ url("kandidaadid/info/1234567856") }}">Kõikme Kannatameära</a>
 					</td>
 					<td>Põlvamaa</td>
 					<td>Sotsiaaldemokraatlik erakond</td>
@@ -100,7 +100,7 @@
 				<tr>
 					<td>1234567855</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Janaida Jalutova</a>
+						<a href="{{ url("kandidaadid/info/1234567855") }}">Janaida Jalutova</a>
 					</td>
 					<td>Põlvamaa</td>
 					<td>Isamaa- ja Respublica Liit</td>
@@ -108,7 +108,7 @@
 				<tr>
 					<td>1234567894</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Ildegaard Ilumeel</a>
+						<a href="{{ url("kandidaadid/info/1234567894") }}">Ildegaard Ilumeel</a>
 					</td>
 					<td>Põlvamaa</td>
 					<td>Eesti Reformierakond</td>
@@ -116,7 +116,7 @@
 				<tr>
 					<td>1234567893</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Harald Hamster</a>
+						<a href="{{ url("kandidaadid/info/1234567893") }}">Harald Hamster</a>
 					</td>
 					<td>Jõgevamaa</td>
 					<td>Isamaa- ja Respublica Liit</td>
@@ -124,7 +124,7 @@
 				<tr>
 					<td>1234567892</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Gerhard Gätegõverdus</a>
+						<a href="{{ url("kandidaadid/info/1234567892") }}">Gerhard Gätegõverdus</a>
 					</td>
 					<td>Ida-Virumaa</td>
 					<td>Sotsiaaldemokraatlik erakond</td>
@@ -132,7 +132,7 @@
 				<tr>
 					<td>1234567891</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Ferdinand Fuksia</a>
+						<a href="{{ url("kandidaadid/info/1234567891") }}">Ferdinand Fuksia</a>
 					</td>
 					<td>Läänemaa</td>
 					<td>Eesti Keskerakond</td>
@@ -140,7 +140,7 @@
 				<tr>
 					<td>1234567890</td>
 					<td>
-						<a href="kandidaadi_vaade.php">Eduard Ekskavaator</a>
+						<a href="{{ url("kandidaadid/info/1234567890") }}">Eduard Ekskavaator</a>
 					</td>
 					<td>Harjumaa</td>
 					<td>Eesti Reformierakond</td>
