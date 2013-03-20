@@ -12,7 +12,7 @@ class Home_Controller extends Base_Controller {
 
 	public function get_login() {
 		// Need a (fake) user that gets logged in
-		if(Request::is_ajax()) {
+		if(Request::ajax()) {
 			$metadata = array("reload" => true);
 			return Response::make(null, 200, array(
 				"K16-META" => json_encode($metadata)
@@ -24,7 +24,7 @@ class Home_Controller extends Base_Controller {
 
 	public function get_logout() {
 		Auth::logout();
-		if(Request::is_ajax()) {
+		if(Request::ajax()) {
 			$metadata = array("reload" => true);
 			return Response::make(null, 200, array(
 				"K16-META" => json_encode($metadata)
