@@ -5,7 +5,7 @@
 		@if(Auth::check())
 			<p class="hide-printer">Hääletamiseks kliki sobiva kandidaadi peale.</p>
 		@else
-			<p class="hide-printer">Soovid hääletada? <a href="user_switch.php">Logi sisse &#62;</a></p>
+			<p class="hide-printer">Soovid hääletada? <a href="{{ url("login") }}">Logi sisse &#62;</a></p>
 		@endif
 	</header>
 	<section>

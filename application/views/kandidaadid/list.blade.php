@@ -3,7 +3,7 @@
 		<p class="hide-printer"><a href="index.php">&#60;&#60; Pealehele</a></p>
 		<h1>Kandidaadid</h1>
 		@if(Auth::check())
-			<p class="hide-printer"><a href="kandidaadi_registreerimine.php">Kandideeri &rsaquo;</a></p>
+			<p class="hide-printer"><a href="{{ url("kandidaadid/registeeri") }}">Kandideeri &rsaquo;</a></p>
 		@else
 			<p class="hide-printer">Soovid kandideerida? <a href="{{ url("login") }}">Logi sisse &#62;</a></p>
 		@endif

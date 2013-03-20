@@ -50,7 +50,7 @@
 			</footer>
 		</div>
 		<div id="ajax-loader" class="ajax-loader">
-			<img id="ajax-loader" src="{{ asset("img/ajax-loader.gif") }}" alt="Laen..."/>
+			<img src="{{ asset("img/ajax-loader.gif") }}" alt="Laen..."/>
 			Oota natukene, meil on asju leida...
 		</div>
 

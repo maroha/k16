@@ -1,4 +1,4 @@
-<p><a href="kandidaadid.php">&#60;&#60; Kandidaatide nimekirja</a></p>
+<p><a href="{{ url("kandidaadid") }}">&#60;&#60; Kandidaatide nimekirja</a></p>
 <article>
 	<header>
 		<h1>Kandidaadi registreerimine</h1>

@@ -1,8 +1,8 @@
 <article class="head-unit">
 	<h1>Teretulemast valimistele!</h1>
 	@if(Auth::check())
-		<p><a href="haaleta.php">Hääleta &rsaquo;</a></p>
-		<p><a href="kandidaadi_registreerimine.php">Kandideeri &rsaquo;</a></p>
+		<p><a href="{{ url("haaleta") }}">Hääleta &rsaquo;</a></p>
+		<p><a href="{{ url("kandidaadid/registeeri") }}">Kandideeri &rsaquo;</a></p>
 		<p><a href="{{ url("tulemused") }}">Vaata tulemusi &rsaquo;</a></p>
 	@else
 		<p>Hääletamiseks või kandideerimiseks <a href="{{ url("login") }}">logi sisse &rsaquo;</a></p>

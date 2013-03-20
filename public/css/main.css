@@ -355,6 +355,9 @@ nav a:hover {
 	z-index: 1234;
 	overflow: auto;
 }
+.ajax-loader img {
+	margin: 0 auto;
+}
 
 
 /* ==========================================================================
@@ -486,7 +489,7 @@ nav a:hover {
 		margin-left: 5px;
 	}
 
-		font-weight:bold 
+		font-weight:bold
 	.form-horizontal .form-buttons {
 		padding-left: 210px;
 	}
