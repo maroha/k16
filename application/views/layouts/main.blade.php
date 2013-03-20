@@ -32,9 +32,9 @@
 				</div>
 				<nav class="clearfix">
 					<ul>
-						<li data-item="kandidaadid"<?php if($menu_item == "kandidaadid") echo ' class="active"'; ?>><a href="kandidaadid.php">Kandidaadid</a></li>
-						<li data-item="tulemused"<?php if($menu_item == "tulemused") echo ' class="active"'; ?>><a href="tulemused.php">Tulemused</a></li>
-						<li data-item="haaleta"<?php if($menu_item == "haaleta") echo ' class="active"'; ?>><a href="haaleta.php">Hääleta</a></li>
+						<li data-item="kandidaadid"{{ $menu_item == "kandidaadid" ? ' class="active"' : null }}><a href="{{ url("kandidaadid") }}">Kandidaadid</a></li>
+						<li data-item="tulemused"{{ $menu_item == "tulemused" ? ' class="active"' : null }}><a href="{{ url("tulemused") }}">Tulemused</a></li>
+						<li data-item="haaleta"{{ $menu_item == "haaleta" ? ' class="active"' : null }}><a href="haaleta.php">Hääleta</a></li>
 					</ul>
 				</nav>
 			</header>

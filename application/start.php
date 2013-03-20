@@ -177,5 +177,7 @@ View::name("layouts.main", "layout");
 
 // Add defaults
 View::composer("layouts.main", function($view) {
-	$view->menu_item = null;
+	if(!isset($view->menu_item)) {
+		$view->menu_item = null;
+	}
 });

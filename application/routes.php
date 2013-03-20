@@ -32,7 +32,7 @@
 |
 */
 
-Route::controller(array("home"));
+Route::controller(array("home", "tulemused", "kandidaadid"));
 // home actions besides index don't get mapped
 Route::get("login", "home@login");
 Route::get("logout", "home@logout");
