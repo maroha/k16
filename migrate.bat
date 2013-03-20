@@ -2,7 +2,7 @@
 rem Dumb-proof migrating, expects this to be installed in xampp/htdocs/k16 (exact folder names are not required)
 
 echo "> Trying global"
-phpx artisan migrate --env=local
+php artisan migrate --env=local
 
 if ERRORLEVEL 1 (
 	echo "> Fallback: Trying relative"
