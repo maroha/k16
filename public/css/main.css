@@ -186,7 +186,13 @@ label {
 
 
 /* Generic styles */
-
+.header-container .disclaimer {
+	font-size: 13px;
+	line-height: 15px;
+	background: #000000;
+	text-align: center;
+	padding: 10px 0;
+}
 .wrapper {
 	width: auto;
 	min-width: 275px;
@@ -319,6 +325,13 @@ nav a:hover {
 .footer-container footer {
 	color: white;
 	padding: 20px 0;
+}
+.footer-container .disclaimer {
+	font-size: 14px;
+	line-height: 16px;
+}
+.footer-container .disclaimer a {
+	color: #ffffff;
 }
 
 /* Table sorter: general settings*/
