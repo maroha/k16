@@ -21,7 +21,7 @@
 			<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 		<![endif]-->
 		<div class="header-container">
-			<div class="disclaimer">Antud rakendus ei ole mõeldud kasutamiseks reaalsetel valimistel<br />Tere loeng :D</div>
+			<div class="disclaimer">Antud rakendus ei ole mõeldud kasutamiseks reaalsetel valimistel<br />Tere loeng &lt;3</div>
 			<header class="wrapper clearfix">
 				<h1 class="title"><a href="{{ url("/") }}">e-Valimised</a></h1>
 				<div class="user">
@@ -47,7 +47,7 @@
 		</div> <!-- #main-container -->
 		<div class="footer-container">
 			<footer class="wrapper">
-				<h3>&#169; K16</h3>
+				<h3>&#169; <a href="https://github.com/t2t2/k16" target="_blank">K16</a></h3>
 				<div class="disclaimer">Rakenduses realiseeritud e-valimiste näide on realiseeritud <a href="https://courses.cs.ut.ee/2013/vl/spring/Main/Practices" target="_blank">tehnoloogiate praktiseerimise eesmärgil</a> ning ei ole mõeldud reaalsete e-valimiste korraldamiseks. Kokkulangevused reaalse e-valimiste protsessiga on juhuslikud. Kui valimismaania kestab rohkem kui 2 nädalat palun konsulteergie arsti või apteekriga.</div>
 			</footer>
 		</div>
