@@ -43,8 +43,9 @@
 					<select name="party" id="register-party">
 						<option value="-1">Määra parteiline kuuluvus</option>
 						<option value="0">Üksikkandidaat</option>
-						<option value="1">Erakond 1</option>
-						<option value="2">Erakond 2</option>
+						@foreach($parteid as $partei)
+							<option value="{{ $partei->id }}">{{ e($partei->nimetus) }}</option>
+						@endforeach
 					</select>
 				</div>
 			</div>
@@ -53,9 +54,9 @@
 				<div class="form-field">
 					<select name="piirkond" id="register-piirkond">
 						<option value="-1">Vali kandideerimispiirkond</option>
-						<option value="1">Piirkond 1</option>
-						<option value="2">Piirkond 2</option>
-						<option value="2">Piirkond 3</option>
+						@foreach($ringkonnad as $ringkond)
+							<option value="{{ $ringkond->id }}">{{ e($ringkond->nimetus) }}</option>
+						@endforeach
 					</select>
 				</div>
 			</div>

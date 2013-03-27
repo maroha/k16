@@ -5,6 +5,12 @@ class Kandidaadid_Controller extends Base_Controller {
 	public $restful = true;
 	public $layout = "name: layout";
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->filter("before", "auth")->only("registeeri");
+	}
+
 	public function parteid_and_ringkonnad()
 	{
 		$ringkonnad = DB::query("SELECT * FROM `valimisringkond`");
@@ -36,8 +42,8 @@ class Kandidaadid_Controller extends Base_Controller {
 
 	public function get_registeeri()
 	{
-		//TODO: add Auth filter
-		$this->layout->content = View::make("kandidaadid.registeeri");
+		list($ringkonnad, $parteid) = $this->parteid_and_ringkonnad();
+		$this->layout->content = View::make("kandidaadid.registeeri", array("ringkonnad" => $ringkonnad, "parteid" => $parteid));
 		$this->layout->javascript = array("candidates", "register");
 		$this->layout->menu_item = "kandidaadid";
 	}
