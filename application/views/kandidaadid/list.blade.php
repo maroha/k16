@@ -13,13 +13,16 @@
 			<input type="text" name="name" disabled title="Väljalülitatud kuna vajab serveri-poolset otsingut" placeholder="Sisesta kandidaadi nimi">
 			<select name="region" id="sorting">
 				<option value="0">Kõik valimisringkonnad</option>
-				<option value="1">Valimisringkond 1</option>
-				<option value="2">Valimisringkond 2</option>
+				@foreach($ringkonnad as $ringkond)
+					<option value="{{ $ringkond->id }}">{{ e($ringkond->nimetus) }}</option>
+				@endforeach
 			</select>
 			<select name="party">
-				<option value="0">Kõik parteid</option>
-				<option value="1">Partei 1</option>
-				<option value="2">Partei 2</option>
+				<option value="-1">Kõik parteid</option>
+				<option value="0">Üksikkandidaat</option>
+				@foreach($parteid as $partei)
+					<option value="{{ $partei->id }}">{{ e($partei->nimetus) }}</option>
+				@endforeach
 			</select>
 			<input type="submit" value="Otsi" />
 		</form>

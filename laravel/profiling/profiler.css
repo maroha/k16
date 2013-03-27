@@ -1,6 +1,7 @@
 .anbu * {
 	color: black;
 	border: 0 !important;
+	text-shadow: none;
 }
 
 .anbu

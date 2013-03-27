@@ -41,8 +41,8 @@
 				<label class="form-label" for="register-party">Parteiline kuuluvus</label>
 				<div class="form-field">
 					<select name="party" id="register-party">
-						<option value="0">Määra parteiline kuuluvus</option>
-						<option value="2">Üksikkandidaat</option>
+						<option value="-1">Määra parteiline kuuluvus</option>
+						<option value="0">Üksikkandidaat</option>
 						<option value="1">Erakond 1</option>
 						<option value="2">Erakond 2</option>
 					</select>
@@ -52,7 +52,7 @@
 				<label class="form-label" for="register-party">Kandideerimispiirkond</label>
 				<div class="form-field">
 					<select name="piirkond" id="register-piirkond">
-						<option value="0">Vali kandideerimispiirkond</option>
+						<option value="-1">Vali kandideerimispiirkond</option>
 						<option value="1">Piirkond 1</option>
 						<option value="2">Piirkond 2</option>
 						<option value="2">Piirkond 3</option>
