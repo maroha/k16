@@ -9,7 +9,7 @@ class Valimisringkonnad {
 	 */
 	public function up()
 	{
-		$sql = "INSERT INTO `db`.`valimisringkond` (`ID`, `Nimetus`) VALUES (NULL, \'Valimisringkond 1\'), (NULL, \'Valimisringkond 2\'), (NULL, \'Valimisringkond 3\'), (NULL, \'Valimisringkond 4\'), (NULL, \'Valimisringkond 5\'), (NULL, \'Valimisringkond 6\'), (NULL, \'Valimisringkond 7\'), (NULL, \'Valimisringkond 8\'), (NULL, \'Valimisringkond 9\'), (NULL, \'Valimisringkond 10\');";
+		$sql = "INSERT INTO `valimisringkond` (`ID`, `Nimetus`) VALUES (NULL, 'Valimisringkond 1'), (NULL, 'Valimisringkond 2'), (NULL, 'Valimisringkond 3'), (NULL, 'Valimisringkond 4'), (NULL, 'Valimisringkond 5'), (NULL, 'Valimisringkond 6'), (NULL, 'Valimisringkond 7'), (NULL, 'Valimisringkond 8'), (NULL, 'Valimisringkond 9'), (NULL, 'Valimisringkond 10');";
 		DB::query($sql);
 	}
 
@@ -20,7 +20,7 @@ class Valimisringkonnad {
 	 */
 	public function down()
 	{
-		//
+		DB::query("DELETE FROM `valimisringkond ;");
 	}
 
 }
