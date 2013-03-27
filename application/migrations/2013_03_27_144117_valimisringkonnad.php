@@ -20,7 +20,7 @@ class Valimisringkonnad {
 	 */
 	public function down()
 	{
-		DB::query("DELETE FROM `valimisringkond ;");
+		DB::query("DELETE FROM `valimisringkond`;");
 	}
 
 }

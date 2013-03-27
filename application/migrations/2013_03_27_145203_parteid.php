@@ -20,7 +20,7 @@ class Parteid {
 	 */
 	public function down()
 	{
-		DB::query("DELETE FROM `partei ;");
+		DB::query("DELETE FROM `partei`;");
 	}
 
 }
