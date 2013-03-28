@@ -11,7 +11,7 @@ class Create_All_The_Tables {
 	{
 
 DB::query(
-"create table Haal
+"create table haal
 (
    ID                   int not null,
    Aeg                  datetime,
@@ -20,7 +20,7 @@ DB::query(
    primary key (ID)
 )");
 DB::query(
-"create table Haaletaja
+"create table haaletaja
 (
    ID                   int not null,
    Eesnimi              char(15),
@@ -30,7 +30,7 @@ DB::query(
    primary key (ID)
 )");
 DB::query(
-"create table Kandidaat
+"create table kandidaat
 (
    ID                   int not null,
    Number               int,
@@ -49,38 +49,38 @@ DB::query(
    primary key (ID)
 );");
 DB::query(
-"create table Partei
+"create table partei
 (
    ID                   int not null,
    Nimetus              char(50),
    primary key (ID)
 );");
 DB::query(
-"create table Valimisringkond
+"create table valimisringkond
 (
    ID                   int not null,
    Nimetus              char(50),
    primary key (ID)
 );");
 DB::query(
-"alter table Haal add constraint fk_Haal_2_Haaletaja foreign key (Haaletaja_ID)
-      references Haaletaja (ID) on delete restrict on update restrict;");
+"alter table haal add constraint fk_Haal_2_Haaletaja foreign key (Haaletaja_ID)
+      references haaletaja (ID) on delete restrict on update restrict;");
 DB::query(
-"alter table Haal add constraint fk_Haal_2_Kandidaat foreign key (Kandidaadi_ID)
-      references Kandidaat (ID) on delete restrict on update restrict;
+"alter table haal add constraint fk_Haal_2_Kandidaat foreign key (Kandidaadi_ID)
+      references kandidaat (ID) on delete restrict on update restrict;
 ");
 DB::query(
-"alter table Haaletaja add constraint fk_Haaletaja_2_Valimisringkond foreign key (Valimisringkonna_ID)
-      references Valimisringkond (ID) on delete restrict on update restrict;");
+"alter table haaletaja add constraint fk_Haaletaja_2_Valimisringkond foreign key (Valimisringkonna_ID)
+      references valimisringkond (ID) on delete restrict on update restrict;");
 DB::query(
-"alter table Kandidaat add constraint fk_Kandidaat_2_Haaletaja foreign key (Haaletaja_ID)
-      references Haaletaja (ID) on delete restrict on update restrict;");
+"alter table kandidaat add constraint fk_Kandidaat_2_Haaletaja foreign key (Haaletaja_ID)
+      references haaletaja (ID) on delete restrict on update restrict;");
 DB::query(
-"alter table Kandidaat add constraint fk_Kandidaat_2_Partei foreign key (Partei_ID)
-      references Partei (ID) on delete restrict on update restrict;");
+"alter table kandidaat add constraint fk_Kandidaat_2_Partei foreign key (Partei_ID)
+      references partei (ID) on delete restrict on update restrict;");
 DB::query(
-"alter table Kandidaat add constraint fk_Kandidaat_2_Valimisringkond foreign key (Valimisringkonna_ID)
-      references Valimisringkond (ID) on delete restrict on update restrict;");
+"alter table kandidaat add constraint fk_Kandidaat_2_Valimisringkond foreign key (Valimisringkonna_ID)
+      references valimisringkond (ID) on delete restrict on update restrict;");
 
 
 	}
@@ -93,15 +93,15 @@ DB::query(
 	public function down()
 	{
 DB::query(
-"drop table Haal;");
+"drop table haal;");
 DB::query(
-"drop table Kandidaat;");
+"drop table kandidaat;");
 DB::query(
-"drop table Haaletaja;");
+"drop table haaletaja;");
 DB::query(
-"drop table Partei;");
+"drop table partei;");
 DB::query(
-"drop table Valimisringkond;");
+"drop table valimisringkond;");
 	}
 
 }
