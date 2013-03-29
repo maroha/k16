@@ -3,6 +3,7 @@
 class Kandidaatid {
 
 	/**
+	Kandidaatid
 	 * Make changes to the database.
 	 *
 	 * @return void
