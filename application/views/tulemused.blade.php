@@ -66,7 +66,11 @@
 			<table class="sortable">
 				<thead>
 					<tr>
+						@if($current["type"] == "party")
 						<th>Partei</th>
+						@else
+						<th>Isik</th>
+						@endif
 						<th>Tulemus</th>
 					</tr>
 				</thead>
