@@ -8,13 +8,13 @@
 			<div class="form-row">
 				<label class="form-label" for="register-firstname">Eesnimi</label>
 				<div class="form-field">
-					<input type="text" size="30" name="firstname" id="register-firstname" />
+					{{ e(Auth::user()->eesnimi) }}
 				</div>
 			</div>
 			<div class="form-row">
 				<label class="form-label" for="register-lastname">Perekonnanimi</label>
 				<div class="form-field">
-					<input type="text" size="30" name="lastname" id="register-lastname" />
+					{{ e(Auth::user()->perekonnanimi) }}
 				</div>
 			</div>
 			<div class="form-row">
@@ -26,7 +26,7 @@
 			<div class="form-row">
 				<label class="form-label" for="register-idnumber">Isikukood</label>
 				<div class="form-field">
-					<input type="text" size="30" name="idnumber" id="register-idnumber" />
+					{{ e(Auth::user()->isikukood) }}
 					<p class="form-help">(Peidetud)</p>
 				</div>
 			</div>

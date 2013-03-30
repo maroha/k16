@@ -25,13 +25,14 @@ var K16 = {
 			});
 			if(Modernizr.history) {
 				$(window).on("popstate", function (event) {
-					console.log(event);
-					K16.common.navigateTo(document.location, true)
+					// console.log(event);
+					K16.common.navigateTo(document.location.href, true)
 				});
 			}
 		},
 		navigateTo: function (targetURL, popstate) {
 			// Some cache uniqueness just in case
+			var ajaxURL
 			if(targetURL.indexOf("?") > 0) {
 				ajaxURL = targetURL + "&a"
 			} else {
@@ -78,41 +79,19 @@ var K16 = {
 				if(searchForm.children.name.value) { // Must use children because name is a dom property
 					search.name = searchForm.children.name.value
 				}
-				if(searchForm.region.value != 0) {
+				if(searchForm.region.value != -1) {
 					search.region = searchForm.region.value
 				}
-				if(searchForm.party.value != 0) {
+				if(searchForm.party.value != -1) {
 					search.party = searchForm.party.value
-				}
-				// Milestone 3 only: Route to the right file
-				var ajaxroute;
-				// Name is ignored for now
-				if(search.region && search.party) {
-					ajaxroute = "/data/findCandidatesByPartyAndRegion.json"
-				} else if(search.region) {
-					ajaxroute = "/data/findCandidatesByRegion.json"
-				} else if(search.party) {
-					ajaxroute = "/data/findCandidatesByParty.json"
-				} else {
-					ajaxroute = "/data/findCandidates.json"
 				}
 				// console.log(search, ajaxroute);
 				$('#ajax-loader').show();
-				$.getJSON(ajaxroute, function (response) {
+				$.getJSON(K16.config.url+'/kandidaadid/otsi', search, function (response) {
 					$('#ajax-loader').hide();
-					// Add missing stuff
-					if(!response.candidates)
-						var response = {candidates: [response]}
-					for (var i = response.candidates.length - 1; i >= 0; i--) {
-						candidate = response.candidates[i]
-						if(!candidate.party)
-							candidate.party = {id: search.party, name: searchForm.party.options[searchForm.party.options.selectedIndex].text}
-						if(!candidate.region)
-							candidate.region = {id: search.region, name: searchForm.region.options[searchForm.region.options.selectedIndex].text}
-					};
 					// console.log(response);
 					// Render results
-					K16.candidates.drawSearchResults(response.candidates)
+					K16.candidates.drawSearchResults(response)
 				});
 				return false; // Don't submit it
 			});
@@ -224,13 +203,13 @@ var K16 = {
 		drawSearchResults: function (candidates) {
 			var tableBody = $("#candidate-list tbody");
 			tableBody.empty();
-			for (var i = candidates.length - 1; i >= 0; i--) {
+			for (var i = 0; i < candidates.length; i++) {
 				// 5ft circle of hell: Making dom elements by hand (FUTURE: Use a templating engine, eg. mustache)
 				var candidateRow = $("<tr>").data("id", candidates[i].id).click(K16.candidates.rowListener)
-				$("<td>").text(candidates[i].id).appendTo(candidateRow)
-				$("<td>").append($("<a>").attr({"href": K16.config.url+"/kandidaadid/info/"+candidates[i].id}).text(candidates[i].person.name)).appendTo(candidateRow)
-				$("<td>").text(candidates[i].region.name).appendTo(candidateRow)
-				$("<td>").text(candidates[i].party.name).appendTo(candidateRow)
+				$("<td>").text(candidates[i].number).appendTo(candidateRow)
+				$("<td>").append($("<a>").attr({"href": K16.config.url+"/kandidaadid/info/"+candidates[i].id}).text(candidates[i].eesnimi+' '+candidates[i].perekonnanimi)).appendTo(candidateRow)
+				$("<td>").text(candidates[i].valimisringkonna_nimi).appendTo(candidateRow)
+				$("<td>").text(candidates[i].partei_nimi).appendTo(candidateRow)
 				tableBody.append(candidateRow)
 			};
 		},
