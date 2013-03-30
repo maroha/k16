@@ -4,24 +4,58 @@
 		<h1>Tulemused</h1>
 	</header>
 	<section>
-		<form>
+		<form method="GET" action="{{ url("tulemused") }}" id="tulemused-filter">
 			<label for="filter-region">Piirkond:</label>
 			<select id="filter-region" name="region">
-				<option value="-1">Kõik valimisringkonnad</option>
+				@if($current["region"] == -1)
+					<option value="-1" selected>Kõik valimisringkonnad</option>
+				@else
+					<option value="-1">Kõik valimisringkonnad</option>
+				@endif
 				@foreach($ringkonnad as $ringkond)
-					<option value="{{ $ringkond->id }}">{{ e($ringkond->nimetus) }}</option>
+					@if($current["region"] == $ringkond->id)
+						<option value="{{ $ringkond->id }}" selected>{{ e($ringkond->nimetus) }}</option>
+					@else
+						<option value="{{ $ringkond->id }}">{{ e($ringkond->nimetus) }}</option>
+					@endif
 				@endforeach
 			</select>
 			<label for="filter-party">Partei:</label>
 			<select id="filter-party" name="party">
-				<option value="-1">Kõik parteid</option>
-				<option value="0">Üksikkandidaat</option>
+				@if($current["party"] == -1)
+					<option value="-1" selected>Kõik parteid</option>
+				@else
+					<option value="-1">Kõik parteid</option>
+				@endif
+				@if($current["party"] == 0)
+					<option value="0" selected>Üksikkandidaat</option>
+				@else
+					<option value="0">Üksikkandidaat</option>
+				@endif
 				@foreach($parteid as $partei)
-					<option value="{{ $partei->id }}">{{ e($partei->nimetus) }}</option>
+					@if($current["party"] == $partei->id)
+						<option value="{{ $partei->id }}" selected>{{ e($partei->nimetus) }}</option>
+					@else
+						<option value="{{ $partei->id }}">{{ e($partei->nimetus) }}</option>
+					@endif
 				@endforeach
 			</select>
-			<label><input type="radio" name="type" value="party" checked="checked" /> Partei</label>
-			<label><input type="radio" name="type" value="person" /> Isik</label>
+			<label>
+				@if($current["type"] == "party")
+					<input type="radio" name="type" value="party" checked="checked" />
+				@else
+					<input type="radio" name="type" value="party" />
+				@endif
+				 Partei
+			</label>
+			<label>
+				@if($current["type"] == "person")
+					<input type="radio" name="type" value="person" checked="checked" />
+				@else
+					<input type="radio" name="type" value="person" />
+				@endif
+				 Isik
+			</label>
 			<button id="submit" type="submit">Värskenda</button>
 		</form>
 		<div class="row-left">
@@ -41,8 +75,8 @@
 						<tr>
 							<th>{{ $result->nimi }}</th>
 							<td>
-								<div class="result-row" style="width: 10%;"></div>
-								<div class="result-text">{{ $result->votes }}</div>
+								<div class="result-row" style="width: {{ $result->percent }}%;"></div>
+								<div class="result-text">{{ "{$result->votes} ({$result->percent}%)" }}</div>
 							</td>
 						</tr>
 					@endforeach

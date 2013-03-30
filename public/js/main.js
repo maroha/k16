@@ -223,12 +223,11 @@ var K16 = {
 	results: {
 		init: function () {
 			// Results page
-			/* AJAX loader for submit button */
-			$('#submit').click(function() {
-				$('#ajax-loader').show();
-				setTimeout(function () {
-					$('#ajax-loader').hide()
-				}, 1000);
+			/* Searc filer thingy */
+			$('#tulemused-filter').submit(function() {
+				var arguments = $(this).serialize()
+				// And just hand it off
+				K16.common.navigateTo(K16.config.url+"/tulemused?"+arguments)
 				return false;
 			});
 			/* Table sorter */

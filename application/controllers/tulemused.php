@@ -14,38 +14,61 @@ class Tulemused_Controller extends Base_Controller {
 
 
 	public function get_index() {
-		/* SQL DUMP
-		 *
-		 * Kandidaadi kaupa:
-		 * SELECT k.ID, CONCAT(u.Eesnimi, " ", u.Perekonnanimi) AS Nimi, COUNT(h.ID) AS votes FROM kandidaat AS k LEFT JOIN haaletaja AS u ON k.Haaletaja_ID = u.ID LEFT JOIN haal AS h ON h.Kandidaadi_ID = k.id GROUP BY k.ID ORDER BY votes DESC
-		 *
-		 * Partei kaupa:
-		 * SELECT k.Partei_ID, p.Nimetus, COUNT(h.ID) AS votes FROM kandidaat AS k LEFT JOIN partei AS p ON k.Partei_ID = p.ID LEFT JOIN haal AS h ON h.Kandidaadi_ID = k.id GROUP BY k.Partei_ID ORDER BY votes DESC
-		 */
 		$selector = "";
 		$leftjoin = "";
 		$groupby = "";
+		$where = array();
+		$argumendid = array();
 
-		$type = "party";
-		// $type = "person";
-		if($type == "party") {
-			$selector = "k.Partei_ID as ID, p.Nimetus as Nimi, COUNT(h.ID) AS votes";
-			$leftjoin = "LEFT JOIN partei AS p ON k.Partei_ID = p.ID";
-			$groupby = "GROUP BY k.Partei_ID";
-		} else { // == "person" (by default)
+		$region = Input::get("region", -1);
+		$party = Input::get("party", -1);
+		$type = Input::get("type", "party");
+		// Filters
+		if($region > 0) {
+			$where[] = "k.Valimisringkonna_ID = ?";
+			$argumendid[] = $region;
+		}
+		if($party > -1) {
+			$where[] = "k.Partei_ID = ?";
+			$argumendid[] = $party;
+			// Force by person
+			$type = "person";
+		}
+		// Create query of awesome
+		if($type == "person") {
 			$selector = "k.ID, CONCAT(u.Eesnimi, \" \", u.Perekonnanimi) AS Nimi, COUNT(h.ID) AS votes";
 			$leftjoin = "LEFT JOIN haaletaja AS u ON k.Haaletaja_ID = u.ID";
 			$groupby = "GROUP BY k.ID";
+		} else { // == "party" (by default)
+			$selector = "k.Partei_ID as ID, p.Nimetus as Nimi, COUNT(h.ID) AS votes";
+			$leftjoin = "LEFT JOIN partei AS p ON k.Partei_ID = p.ID";
+			$groupby = "GROUP BY k.Partei_ID";
 		}
 
-		$sql = "SELECT {$selector} FROM kandidaat as k {$leftjoin} LEFT JOIN haal AS h ON h.Kandidaadi_ID = k.ID {$groupby} ORDER BY votes DESC";
-		$results = DB::query($sql);
+		if(count($where) > 0) {
+			$where = " WHERE ".implode(" AND ", $where);
+		} else {
+			$where = "";
+		}
+		$sql = "SELECT {$selector} FROM kandidaat as k {$leftjoin} LEFT JOIN haal AS h ON h.Kandidaadi_ID = k.ID{$where} {$groupby} ORDER BY votes DESC";
+		$results = DB::query($sql, $argumendid);
+
+		// Calculate percentages
+		$array_sum = function ($value, $result) {
+			$value += $result->votes; return $value;
+		};
+		$total = array_reduce($results, $array_sum) ?: 1; // No division by 0 here good sir!
+		$add_percentage = function (&$element, $key) use ($total) {
+			$element->percent = $element->votes / $total * 100;
+		};
+		array_walk($results, $add_percentage);
+
 
 		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 		$this->layout->content = View::make("tulemused", array(
 			"parteid" => $parteid,
 			"ringkonnad" => $ringkonnad,
-			"results" => $results
+			"results" => $results, "current" => array("region" => $region, "party" => $party, "type" => $type)
 		));
 		$this->layout->javascript = array("results");
 		$this->layout->menu_item = "tulemused";
