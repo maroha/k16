@@ -51,7 +51,39 @@ EOL;
 		$this->layout->javascript = array("candidates", "view");
 		$this->layout->menu_item = "kandidaadid";
 	}
-
+	
+	public function get_otsi()
+	{
+		$sql = <<<EOL
+SELECT k.ID, k.Number, h.Eesnimi, h.Perekonnanimi,
+p.Nimetus AS Partei_Nimi,
+r.Nimetus AS Valimisringkonna_nimi
+FROM `kandidaat` AS k
+LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
+LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
+LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
+EOL;
+		$argumendid = array();
+		$region = Input::get('region');
+		if(isset($region)) {
+			$sql .= " WHERE k.Valimisringkonna_ID = ?";
+			$argumendid[] = $region;
+		}
+		$party = Input::get('party');
+		if(isset($party)) {
+			if(count($argumendid)==0) {
+				$sql .= " WHERE k.Partei_ID = ?";
+			} else {
+				$sql .= " AND k.Partei_ID = ?";
+			}
+			$argumendid[] = $party;
+		}
+		//dd($sql);
+		$kandidaadid = DB::query($sql, $argumendid);
+		//dd($kandidaadid);
+		return Response::json($kandidaadid);
+	}
+	
 	public function get_registeeri()
 	{
 		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
