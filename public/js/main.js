@@ -104,32 +104,11 @@ var K16 = {
 			// Candidate Register page
 			$("#register-form").submit(function () {
 				$(".error", document["register-form"]).remove()
-				var firstname_len = document["register-form"].firstname.value.length;
 				var korras = true;
-				if (document["register-form"].firstname.value == "" || firstname_len > 15 || firstname_len < 3) {
-					//	 alert( "Sisestage oma nimi! (3 kuni 15 tahti)" );
-					$(document["register-form"].firstname).after("<div class=\"error\">Sisestage oma nimi! (3 kuni 15 tahti)</div>")
-					korras = false
-				}
-
-				var lastname_len = document["register-form"].lastname.value.length;
-				if (document["register-form"].lastname.value == "" || lastname_len > 20 || lastname_len < 3) {
-					//	 alert( "Sisestage oma perenimi! (3 kuni 15 marki)" );
-					$(document["register-form"].lastname).after("<div class=\"error\">Sisestage oma perenimi! (3 kuni 15 tahti)</div>")
-					korras = false;
-				}
 
 				if (document["register-form"].birthplace.value == "") {
 					//	 alert( "Sisestage oma sunnikoht!" );
 					$(document["register-form"].birthplace).after("<div class=\"error\">Sisestage oma sunnikoht!</div>")
-					korras = false;
-				}
-
-				if (document["register-form"].idnumber.value == "" ||
-					isNaN(document["register-form"].idnumber.value) ||
-					document["register-form"].idnumber.value.length != 11) {
-					//	 alert( "Sisestage oma isikukoodi 11 numbri" );
-					$(document["register-form"].idnumber).after("<div class=\"error\">Sisestage oma isikukoodi 11 numbri</div>")
 					korras = false;
 				}
 
