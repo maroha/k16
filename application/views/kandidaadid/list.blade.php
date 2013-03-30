@@ -12,7 +12,7 @@
 		<form id="search-form" action="">
 			<input type="text" name="name" disabled title="Väljalülitatud kuna vajab serveri-poolset otsingut" placeholder="Sisesta kandidaadi nimi">
 			<select name="region" id="sorting">
-				<option value="0">Kõik valimisringkonnad</option>
+				<option value="-1">Kõik valimisringkonnad</option>
 				@foreach($ringkonnad as $ringkond)
 					<option value="{{ $ringkond->id }}">{{ e($ringkond->nimetus) }}</option>
 				@endforeach

@@ -7,15 +7,18 @@
 		<form>
 			<label for="filter-region">Piirkond:</label>
 			<select id="filter-region" name="region">
-				<option value="0">Kogu Eesti</option>
-				<option value="1">Valimisringkond 1</option>
-				<option value="2">Valimisringkond 2</option>
+				<option value="-1">Kõik valimisringkonnad</option>
+				@foreach($ringkonnad as $ringkond)
+					<option value="{{ $ringkond->id }}">{{ e($ringkond->nimetus) }}</option>
+				@endforeach
 			</select>
 			<label for="filter-party">Partei:</label>
 			<select id="filter-party" name="party">
-				<option value="0">Kõik Parteid</option>
-				<option value="1">Partei 1</option>
-				<option value="2">Partei 2</option>
+				<option value="-1">Kõik parteid</option>
+				<option value="0">Üksikkandidaat</option>
+				@foreach($parteid as $partei)
+					<option value="{{ $partei->id }}">{{ e($partei->nimetus) }}</option>
+				@endforeach
 			</select>
 			<label><input type="radio" name="type" value="party" checked="checked" /> Partei</label>
 			<label><input type="radio" name="type" value="person" /> Isik</label>
