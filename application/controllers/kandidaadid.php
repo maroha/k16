@@ -70,7 +70,15 @@ WHERE k.ID = ?
 LIMIT 1
 EOL;
 		$kandidaat = DB::query($sql, array($kandidaat_id));
-		$this->layout->content = View::make("kandidaadid.info", array("kandidaat" => $kandidaat[0]));
+		// Check if user has already voted
+		$juba = false;
+		if(Auth::check()) {
+			$votecheck = DB::query("SELECT COUNT(*) AS voted FROM `haal` WHERE `Haaletaja_ID` = ?", array(Auth::user()->id));
+			if($votecheck[0]->voted > 0) {
+				$juba = true;
+			}
+		}
+		$this->layout->content = View::make("kandidaadid.info", array("kandidaat" => $kandidaat[0], "juba_haaletanud" => $juba));
 		$this->layout->javascript = array("candidates", "view");
 		$this->layout->menu_item = "kandidaadid";
 	}
@@ -147,6 +155,19 @@ EOL;
 		$kandidaadid = DB::query($sql, $argumendid);
 		//dd($kandidaadid);
 		return Response::json($kandidaadid);
+	}
+	public function post_haaleta() {
+		$kandidaat = Input::get("kandidaat");
+		// Kontrolli kandidaati
+		$kontroll = DB::query("SELECT COUNT(*) as count FROM `kandidaat` WHERE `ID` = ?", array($kandidaat));
+		if($kontroll[0]->count == 0) {
+			return Response::error('404');
+		}
+		// Kontrolli duplikaati.... vüi kohe lihtsalt kustuta ära
+		DB::query("DELETE FROM `haal` WHERE (`Haaletaja_ID` = ?)", array(Auth::user()->id));
+		// Haaleta
+		DB::query("INSERT INTO `haal` (`Aeg`, `Haaletaja_ID`, `Kandidaadi_ID`) VALUES (?, ?, ?);", array(date('Y-m-d H:i:s'), Auth::user()->id, $kandidaat));
+		return Redirect::home();
 	}
 
 	public function get_registeeri()
