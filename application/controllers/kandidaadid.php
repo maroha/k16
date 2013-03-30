@@ -28,6 +28,7 @@ FROM `kandidaat` AS k
 LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
 LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
 LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
+ORDER BY k.Number ASC
 EOL;
 		$kandidaadid = DB::query($sql);
 		$this->layout->content = View::make("kandidaadid.list", array(
@@ -64,8 +65,9 @@ list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 SELECT k.ID, k.Number, h.Eesnimi, h.Perekonnanimi, k.Sunnikoht, k.Haridus, k.Akadeemiline_kraad, k.Elukutse, k.Tookoht, p.Nimetus as partei_nimetus, k.Email, k.Telefoninumber
 FROM  `kandidaat` AS k
 LEFT JOIN  `haaletaja` AS h ON k.Haaletaja_ID = h.ID
-LEFT JOIN  `partei` AS p ON k.Partei_ID = p.ID 
+LEFT JOIN  `partei` AS p ON k.Partei_ID = p.ID
 WHERE k.ID = ?
+LIMIT 1
 EOL;
 		$kandidaat = DB::query($sql, array($kandidaat_id));
 		$this->layout->content = View::make("kandidaadid.info", array("kandidaat" => $kandidaat[0]));
@@ -83,6 +85,7 @@ FROM `kandidaat` AS k
 LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
 LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
 LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
+ORDER BY k.Number ASC
 EOL;
 		$argumendid = array();
 		$name = Input::get('name');
