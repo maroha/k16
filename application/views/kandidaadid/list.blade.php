@@ -9,8 +9,8 @@
 		@endif
 	</header>
 	<section>
-		<form id="search-form" action="">
-			<input type="text" name="name" title="Väljalülitatud kuna vajab serveri-poolset otsingut" placeholder="Sisesta kandidaadi nimi">
+		<form id="search-form" action="{{ url("kandidaadid") }}">
+			<input type="text" name="name" placeholder="Sisesta kandidaadi nimi" id="search-name">
 			<select name="region" id="sorting">
 				<option value="-1">Kõik valimisringkonnad</option>
 				@foreach($ringkonnad as $ringkond)

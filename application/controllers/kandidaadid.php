@@ -74,6 +74,22 @@ EOL;
 		$this->layout->javascript = array("candidates", "view");
 		$this->layout->menu_item = "kandidaadid";
 	}
+	public function get_autocomplete() {
+		$otsi = Input::get("q");
+		$sql = <<<EOL
+SELECT k.ID, h.Eesnimi, h.Perekonnanimi
+FROM `kandidaat` AS k
+LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
+WHERE h.Eesnimi LIKE ?
+ORDER BY h.Eesnimi ASC
+EOL;
+		$results = DB::query($sql, array($otsi."%"));
+		$output = "";
+		foreach ($results as $person) {
+			$output .= "{$person->eesnimi} {$person->perekonnanimi}\n";
+		}
+		return Response::make($output);
+	}
 
 	public function get_otsi()
 	{
@@ -85,14 +101,28 @@ FROM `kandidaat` AS k
 LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
 LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
 LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
-ORDER BY k.Number ASC
 EOL;
 		$argumendid = array();
 		$name = Input::get('name');
 		if(isset($name)) {
-			$sql .= " WHERE h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?";
-			$argumendid[] = $name."%";
-			$argumendid[] = $name."%";
+			$nime_osad = explode(" ", $name);
+			foreach ($nime_osad as $osa) {
+				if(count($argumendid) == 0) {
+					// Ainult eesnimi
+					$sql .= " WHERE h.Eesnimi LIKE ?";
+					$argumendid[] = $osa."%";
+				} elseif (count($argumendid) == 1) {
+					// Teine osa eesnimest või esimene osa perekonnanimest
+					$sql .= " AND (h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?)";
+					$argumendid[] = "%".$osa."%";
+					$argumendid[] = $osa."%";
+				} else {
+					// Teine osa eesnimest või perekonnanimest
+					$sql .= " AND (h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?)";
+					$argumendid[] = "%".$osa."%";
+					$argumendid[] = "%".$osa."%";
+				}
+			}
 		}
 		$region = Input::get('region');
 		if(isset($region)) {
@@ -112,7 +142,8 @@ EOL;
 			}
 			$argumendid[] = $party;
 		}
-		//dd($sql);
+		$sql .= " ORDER BY k.Number ASC";
+		//dd(array($sql, $argumendid));
 		$kandidaadid = DB::query($sql, $argumendid);
 		//dd($kandidaadid);
 		return Response::json($kandidaadid);

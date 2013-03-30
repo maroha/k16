@@ -95,6 +95,8 @@ var K16 = {
 				});
 				return false; // Don't submit it
 			});
+			// Superawesome suggestions!
+			$("#search-name").autocomplete(K16.config.url+"/kandidaadid/autocomplete")
 			// Row click listener
 			$("#candidate-list tbody tr").click(K16.candidates.rowListener)
 		},
