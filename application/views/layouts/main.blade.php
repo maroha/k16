@@ -26,7 +26,7 @@
 				<h1 class="title"><a href="{{ url("/") }}">e-Valimised</a></h1>
 				<div class="user">
 					@if(Auth::check())
-						Tere Isik Isikuline! &ndash; <a href="{{ url("logout") }}">logi välja &rsaquo;</a>
+						Tere {{ Auth::user()->eesnimi }} {{ Auth::user()->perekonnanimi }}! &ndash; <a href="{{ url("logout") }}">logi välja &rsaquo;</a>
 					@else
 						Pole sisse loginud &ndash; <a href="{{ url("login") }}">logi sisse &rsaquo;</a>
 					@endif

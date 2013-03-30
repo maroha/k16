@@ -16,7 +16,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'faker',
+	'driver' => 'fluent',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -68,6 +68,6 @@ return array(
 	|
 	*/
 
-	'table' => 'users',
+	'table' => 'haaletaja',
 
 );
