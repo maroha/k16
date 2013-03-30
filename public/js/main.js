@@ -117,12 +117,12 @@ var K16 = {
 					$(document["register-form"].address).after("<div class=\"error\">Sisestage oma elukoha aadress!</div>")
 					korras = false;
 				}
-				if (document["register-form"].party.value == "0") {
+				if (document["register-form"].party.value == -1) {
 					//	 alert( "Te pole valinud Erakonna" );
 					$(document["register-form"].party).after("<div class=\"error\">Valige palun Erakonna!</div>")
 					korras = false;
 				}
-				if (document["register-form"].piirkond.value == "0") {
+				if (document["register-form"].piirkond.value == -1) {
 					//	 alert( "Te pole valinud Piirkonna" );
 					$(document["register-form"].piirkond).after("<div class=\"error\">Valige palun Piirkonna!</div>")
 					korras = false;
