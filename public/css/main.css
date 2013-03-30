@@ -488,9 +488,12 @@ nav a:hover {
 		float: right;
 		width: 75%;
 	}
+	.form-horizontal .form-row {
+		line-height: 32px;
+	}
 	.form-horizontal .form-label {
 		float: left;
-		padding-top: 3px;
+		line-height: 32px;
 		text-align: right;
 		width: 200px;
 	}
