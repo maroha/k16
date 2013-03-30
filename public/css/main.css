@@ -104,6 +104,9 @@ table tbody tr:hover {
 table tbody th {
 	background-color: rgba(255, 255, 255, 0.05);
 }
+table tbody th:first-child {
+	width: 40%;
+}
 table th, table td {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 	border-right: 1px solid rgba(255, 255, 255, 0.3);
