@@ -124,6 +124,25 @@ EOL;
 	}
 	public function post_registeeri()
 	{
+		$sql = <<<EOT
+INSERT INTO `kandidaat` (`Partei_ID`, `Valimisringkonna_ID`, `Sunnikoht`, `Elukohaaadress`, `Haridus`, `Akadeemiline_kraad`, `Elukutse`, `Tookoht`, `Telefoninumber`, `Email`, `Pilt`, `Haaletaja_ID`) VALUES
+		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+EOT;
+		$sunnikoht = Input::get("birthplace");
+		$elukohaaadress = Input::get("address");
+		$partei_id = Input::get("party");
+		$valimisringkonna_id = Input::get("piirkond");
+		$haridus = Input::get("haridus");
+		
+		$akadeemiline_kraad = Input::get("academicdegree");
+		$elukutse = Input::get("occupation");
+		$tookoht = Input::get("work");
+		$telefoninumber = Input::get("phone");
+		$email = Input::get("email");
+		$pilt = Input::get("picture");
+		
+		$vaartused = array($partei_id, $valimisringkonna_id, $sunnikoht, $elukohaaadress, $haridus, $akadeemiline_kraad, $elukutse, $tookoht, $telefoninumber, $email, $pilt, Auth::user()->id);
+		DB::query($sql, $vaartused);
 		//TODO: Everything
 		return Redirect::to("kandidaadid/registeeri");
 	}
