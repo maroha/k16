@@ -25,13 +25,14 @@ var K16 = {
 			});
 			if(Modernizr.history) {
 				$(window).on("popstate", function (event) {
-					console.log(event);
-					K16.common.navigateTo(document.location, true)
+					// console.log(event);
+					K16.common.navigateTo(document.location.href, true)
 				});
 			}
 		},
 		navigateTo: function (targetURL, popstate) {
 			// Some cache uniqueness just in case
+			var ajaxURL
 			if(targetURL.indexOf("?") > 0) {
 				ajaxURL = targetURL + "&a"
 			} else {
