@@ -1,9 +1,8 @@
 <?php
 
-class Kandidaatid {
+class Kandidaat {
 
 	/**
-	Kandidaatid
 	 * Make changes to the database.
 	 *
 	 * @return void
