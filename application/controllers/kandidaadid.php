@@ -13,13 +13,13 @@ class Kandidaadid_Controller extends Base_Controller {
 
 	public function parteid_and_ringkonnad()
 	{
-		$ringkonnad = DB::query("SELECT * FROM `valimisringkond`");
 		$parteid = DB::query("SELECT * FROM `partei`");
-		return array($ringkonnad, $parteid);
+		$ringkonnad = DB::query("SELECT * FROM `valimisringkond`");
+		return array($parteid, $ringkonnad);
 	}
 
 	public function get_index() {
-		list($ringkonnad, $parteid) = $this->parteid_and_ringkonnad();
+		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 		$this->layout->content = View::make("kandidaadid.list", array("ringkonnad" => $ringkonnad, "parteid" => $parteid));
 		$this->layout->javascript = array("candidates", "list");
 		$this->layout->menu_item = "kandidaadid";
@@ -27,7 +27,7 @@ class Kandidaadid_Controller extends Base_Controller {
 
 	public function get_haaleta()
 	{
-		list($ringkonnad, $parteid) = $this->parteid_and_ringkonnad();
+		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 		$this->layout->content = View::make("kandidaadid.list_haaleta", array("ringkonnad" => $ringkonnad, "parteid" => $parteid));
 		$this->layout->javascript = array("candidates", "vote");
 		$this->layout->menu_item = "haaleta";
@@ -42,7 +42,7 @@ class Kandidaadid_Controller extends Base_Controller {
 
 	public function get_registeeri()
 	{
-		list($ringkonnad, $parteid) = $this->parteid_and_ringkonnad();
+		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 		$this->layout->content = View::make("kandidaadid.registeeri", array("ringkonnad" => $ringkonnad, "parteid" => $parteid));
 		$this->layout->javascript = array("candidates", "register");
 		$this->layout->menu_item = "kandidaadid";
