@@ -10,7 +10,7 @@
 	</header>
 	<section>
 		<form id="search-form" action="">
-			<input type="text" name="name" disabled title="Väljalülitatud kuna vajab serveri-poolset otsingut" placeholder="Sisesta kandidaadi nimi">
+			<input type="text" name="name" title="Väljalülitatud kuna vajab serveri-poolset otsingut" placeholder="Sisesta kandidaadi nimi">
 			<select name="region" id="sorting">
 				<option value="-1">Kõik valimisringkonnad</option>
 				@foreach($ringkonnad as $ringkond)

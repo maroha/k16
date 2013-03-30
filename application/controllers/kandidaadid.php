@@ -63,7 +63,7 @@ EOL;
 		$this->layout->javascript = array("candidates", "view");
 		$this->layout->menu_item = "kandidaadid";
 	}
-	
+
 	public function get_otsi()
 	{
 		$sql = <<<EOL
@@ -76,9 +76,19 @@ LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
 LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
 EOL;
 		$argumendid = array();
+		$name = Input::get('name');
+		if(isset($name)) {
+			$sql .= " WHERE h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?";
+			$argumendid[] = $name."%";
+			$argumendid[] = $name."%";
+		}
 		$region = Input::get('region');
 		if(isset($region)) {
-			$sql .= " WHERE k.Valimisringkonna_ID = ?";
+			if(count($argumendid)==0) {
+				$sql .= " WHERE k.Valimisringkonna_ID = ?";
+			} else {
+				$sql .= " AND k.Valimisringkonna_ID = ?";
+			}
 			$argumendid[] = $region;
 		}
 		$party = Input::get('party');
@@ -95,7 +105,7 @@ EOL;
 		//dd($kandidaadid);
 		return Response::json($kandidaadid);
 	}
-	
+
 	public function get_registeeri()
 	{
 		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
