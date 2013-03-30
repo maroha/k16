@@ -202,7 +202,7 @@ var K16 = {
 		drawSearchResults: function (candidates) {
 			var tableBody = $("#candidate-list tbody");
 			tableBody.empty();
-			for (var i = 0; i <= candidates.length; i++) {
+			for (var i = 0; i < candidates.length; i++) {
 				// 5ft circle of hell: Making dom elements by hand (FUTURE: Use a templating engine, eg. mustache)
 				var candidateRow = $("<tr>").data("id", candidates[i].id).click(K16.candidates.rowListener)
 				$("<td>").text(candidates[i].number).appendTo(candidateRow)
