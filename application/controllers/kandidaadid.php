@@ -28,6 +28,7 @@ FROM `kandidaat` AS k
 LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
 LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
 LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
+ORDER BY k.Number ASC
 EOL;
 		$kandidaadid = DB::query($sql);
 		$this->layout->content = View::make("kandidaadid.list", array(
@@ -64,13 +65,38 @@ list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 SELECT k.ID, k.Number, h.Eesnimi, h.Perekonnanimi, k.Sunnikoht, k.Haridus, k.Akadeemiline_kraad, k.Elukutse, k.Tookoht, p.Nimetus as partei_nimetus, k.Email, k.Telefoninumber
 FROM  `kandidaat` AS k
 LEFT JOIN  `haaletaja` AS h ON k.Haaletaja_ID = h.ID
-LEFT JOIN  `partei` AS p ON k.Partei_ID = p.ID 
+LEFT JOIN  `partei` AS p ON k.Partei_ID = p.ID
 WHERE k.ID = ?
+LIMIT 1
 EOL;
 		$kandidaat = DB::query($sql, array($kandidaat_id));
-		$this->layout->content = View::make("kandidaadid.info", array("kandidaat" => $kandidaat[0]));
+		// Check if user has already voted
+		$juba = false;
+		if(Auth::check()) {
+			$votecheck = DB::query("SELECT COUNT(*) AS voted FROM `haal` WHERE `Haaletaja_ID` = ?", array(Auth::user()->id));
+			if($votecheck[0]->voted > 0) {
+				$juba = true;
+			}
+		}
+		$this->layout->content = View::make("kandidaadid.info", array("kandidaat" => $kandidaat[0], "juba_haaletanud" => $juba));
 		$this->layout->javascript = array("candidates", "view");
 		$this->layout->menu_item = "kandidaadid";
+	}
+	public function get_autocomplete() {
+		$otsi = Input::get("q");
+		$sql = <<<EOL
+SELECT k.ID, h.Eesnimi, h.Perekonnanimi
+FROM `kandidaat` AS k
+LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
+WHERE h.Eesnimi LIKE ?
+ORDER BY h.Eesnimi ASC
+EOL;
+		$results = DB::query($sql, array($otsi."%"));
+		$output = "";
+		foreach ($results as $person) {
+			$output .= "{$person->eesnimi} {$person->perekonnanimi}\n";
+		}
+		return Response::make($output);
 	}
 
 	public function get_otsi()
@@ -87,9 +113,24 @@ EOL;
 		$argumendid = array();
 		$name = Input::get('name');
 		if(isset($name)) {
-			$sql .= " WHERE h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?";
-			$argumendid[] = $name."%";
-			$argumendid[] = $name."%";
+			$nime_osad = explode(" ", $name);
+			foreach ($nime_osad as $osa) {
+				if(count($argumendid) == 0) {
+					// Ainult eesnimi
+					$sql .= " WHERE h.Eesnimi LIKE ?";
+					$argumendid[] = $osa."%";
+				} elseif (count($argumendid) == 1) {
+					// Teine osa eesnimest või esimene osa perekonnanimest
+					$sql .= " AND (h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?)";
+					$argumendid[] = "%".$osa."%";
+					$argumendid[] = $osa."%";
+				} else {
+					// Teine osa eesnimest või perekonnanimest
+					$sql .= " AND (h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?)";
+					$argumendid[] = "%".$osa."%";
+					$argumendid[] = "%".$osa."%";
+				}
+			}
 		}
 		$region = Input::get('region');
 		if(isset($region)) {
@@ -109,10 +150,24 @@ EOL;
 			}
 			$argumendid[] = $party;
 		}
-		//dd($sql);
+		$sql .= " ORDER BY k.Number ASC";
+		//dd(array($sql, $argumendid));
 		$kandidaadid = DB::query($sql, $argumendid);
 		//dd($kandidaadid);
 		return Response::json($kandidaadid);
+	}
+	public function post_haaleta() {
+		$kandidaat = Input::get("kandidaat");
+		// Kontrolli kandidaati
+		$kontroll = DB::query("SELECT COUNT(*) as count FROM `kandidaat` WHERE `ID` = ?", array($kandidaat));
+		if($kontroll[0]->count == 0) {
+			return Response::error('404');
+		}
+		// Kontrolli duplikaati.... vüi kohe lihtsalt kustuta ära
+		DB::query("DELETE FROM `haal` WHERE (`Haaletaja_ID` = ?)", array(Auth::user()->id));
+		// Haaleta
+		DB::query("INSERT INTO `haal` (`Aeg`, `Haaletaja_ID`, `Kandidaadi_ID`) VALUES (?, ?, ?);", array(date('Y-m-d H:i:s'), Auth::user()->id, $kandidaat));
+		return Redirect::home();
 	}
 
 	public function get_registeeri()

@@ -59,7 +59,7 @@ class Tulemused_Controller extends Base_Controller {
 		};
 		$total = array_reduce($results, $array_sum) ?: 1; // No division by 0 here good sir!
 		$add_percentage = function (&$element, $key) use ($total) {
-			$element->percent = $element->votes / $total * 100;
+			$element->percent = round($element->votes / $total * 100, 2);
 		};
 		array_walk($results, $add_percentage);
 
