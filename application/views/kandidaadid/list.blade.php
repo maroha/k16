@@ -36,118 +36,16 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>1234567855</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567855") }}">Janaida Jalutova</a>
-					</td>
-					<td>Tartumaa</td>
-					<td>Eesti Reformierakond</td>
-				</tr>
-				<tr>
-					<td>1234567894</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567894") }}">Ildegaard Ilumeel</a>
-					</td>
-					<td>Tartumaa</td>
-					<td>Sotsiaaldemokraatlik erakond</td>
-				</tr>
-				<tr>
-					<td>1234567893</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567893") }}">Harald Hamster</a>
-					</td>
-					<td>Tartumaa</td>
-					<td>Isamaa- ja Respublica Liit</td>
-				</tr>
-				<tr>
-					<td>1234567892</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567892") }}">Gerhard Gätegõverdus</a>
-					</td>
-					<td>Tartumaa</td>
-					<td>Sotsiaaldemokraatlik erakond</td>
-				</tr>
-				<tr>
-					<td>1234567891</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567891") }}">Ferdinand Fuksia</a>
-					</td>
-					<td>Tartumaa</td>
-					<td>Eesti Keskerakond</td>
-				</tr>
-				<tr>
-					<td>1234567890</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567890") }}">Eduard Ekskavaator</a>
-					</td>
-					<td>Tartumaa</td>
-					<td>Eesti Reformierakond</td>
-				</tr>
-				<tr>
-					<td>1234567857</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567857") }}">Leila Lagerfeld</a>
-					</td>
-					<td>Põlvamaa</td>
-					<td>Eesti Keskerakond</td>
-				</tr>
-				<tr>
-					<td>1234567856</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567856") }}">Kõikme Kannatameära</a>
-					</td>
-					<td>Põlvamaa</td>
-					<td>Sotsiaaldemokraatlik erakond</td>
-				</tr>
-				<tr>
-					<td>1234567855</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567855") }}">Janaida Jalutova</a>
-					</td>
-					<td>Põlvamaa</td>
-					<td>Isamaa- ja Respublica Liit</td>
-				</tr>
-				<tr>
-					<td>1234567894</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567894") }}">Ildegaard Ilumeel</a>
-					</td>
-					<td>Põlvamaa</td>
-					<td>Eesti Reformierakond</td>
-				</tr>
-				<tr>
-					<td>1234567893</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567893") }}">Harald Hamster</a>
-					</td>
-					<td>Jõgevamaa</td>
-					<td>Isamaa- ja Respublica Liit</td>
-				</tr>
-				<tr>
-					<td>1234567892</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567892") }}">Gerhard Gätegõverdus</a>
-					</td>
-					<td>Ida-Virumaa</td>
-					<td>Sotsiaaldemokraatlik erakond</td>
-				</tr>
-				<tr>
-					<td>1234567891</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567891") }}">Ferdinand Fuksia</a>
-					</td>
-					<td>Läänemaa</td>
-					<td>Eesti Keskerakond</td>
-				</tr>
-				<tr>
-					<td>1234567890</td>
-					<td>
-						<a href="{{ url("kandidaadid/info/1234567890") }}">Eduard Ekskavaator</a>
-					</td>
-					<td>Harjumaa</td>
-					<td>Eesti Reformierakond</td>
-				</tr>
+				@foreach($kandidaadid as $kandidaat)
+					<tr>
+						<td>{{ $kandidaat->number }}</td>
+						<td>
+							<a href="{{ url("kandidaadid/info/".$kandidaat->id) }}">{{ $kandidaat->eesnimi }} {{ $kandidaat->perekonnanimi }}</a>
+						</td>
+						<td>{{ $kandidaat->valimisringkonna_nimi }}</td>
+						<td>{{ $kandidaat->partei_nimi }}</td>
+					</tr>
+				@endforeach
 			</tbody>
 		</table>
 	</section>

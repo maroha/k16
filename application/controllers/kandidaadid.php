@@ -20,7 +20,19 @@ class Kandidaadid_Controller extends Base_Controller {
 
 	public function get_index() {
 		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
-		$this->layout->content = View::make("kandidaadid.list", array("ringkonnad" => $ringkonnad, "parteid" => $parteid));
+		$sql = <<<EOL
+SELECT k.ID, k.Number, h.Eesnimi, h.Perekonnanimi,
+p.Nimetus AS Partei_Nimi,
+r.Nimetus AS Valimisringkonna_nimi
+FROM `kandidaat` AS k
+LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
+LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
+LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
+EOL;
+		$kandidaadid = DB::query($sql);
+		$this->layout->content = View::make("kandidaadid.list", array(
+			"ringkonnad" => $ringkonnad, "parteid" => $parteid, "kandidaadid" => $kandidaadid
+		));
 		$this->layout->javascript = array("candidates", "list");
 		$this->layout->menu_item = "kandidaadid";
 	}
