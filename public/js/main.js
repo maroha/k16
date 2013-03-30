@@ -84,18 +84,6 @@ var K16 = {
 				if(searchForm.party.value != -1) {
 					search.party = searchForm.party.value
 				}
-				// Milestone 3 only: Route to the right file
-				var ajaxroute;
-				// Name is ignored for now
-				if(search.region && search.party) {
-					ajaxroute = "/data/findCandidatesByPartyAndRegion.json"
-				} else if(search.region) {
-					ajaxroute = "/data/findCandidatesByRegion.json"
-				} else if(search.party) {
-					ajaxroute = "/data/findCandidatesByParty.json"
-				} else {
-					ajaxroute = "/data/findCandidates.json"
-				}
 				// console.log(search, ajaxroute);
 				$('#ajax-loader').show();
 				$.getJSON(K16.config.url+'/kandidaadid/otsi', search, function (response) {
@@ -214,7 +202,7 @@ var K16 = {
 		drawSearchResults: function (candidates) {
 			var tableBody = $("#candidate-list tbody");
 			tableBody.empty();
-			for (var i = candidates.length - 1; i >= 0; i--) {
+			for (var i = 0; i <= candidates.length; i++) {
 				// 5ft circle of hell: Making dom elements by hand (FUTURE: Use a templating engine, eg. mustache)
 				var candidateRow = $("<tr>").data("id", candidates[i].id).click(K16.candidates.rowListener)
 				$("<td>").text(candidates[i].number).appendTo(candidateRow)
