@@ -364,6 +364,12 @@ nav a:hover {
 .main {
 	padding: 30px 0;
 }
+.alert {
+	font-weight: bold;
+	background: rgba(255, 255, 255, 0.3);
+	padding: 5px 20px;
+	text-align: center;
+}
 
 .main article h1 {
 	font-size: 2em;

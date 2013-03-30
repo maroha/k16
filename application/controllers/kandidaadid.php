@@ -166,7 +166,12 @@ EOL;
 		// Kontrolli duplikaati.... vüi kohe lihtsalt kustuta ära
 		DB::query("DELETE FROM `haal` WHERE (`Haaletaja_ID` = ?)", array(Auth::user()->id));
 		// Haaleta
-		DB::query("INSERT INTO `haal` (`Aeg`, `Haaletaja_ID`, `Kandidaadi_ID`) VALUES (?, ?, ?);", array(date('Y-m-d H:i:s'), Auth::user()->id, $kandidaat));
+		$success = DB::query("INSERT INTO `haal` (`Aeg`, `Haaletaja_ID`, `Kandidaadi_ID`) VALUES (?, ?, ?);", array(date('Y-m-d H:i:s'), Auth::user()->id, $kandidaat));
+		if($success) {
+			Session::flash("message", "Teie hääl on salvestatud!");
+		} else {
+			Session::flash("message", "Hääle salvestamisel tekkis viga! Palun proovige hiljem uuesti :(");
+		}
 		return Redirect::home();
 	}
 

@@ -42,6 +42,9 @@
 		</div>
 		<div class="main-container">
 			<div id="content" class="main wrapper clearfix">
+				@if(Session::has("message"))
+					<div class="alert">{{ Session::get("message") }}</div>
+				@endif
 				{{ $content }}
 			</div> <!-- #main -->
 		</div> <!-- #main-container -->
