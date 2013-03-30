@@ -37,41 +37,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th>Partei A</th>
-						<td>
-							<div class="result-row" style="width: 50%;"></div>
-							<div class="result-text">500,000 (25%)</div>
-						</td>
-					</tr>
-					<tr>
-						<th>Partei B</th>
-						<td>
-							<div class="result-row" style="width: 40%;"></div>
-							<div class="result-text">400,000 (20%)</div>
-						</td>
-					</tr>
-					<tr>
-						<th>Partei C</th>
-						<td>
-							<div class="result-row" style="width: 30%;"></div>
-							<div class="result-text">300,000 (15%)</div>
-						</td>
-					</tr>
-					<tr>
-						<th>Partei D</th>
-						<td>
-							<div class="result-row" style="width: 20%;"></div>
-							<div class="result-text">200,000 (10%)</div>
-						</td>
-					</tr>
-					<tr>
-						<th>Partei E</th>
-						<td>
-							<div class="result-row" style="width: 10%;"></div>
-							<div class="result-text">100,000 (5%)</div>
-						</td>
-					</tr>
+					@foreach($results as $result)
+						<tr>
+							<th>{{ $result->nimi }}</th>
+							<td>
+								<div class="result-row" style="width: 10%;"></div>
+								<div class="result-text">{{ $result->votes }}</div>
+							</td>
+						</tr>
+					@endforeach
 				</tbody>
 			</table>
 		</div>
