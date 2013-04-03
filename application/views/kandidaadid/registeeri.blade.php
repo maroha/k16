@@ -42,7 +42,6 @@
 				<div class="form-field">
 					<select name="party" id="register-party">
 						<option value="-1">Määra parteiline kuuluvus</option>
-						<option value="0">Üksikkandidaat</option>
 						@foreach($parteid as $partei)
 							<option value="{{ $partei->id }}">{{ e($partei->nimetus) }}</option>
 						@endforeach

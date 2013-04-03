@@ -19,7 +19,6 @@
 			</select>
 			<select name="party">
 				<option value="-1">Kõik parteid</option>
-				<option value="0">Üksikkandidaat</option>
 				@foreach($parteid as $partei)
 					<option value="{{ $partei->id }}">{{ e($partei->nimetus) }}</option>
 				@endforeach
