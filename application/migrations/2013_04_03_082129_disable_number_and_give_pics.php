@@ -10,7 +10,7 @@ class Disable_Number_And_Give_Pics {
 	public function up()
 	{
 		DB::query("ALTER TABLE `kandidaat` DROP `Number`, COMMENT='';");
-		DB::query("UPDATE `kandidaat` SET `Pilt` = ? WHERE `Pilt` = NULL", array("img/isik_isikuline.png"));
+		DB::query("UPDATE `kandidaat` SET `Pilt` = ? WHERE `Pilt` = NULL", array("img/isik_isikuline.jpg"));
 	}
 
 	/**
