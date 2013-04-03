@@ -21,14 +21,14 @@ class Kandidaadid_Controller extends Base_Controller {
 	public function get_index() {
 		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 		$sql = <<<EOL
-SELECT k.ID, k.Number, h.Eesnimi, h.Perekonnanimi,
+SELECT k.ID, h.Eesnimi, h.Perekonnanimi,
 p.Nimetus AS Partei_Nimi,
 r.Nimetus AS Valimisringkonna_nimi
 FROM `kandidaat` AS k
 LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
 LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
 LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
-ORDER BY k.Number ASC
+ORDER BY k.ID ASC
 EOL;
 		$kandidaadid = DB::query($sql);
 		$this->layout->content = View::make("kandidaadid.list", array(
@@ -42,7 +42,7 @@ EOL;
 	{
 		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 		$sql = <<<EOL
-SELECT k.ID, k.Number, h.Eesnimi, h.Perekonnanimi,
+SELECT k.ID, h.Eesnimi, h.Perekonnanimi,
 p.Nimetus AS Partei_Nimi,
 r.Nimetus AS Valimisringkonna_nimi
 FROM `kandidaat` AS k
@@ -62,23 +62,27 @@ EOL;
 	{
 list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 		$sql = <<<EOL
-SELECT k.ID, k.Number, h.Eesnimi, h.Perekonnanimi, k.Sunnikoht, k.Haridus, k.Akadeemiline_kraad, k.Elukutse, k.Tookoht, p.Nimetus as partei_nimetus, k.Email, k.Telefoninumber
+SELECT k.ID, h.Eesnimi, h.Perekonnanimi, k.Sunnikoht, k.Haridus, k.Akadeemiline_kraad, k.Elukutse, k.Tookoht, p.Nimetus as partei_nimetus, k.Email, k.Telefoninumber, k.Pilt
 FROM  `kandidaat` AS k
 LEFT JOIN  `haaletaja` AS h ON k.Haaletaja_ID = h.ID
 LEFT JOIN  `partei` AS p ON k.Partei_ID = p.ID
 WHERE k.ID = ?
 LIMIT 1
 EOL;
-		$kandidaat = DB::query($sql, array($kandidaat_id));
+		$kandidaat = DB::first($sql, array($kandidaat_id));
+		if(!$kandidaat) {
+			Session::flash("message", "Kandidaati ei leitud!");
+			return Redirect::to("kandidaadid");
+		}
 		// Check if user has already voted
 		$juba = false;
 		if(Auth::check()) {
-			$votecheck = DB::query("SELECT COUNT(*) AS voted FROM `haal` WHERE `Haaletaja_ID` = ?", array(Auth::user()->id));
-			if($votecheck[0]->voted > 0) {
+			$votecheck = DB::only("SELECT COUNT(*) AS voted FROM `haal` WHERE `Haaletaja_ID` = ?", array(Auth::user()->id));
+			if($votecheck > 0) {
 				$juba = true;
 			}
 		}
-		$this->layout->content = View::make("kandidaadid.info", array("kandidaat" => $kandidaat[0], "juba_haaletanud" => $juba));
+		$this->layout->content = View::make("kandidaadid.info", array("kandidaat" => $kandidaat, "juba_haaletanud" => $juba));
 		$this->layout->javascript = array("candidates", "view");
 		$this->layout->menu_item = "kandidaadid";
 	}
@@ -102,7 +106,7 @@ EOL;
 	public function get_otsi()
 	{
 		$sql = <<<EOL
-SELECT k.ID, k.Number, h.Eesnimi, h.Perekonnanimi,
+SELECT k.ID, h.Eesnimi, h.Perekonnanimi,
 p.Nimetus AS Partei_Nimi,
 r.Nimetus AS Valimisringkonna_nimi
 FROM `kandidaat` AS k
@@ -150,7 +154,7 @@ EOL;
 			}
 			$argumendid[] = $party;
 		}
-		$sql .= " ORDER BY k.Number ASC";
+		$sql .= " ORDER BY k.ID ASC";
 		//dd(array($sql, $argumendid));
 		$kandidaadid = DB::query($sql, $argumendid);
 		//dd($kandidaadid);
@@ -159,8 +163,8 @@ EOL;
 	public function post_haaleta() {
 		$kandidaat = Input::get("kandidaat");
 		// Kontrolli kandidaati
-		$kontroll = DB::query("SELECT COUNT(*) as count FROM `kandidaat` WHERE `ID` = ?", array($kandidaat));
-		if($kontroll[0]->count == 0) {
+		$kontroll = DB::only("SELECT COUNT(*) as count FROM `kandidaat` WHERE `ID` = ?", array($kandidaat));
+		if($kontroll == 0) {
 			return Response::error('404');
 		}
 		// Kontrolli duplikaati.... vüi kohe lihtsalt kustuta ära
@@ -177,6 +181,12 @@ EOL;
 
 	public function get_registeeri()
 	{
+		$kontroll = DB::only("SELECT COUNT(*) as count FROM `kandidaat` WHERE `Haaletaja_ID` = ?", array(Auth::user()->id));
+		if($kontroll) {
+			Session::flash("message", "Te olete juba lisatud kandidaadina!");
+			return Redirect::to("kandidaadid");
+		}
+
 		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 		$this->layout->content = View::make("kandidaadid.registeeri", array("ringkonnad" => $ringkonnad, "parteid" => $parteid));
 		$this->layout->javascript = array("candidates", "register");
@@ -184,6 +194,12 @@ EOL;
 	}
 	public function post_registeeri()
 	{
+		$kontroll = DB::only("SELECT COUNT(*) as count FROM `kandidaat` WHERE `Haaletaja_ID` = ?", array(Auth::user()->id));
+		if($kontroll) {
+			Session::flash("message", "Te olete juba lisatud kandidaadina!");
+			return Redirect::to("kandidaadid");
+		}
+
 		$sql = <<<EOT
 INSERT INTO `kandidaat` (`Partei_ID`, `Valimisringkonna_ID`, `Sunnikoht`, `Elukohaaadress`, `Haridus`, `Akadeemiline_kraad`, `Elukutse`, `Tookoht`, `Telefoninumber`, `Email`, `Pilt`, `Haaletaja_ID`) VALUES
 		(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
@@ -193,17 +209,38 @@ EOT;
 		$partei_id = Input::get("party");
 		$valimisringkonna_id = Input::get("piirkond");
 		$haridus = Input::get("haridus");
-		
+
 		$akadeemiline_kraad = Input::get("academicdegree");
 		$elukutse = Input::get("occupation");
 		$tookoht = Input::get("work");
 		$telefoninumber = Input::get("phone");
 		$email = Input::get("email");
-		$pilt = Input::get("picture");
-		
-		$vaartused = array($partei_id, $valimisringkonna_id, $sunnikoht, $elukohaaadress, $haridus, $akadeemiline_kraad, $elukutse, $tookoht, $telefoninumber, $email, $pilt, Auth::user()->id);
+
+		// picture
+		$pilt = Input::file("picture");
+		$pilturl = null;
+		if($pilt and $pilt['tmp_name'] and $pilt['size'] < 524288) { // max 512 KB
+			$extensions = array('jpg', 'png', 'gif');
+			foreach ($extensions as $extension) {
+				if(File::is($extension, $pilt['tmp_name'])) {
+					$newid = DB::only("SELECT MAX(`ID`) FROM `kandidaat`;") + 1;
+					$piltnimi = md5($newid).".{$extension}";
+					Input::upload("picture", path("public")."img/uploads", $piltnimi);
+					$pilturl = "img/uploads/".$piltnimi;
+					break;
+				}
+			}
+		}
+		if(!$pilturl) {
+			$pilturl = "img/isik_isikuline.png";
+		}
+
+
+		$vaartused = array($partei_id, $valimisringkonna_id, $sunnikoht, $elukohaaadress, $haridus, $akadeemiline_kraad, $elukutse, $tookoht, $telefoninumber, $email, $pilturl, Auth::user()->id);
 		DB::query($sql, $vaartused);
-		//TODO: Everything
-		return Redirect::to("kandidaadid/registeeri");
+
+
+		Session::flash("message", "Te olete lisatud kandidaadina!");
+		return Redirect::to("kandidaadid");
 	}
 }

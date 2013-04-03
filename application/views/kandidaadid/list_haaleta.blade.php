@@ -38,7 +38,7 @@
 			<tbody>
 			@foreach($kandidaadid as $kandidaat)
 					<tr>
-						<td>{{ $kandidaat->number }}</td>
+						<td>{{ $kandidaat->id }}</td>
 						<td>
 							<a href="{{ url("kandidaadid/info/".$kandidaat->id) }}">{{ $kandidaat->eesnimi }} {{ $kandidaat->perekonnanimi }}</a>
 						</td>

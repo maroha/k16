@@ -187,7 +187,7 @@ var K16 = {
 			for (var i = 0; i < candidates.length; i++) {
 				// 5ft circle of hell: Making dom elements by hand (FUTURE: Use a templating engine, eg. mustache)
 				var candidateRow = $("<tr>").data("id", candidates[i].id).click(K16.candidates.rowListener)
-				$("<td>").text(candidates[i].number).appendTo(candidateRow)
+				$("<td>").text(candidates[i].id).appendTo(candidateRow)
 				$("<td>").append($("<a>").attr({"href": K16.config.url+"/kandidaadid/info/"+candidates[i].id}).text(candidates[i].eesnimi+' '+candidates[i].perekonnanimi)).appendTo(candidateRow)
 				$("<td>").text(candidates[i].valimisringkonna_nimi).appendTo(candidateRow)
 				$("<td>").text(candidates[i].partei_nimi).appendTo(candidateRow)

@@ -20,7 +20,7 @@ class Base_Controller extends Controller {
 		$response = parent::response($method, $parameters);
 
 		// If it's already a response, then probably no changes are needed.
-		if($response instanceof Response) {
+		if($response instanceof Response or $response instanceof Redirect) {
 			return $response;
 		}
 
@@ -30,7 +30,9 @@ class Base_Controller extends Controller {
 				Event::fire("laravel.composing: {$response->view}", array($response));
 			}
 
-			$ajax_response = Response::make($response->content);
+			$aresponse = View::make("ajax", array("content" => $response->content));
+
+			$ajax_response = Response::make($aresponse);
 			$metadata = array(
 				"menuItem" => $response->menu_item,
 				"javascript" => $response->javascript

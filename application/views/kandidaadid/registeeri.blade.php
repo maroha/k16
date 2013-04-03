@@ -4,7 +4,7 @@
 		<h1>Kandidaadi registreerimine</h1>
 	</header>
 	<section>
-		<form class="form-horizontal" action="{{ url("kandidaadid/registeeri") }}" method="POST" id="register-form" name="register-form">
+		<form class="form-horizontal" action="{{ url("kandidaadid/registeeri") }}" method="POST" enctype="multipart/form-data" id="register-form" name="register-form">
 			<div class="form-row">
 				<label class="form-label" for="register-firstname">Eesnimi</label>
 				<div class="form-field">

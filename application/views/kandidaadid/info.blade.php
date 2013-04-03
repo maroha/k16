@@ -2,7 +2,7 @@
 <h1>{{ e($kandidaat->eesnimi) }} {{ e($kandidaat->perekonnanimi) }}</h1>
 
 <div class="left-sidebar">
-	<img src="{{ asset("img/isik_isikuline.jpg") }}" />
+	<img src="{{ asset($kandidaat->pilt) }}" />
 	E-mail: {{ e($kandidaat->email) }} <br/>
 	Telefon: {{ e($kandidaat->telefoninumber) }}
 </div>
@@ -18,7 +18,7 @@
 	@else
 		<span class="float-right">Hääletamiseks peate olema sisselogitud</span>
 	@endif
-	<h2>Kandidaat number: #{{ e($kandidaat->number) }}</h2>
+	<h2>Kandidaat number: #{{ e($kandidaat->id) }}</h2>
 	<table>
 		<tbody>
 			<tr><!--
