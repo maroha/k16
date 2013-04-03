@@ -85,11 +85,16 @@ var K16 = {
 				if(searchForm.party.value != -1) {
 					search.party = searchForm.party.value
 				}
+				// Serialize only filled fields - http://stackoverflow.com/a/6240619/211088
+				console.log($(this).clone().find('input:text[value=""],select[value="-1"]').remove().end())
+				var permaURL = $(this).attr("action")+"?"+$("input,select", this).filter(function(){ return $(this).val() && (this.tagName != "SELECT" || $(this).val() != -1); }).serialize();
+
 				// console.log(search, ajaxroute);
 				$('#ajax-loader').show();
 				$.getJSON(K16.config.url+'/kandidaadid/otsi', search, function (response) {
 					$('#ajax-loader').hide();
 					// console.log(response);
+					history.pushState({}, "", permaURL)
 					// Render results
 					K16.candidates.drawSearchResults(response)
 				});

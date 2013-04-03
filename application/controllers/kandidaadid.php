@@ -17,9 +17,7 @@ class Kandidaadid_Controller extends Base_Controller {
 		$ringkonnad = DB::query("SELECT * FROM `valimisringkond`");
 		return array($parteid, $ringkonnad);
 	}
-
-	public function get_index() {
-		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
+	public function leiaKandidaadid($otsi = array()) {
 		$sql = <<<EOL
 SELECT k.ID, h.Eesnimi, h.Perekonnanimi,
 p.Nimetus AS Partei_Nimi,
@@ -28,9 +26,51 @@ FROM `kandidaat` AS k
 LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
 LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
 LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
-ORDER BY k.ID ASC
 EOL;
-		$kandidaadid = DB::query($sql);
+		$argumendid = array();
+		if(isset($otsi["name"])) {
+			$nime_osad = explode(" ", $otsi["name"]);
+			foreach ($nime_osad as $osa) {
+				if(count($argumendid) == 0) {
+					// Ainult eesnimi
+					$sql .= " WHERE h.Eesnimi LIKE ?";
+					$argumendid[] = $osa."%";
+				} elseif (count($argumendid) == 1) {
+					// Teine osa eesnimest või esimene osa perekonnanimest
+					$sql .= " AND (h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?)";
+					$argumendid[] = "%".$osa."%";
+					$argumendid[] = $osa."%";
+				} else {
+					// Teine osa eesnimest või perekonnanimest
+					$sql .= " AND (h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?)";
+					$argumendid[] = "%".$osa."%";
+					$argumendid[] = "%".$osa."%";
+				}
+			}
+		}
+		if(isset($otsi["region"]) && $otsi["region"] != -1) {
+			if(count($argumendid)==0) {
+				$sql .= " WHERE k.Valimisringkonna_ID = ?";
+			} else {
+				$sql .= " AND k.Valimisringkonna_ID = ?";
+			}
+			$argumendid[] = $otsi["region"];
+		}
+		if(isset($otsi["party"]) && $otsi["party"] != -1) {
+			if(count($argumendid)==0) {
+				$sql .= " WHERE k.Partei_ID = ?";
+			} else {
+				$sql .= " AND k.Partei_ID = ?";
+			}
+			$argumendid[] = $otsi["party"];
+		}
+		$sql .= " ORDER BY k.ID ASC";
+		return DB::query($sql, $argumendid);
+	}
+
+	public function get_index() {
+		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
+		$kandidaadid = $this->leiaKandidaadid(Input::all());
 		$this->layout->content = View::make("kandidaadid.list", array(
 			"ringkonnad" => $ringkonnad, "parteid" => $parteid, "kandidaadid" => $kandidaadid
 		));
@@ -41,16 +81,8 @@ EOL;
 	public function get_haaleta()
 	{
 		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
-		$sql = <<<EOL
-SELECT k.ID, h.Eesnimi, h.Perekonnanimi,
-p.Nimetus AS Partei_Nimi,
-r.Nimetus AS Valimisringkonna_nimi
-FROM `kandidaat` AS k
-LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
-LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
-LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
-EOL;
-		$kandidaadid = DB::query($sql);
+		$kandidaadid = $this->leiaKandidaadid(Input::all());
+
 		$this->layout->content = View::make("kandidaadid.list_haaleta", array(
 			"ringkonnad" => $ringkonnad, "parteid" => $parteid, "kandidaadid" => $kandidaadid
 		));
@@ -105,58 +137,7 @@ EOL;
 
 	public function get_otsi()
 	{
-		$sql = <<<EOL
-SELECT k.ID, h.Eesnimi, h.Perekonnanimi,
-p.Nimetus AS Partei_Nimi,
-r.Nimetus AS Valimisringkonna_nimi
-FROM `kandidaat` AS k
-LEFT JOIN `haaletaja` AS h ON k.Haaletaja_ID = h.ID
-LEFT JOIN `valimisringkond` AS r ON k.Valimisringkonna_ID = r.Id
-LEFT JOIN `partei` AS p ON k.Partei_ID = p.Id
-EOL;
-		$argumendid = array();
-		$name = Input::get('name');
-		if(isset($name)) {
-			$nime_osad = explode(" ", $name);
-			foreach ($nime_osad as $osa) {
-				if(count($argumendid) == 0) {
-					// Ainult eesnimi
-					$sql .= " WHERE h.Eesnimi LIKE ?";
-					$argumendid[] = $osa."%";
-				} elseif (count($argumendid) == 1) {
-					// Teine osa eesnimest või esimene osa perekonnanimest
-					$sql .= " AND (h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?)";
-					$argumendid[] = "%".$osa."%";
-					$argumendid[] = $osa."%";
-				} else {
-					// Teine osa eesnimest või perekonnanimest
-					$sql .= " AND (h.Eesnimi LIKE ? OR h.Perekonnanimi LIKE ?)";
-					$argumendid[] = "%".$osa."%";
-					$argumendid[] = "%".$osa."%";
-				}
-			}
-		}
-		$region = Input::get('region');
-		if(isset($region)) {
-			if(count($argumendid)==0) {
-				$sql .= " WHERE k.Valimisringkonna_ID = ?";
-			} else {
-				$sql .= " AND k.Valimisringkonna_ID = ?";
-			}
-			$argumendid[] = $region;
-		}
-		$party = Input::get('party');
-		if(isset($party)) {
-			if(count($argumendid)==0) {
-				$sql .= " WHERE k.Partei_ID = ?";
-			} else {
-				$sql .= " AND k.Partei_ID = ?";
-			}
-			$argumendid[] = $party;
-		}
-		$sql .= " ORDER BY k.ID ASC";
-		//dd(array($sql, $argumendid));
-		$kandidaadid = DB::query($sql, $argumendid);
+		$kandidaadid = $this->leiaKandidaadid(Input::all());
 		//dd($kandidaadid);
 		return Response::json($kandidaadid);
 	}

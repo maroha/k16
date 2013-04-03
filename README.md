@@ -15,6 +15,7 @@ Teadetetahvle
 * Eile - `mv Korsakov /Latvia`
 * Kui keegi leiab kaduma läinud andmeid, palun tagastage valvelauda.
 * Skype vestlus - Nüüd 72% lingid!
+* HÄÄLERALLI
 
 1. Etapp
 --------
@@ -28,4 +29,7 @@ Teadetetahvle
 --------
 [Tag 3](https://github.com/t2t2/k16/tree/3)
 
-
+4. Etapp
+--------
+[Tag 4](https://github.com/t2t2/k16/tree/4)
+[Kloonimisjuhend](https://github.com/t2t2/k16/wiki/Kloonimine-&-K%C3%A4ima-Panemine)
