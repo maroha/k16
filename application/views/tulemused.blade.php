@@ -27,11 +27,6 @@
 				@else
 					<option value="-1">Kõik parteid</option>
 				@endif
-				@if($current["party"] == 0)
-					<option value="0" selected>Üksikkandidaat</option>
-				@else
-					<option value="0">Üksikkandidaat</option>
-				@endif
 				@foreach($parteid as $partei)
 					@if($current["party"] == $partei->id)
 						<option value="{{ $partei->id }}" selected>{{ e($partei->nimetus) }}</option>
@@ -67,9 +62,9 @@
 				<thead>
 					<tr>
 						@if($current["type"] == "party")
-						<th>Partei</th>
+						<th id="results-type">Partei</th>
 						@else
-						<th>Isik</th>
+						<th id="results-type">Isik</th>
 						@endif
 						<th>Tulemus</th>
 					</tr>
