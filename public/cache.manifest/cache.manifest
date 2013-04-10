@@ -7,6 +7,9 @@
 # Kui ei kasuta FALLBACKi ega NETWORKi, siis eraldi CACHE mainida pole vaja ka, muudel juhtudel peab!
 ../index.php
 ../../application/views/layouts/main.blade.php
+../kandidaadid?a
+../haaleta?a
+../tulemused?a
 ../css/main.css
 ../css/normalize.css
 ../css/normalize.min.css
