@@ -214,7 +214,7 @@ EOT;
 			}
 		}
 		if(!$pilturl) {
-			$pilturl = "img/isik_isikuline.png";
+			$pilturl = "img/isik_isikuline.jpg";
 		}
 
 
