@@ -11,31 +11,26 @@ class Tulemused_Controller extends Base_Controller {
 		$ringkonnad = DB::query("SELECT * FROM `valimisringkond`");
 		return array($parteid, $ringkonnad);
 	}
-
-
-	public function get_index() {
+	public function results($filters = array("type" => "party")) {
 		$selector = "";
 		$leftjoin = "";
 		$groupby = "";
 		$where = array();
 		$argumendid = array();
 
-		$region = Input::get("region", -1);
-		$party = Input::get("party", -1);
-		$type = Input::get("type", "party");
 		// Filters
-		if($region > 0) {
+		if(isset($filters["region"])) {
 			$where[] = "k.Valimisringkonna_ID = ?";
-			$argumendid[] = $region;
+			$argumendid[] = $filters["region"];
 		}
-		if($party > -1) {
+		if(isset($filters["party"])) {
 			$where[] = "k.Partei_ID = ?";
-			$argumendid[] = $party;
+			$argumendid[] = $filters["party"];
 			// Force by person
 			$type = "person";
 		}
 		// Create query of awesome
-		if($type == "person") {
+		if($filters["type"] == "person") {
 			$selector = "k.ID, CONCAT(u.Eesnimi, \" \", u.Perekonnanimi) AS Nimi, COUNT(h.ID) AS votes";
 			$leftjoin = "LEFT JOIN haaletaja AS u ON k.Haaletaja_ID = u.ID";
 			$groupby = "GROUP BY k.ID";
@@ -51,7 +46,24 @@ class Tulemused_Controller extends Base_Controller {
 			$where = "";
 		}
 		$sql = "SELECT {$selector} FROM kandidaat as k {$leftjoin} LEFT JOIN haal AS h ON h.Kandidaadi_ID = k.ID{$where} {$groupby} ORDER BY votes DESC";
-		$results = DB::query($sql, $argumendid);
+		return DB::query($sql, $argumendid);
+	}
+
+	public function get_index() {
+		$region = Input::get("region", -1);
+		$party = Input::get("party", -1);
+		$type = Input::get("type", "party");
+
+		$filters = array("type" => $type);
+
+		if($region > 0) {
+			$filters["region"] = $region;
+		}
+		if($party > 0) {
+			$filters["party"] = $party;
+		}
+
+		$results = $this->results($filters);
 
 		// Calculate percentages
 		$array_sum = function ($value, $result) {
@@ -72,5 +84,11 @@ class Tulemused_Controller extends Base_Controller {
 		));
 		$this->layout->javascript = array("results");
 		$this->layout->menu_item = "tulemused";
+	}
+	public function get_json() {
+		$sql = "SELECT k.ID, CONCAT(u.Eesnimi, \" \", u.Perekonnanimi) AS Nimi, k.Partei_ID, p.Nimetus as Partei_Nimi, k.Valimisringkonna_ID, COUNT(h.ID) AS votes FROM kandidaat as k LEFT JOIN haaletaja AS u ON k.Haaletaja_ID = u.ID LEFT JOIN partei AS p ON k.Partei_ID = p.ID  LEFT JOIN haal AS h ON h.Kandidaadi_ID = k.ID GROUP BY k.ID";
+
+		$results = DB::query($sql);
+		return Response::json($results);
 	}
 }

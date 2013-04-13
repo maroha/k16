@@ -1,4 +1,4 @@
-﻿/*
+/*
  * The following implements The Garber-Irish Implementation for markup-based means of executing javascript on page load. This means only global and page-related javascript gets executed on page load. For more info check:
  * http://paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/
  * http://viget.com/inspire/extending-paul-irishs-comprehensive-dom-ready-execution
@@ -97,7 +97,9 @@ var K16 = {
 				$.getJSON(K16.config.url+'/kandidaadid/otsi', search, function (response) {
 					$('#ajax-loader').hide();
 					// console.log(response);
-					history.pushState({}, "", permaURL)
+					if(Modernizr.history) {
+						history.pushState({}, "", permaURL)
+					}
 					// Render results
 					K16.candidates.drawSearchResults(response)
 				});
@@ -210,13 +212,106 @@ var K16 = {
 		}
 	},
 	results: {
+		current_filters: {},
+		update_data: function () {
+			$.getJSON(K16.config.url+"/tulemused/json", function (results) {
+				K16.storage.set("results", results)
+				K16.results.render()
+			});
+		},
+		update_filters: function () {
+			K16.results.current_filters = {}
+			var region = $("#filter-region").val();
+			if(region > -1) {
+				K16.results.current_filters.region = region
+			}
+			var party = $("#filter-party").val();
+			if(party > -1) {
+				K16.results.current_filters.party = party
+			}
+			var type = $("#tulemused-filter input[name='type']:checked").val();
+			if(K16.results.current_filters.party && type == "party") {
+				type = "person"
+				$("#tulemused-filter input[name='type']:checked").removeAttr("checked")
+				$("#tulemused-filter input[name='type']").filter('[value=person]').get(0).checked = true
+			}
+			K16.results.current_filters.type = type
+		},
+		render: function () {
+			$("#results-type").text(K16.results.current_filters.type == "person" ? "Isik" : "Partei")
+			var total, tulemused = [];
+			if(K16.results.current_filters.type == "person") {
+				total = 0;
+				tulemused = $.map(K16.storage.get("results"), function (person) {
+					// Check filters
+					if(K16.results.current_filters.region && person.valimisringkonna_id != K16.results.current_filters.region) {
+						return null;
+					}
+					if(K16.results.current_filters.party && person.partei_id != K16.results.current_filters.party) {
+						return null;
+					}
+					// Add to results
+					total += person.votes
+					return [{name: person.nimi, votes: person.votes}]
+				});
+			} else { // party
+				total = 0;
+				parteid = {}
+				tulemused = []
+				$.each(K16.storage.get("results"), function (key, person) {
+					// Check filters
+					if(K16.results.current_filters.region && person.valimisringkonna_id != K16.results.current_filters.region) {
+						return null;
+					}
+					if(K16.results.current_filters.party && person.partei_id != K16.results.current_filters.party) {
+						return null;
+					}
+					// Add to results
+					if(!parteid[person.partei_id]) {
+						parteid[person.partei_id] = {"name": person.partei_nimi, "votes" : 0}
+						tulemused.push(parteid[person.partei_id]) // Objects are references YAY!
+					}
+					total += person.votes
+					parteid[person.partei_id].votes += person.votes
+				});
+			}
+			console.log(total, tulemused)
+			tulemused.sort(function (a, b) {
+				return b.votes - a.votes
+			});
+
+			var newTable = $.map(tulemused, function (row) {
+				var percent = Math.round(row.votes / (total ? total : 1) * 10000) / 100
+
+				return $("<tr>").append(
+					$("<th>").text(row.name)
+				).append(
+					$("<td>").append(
+						$('<div class="result-row">').width(percent+"%")
+					).append(
+						$('<div class="result-text">').text(row.votes+" ("+percent+")")
+					)
+				)
+			});
+			$("#results-table").empty().append(newTable)
+
+		},
 		init: function () {
 			// Results page
-			/* Searc filer thingy */
+			K16.results.update_filters()
+			K16.results.update_data()
+			/* Search filter thingy */
 			$('#tulemused-filter').submit(function() {
-				var arguments = $(this).serialize()
+				K16.results.update_filters()
+				K16.results.render()
+
+				// UPDATE LOCAL URL
+				if(Modernizr.history) {
+					var arguments = $(this).serialize()
+					history.pushState({}, "", K16.config.url+"/tulemused?"+arguments)
+				}
 				// And just hand it off
-				K16.common.navigateTo(K16.config.url+"/tulemused?"+arguments)
+				// K16.common.navigateTo(K16.config.url+"/tulemused?"+arguments)
 				return false;
 			});
 			/* Table sorter */
@@ -273,6 +368,26 @@ var K16 = {
 				//obj.title = "Sorteeritud " + ((verse) ? "kahanevalt" : "kasvavalt")
 			}
 			prepTabs()
+		}
+	},
+	storage: {
+		cache: {},
+		get: function (name) {
+			if(K16.storage.cache[name]) {
+				return K16.storage.cache[name];
+			}
+			if(Modernizr.localstorage && window.JSON) {
+				if(data = window.localStorage[name]) {
+					return K16.storage.cache[name] = JSON.parse(data)
+				}
+			}
+			return null
+		},
+		set: function (name, data) {
+			if(Modernizr.localstorage && window.JSON) {
+				window.localStorage[name] = JSON.stringify(data)
+			}
+			K16.storage.cache[name] = data;
 		}
 	}
 };
