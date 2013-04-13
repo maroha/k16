@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" manifest="../../../public/cache.manifest/cache.manifest"> <!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -51,7 +51,7 @@
 		<div class="footer-container">
 			<footer class="wrapper">
 				<h3>&#169; <a href="https://github.com/t2t2/k16" target="_blank">K16</a></h3>
-				<div class="disclaimer">Rakenduses realiseeritud e-valimiste näide on realiseeritud <a href="https://courses.cs.ut.ee/2013/vl/spring/Main/Practices" target="_blank">tehnoloogiate praktiseerimise eesmärgil</a> ning ei ole mõeldud reaalsete e-valimiste korraldamiseks. Kokkulangevused reaalse e-valimiste protsessiga on juhuslikud. Kui valimismaania kestab rohkem kui 2 nädalat palun konsulteergie arsti või apteekriga.</div>
+				<div class="disclaimer">Rakenduses realiseeritud e-valimiste näide on realiseeritud <a href="https://courses.cs.ut.ee/2013/vl/spring/Main/Practices" target="_blank">tehnoloogiate praktiseerimise eesmärgil</a> ning ei ole mõeldud reaalsete e-valimiste korraldamiseks. Kokkulangevused reaalse e-valimiste protsessiga on juhuslikud. Kui valimismaania kestab rohkem kui 2 nädalat palun konsulteerige arsti või apteekriga.</div>
 			</footer>
 		</div>
 		<div id="ajax-loader" class="ajax-loader">
