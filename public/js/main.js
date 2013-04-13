@@ -44,6 +44,9 @@ var K16 = {
 				if(metadata.reload) {
 					location.reload(); return false;
 				}
+				if(metadata.redirect) {
+					location = metadata.redirect; return false;
+				}
 				if(Modernizr.history && !popstate) {
 					history.pushState({}, "", targetURL)
 				}
