@@ -321,6 +321,10 @@ label {
 .user a:link, .user a:visited {
 	color: #cccccc;
 }
+.fb-login {
+	display: inline-block;
+}
+
 .footer-container {
 	background: rgba(0, 0, 0, 0.6);
 }
@@ -749,5 +753,5 @@ nav a:hover {
 		height: 5px;
 		margin: 10px 5px 10px -5px;
 	}
-
+	
 }

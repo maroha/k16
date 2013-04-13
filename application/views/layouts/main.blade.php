@@ -28,7 +28,7 @@
 					@if(Auth::check())
 						Tere {{ Auth::user()->eesnimi }} {{ Auth::user()->perekonnanimi }}! &ndash; <a href="{{ url("logout") }}">logi välja &rsaquo;</a>
 					@else
-						Pole sisse loginud &ndash; <a href="{{ url("login") }}">logi sisse &rsaquo;</a>
+						Pole sisse loginud &ndash; <a href="{{ url("login") }}"><img src="img/fb_login.png" class="fb-login"></a>
 					@endif
 				</div>
 				<nav class="clearfix">

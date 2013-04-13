@@ -37,6 +37,7 @@ Route::controller(array("home", "tulemused", "kandidaadid"));
 Route::get("haaleta", "kandidaadid@haaleta");
 // home actions besides index don't get mapped
 Route::get("login", "home@login");
+Route::get("login_callback", "home@login_callback");
 Route::get("logout", "home@logout");
 
 /*
