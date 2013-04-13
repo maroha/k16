@@ -69,7 +69,7 @@
 						<th>Tulemus</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="results-table">
 					@foreach($results as $result)
 						<tr>
 							<th>{{ $result->nimi }}</th>

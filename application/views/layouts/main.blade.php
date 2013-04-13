@@ -16,7 +16,7 @@
 
 		<script src="{{ asset("js/vendor/modernizr-2.6.2-respond-1.1.0.min.js") }}"></script>
 	</head>
-	<body{{ isset($javascript[0]) ? " data-controller=\"{$javascript[0]}\"" : null }}{{ isset($javascript[1]) ? " data-action=\"{$javascript[1]}\"" : null }} data-url="{{ URL::base() }}">
+	<body{{ isset($javascript[0]) ? " data-controller=\"{$javascript[0]}\"" : null }}{{ isset($javascript[1]) ? " data-action=\"{$javascript[1]}\"" : null }} data-url="{{ URL::base() }}" data-live="{{ Config::get("live.client.full_url") }}">
 		<!--[if lt IE 7]>
 			<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 		<![endif]-->

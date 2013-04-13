@@ -154,6 +154,7 @@ EOL;
 		$success = DB::query("INSERT INTO `haal` (`Aeg`, `Haaletaja_ID`, `Kandidaadi_ID`) VALUES (?, ?, ?);", array(date('Y-m-d H:i:s'), Auth::user()->id, $kandidaat));
 		if($success) {
 			Session::flash("message", "Teie hääl on salvestatud!");
+			Command::run(array('liveserver:update'));
 		} else {
 			Session::flash("message", "Hääle salvestamisel tekkis viga! Palun proovige hiljem uuesti :(");
 		}
@@ -213,7 +214,7 @@ EOT;
 			}
 		}
 		if(!$pilturl) {
-			$pilturl = "img/isik_isikuline.png";
+			$pilturl = "img/isik_isikuline.jpg";
 		}
 
 
