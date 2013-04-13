@@ -160,6 +160,7 @@ return array(
 		'Bundle'     	=> 'Laravel\\Bundle',
 		'Cache'      	=> 'Laravel\\Cache',
 		'Config'     	=> 'Laravel\\Config',
+		'Command'    	=> 'Laravel\\Cli\\Command',
 		'Controller' 	=> 'Laravel\\Routing\\Controller',
 		'Cookie'     	=> 'Laravel\\Cookie',
 		'Crypter'    	=> 'Laravel\\Crypter',

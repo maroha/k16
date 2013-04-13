@@ -29,6 +29,18 @@ var K16 = {
 					K16.common.navigateTo(document.location.href, true)
 				});
 			}
+			// Cache results
+			K16.results.update_data()
+			// live server integration
+			if(K16.config.live && Modernizr.websockets) {
+				K16.live = new WebSocket(K16.config.live)
+				K16.live.onmessage = function(e) {
+					K16.storage.set("results", JSON.parse(e.data))
+					if($("#results-table").length > 0) {
+						K16.results.render()
+					}
+				};
+			}
 		},
 		navigateTo: function (targetURL, popstate) {
 			// Some cache uniqueness just in case
@@ -213,10 +225,9 @@ var K16 = {
 	},
 	results: {
 		current_filters: {},
-		update_data: function () {
+		update_data: function (render) {
 			$.getJSON(K16.config.url+"/tulemused/json", function (results) {
 				K16.storage.set("results", results)
-				K16.results.render()
 			});
 		},
 		update_filters: function () {
@@ -275,7 +286,6 @@ var K16 = {
 					parteid[person.partei_id].votes += person.votes
 				});
 			}
-			console.log(total, tulemused)
 			tulemused.sort(function (a, b) {
 				return b.votes - a.votes
 			});
@@ -289,7 +299,7 @@ var K16 = {
 					$("<td>").append(
 						$('<div class="result-row">').width(percent+"%")
 					).append(
-						$('<div class="result-text">').text(row.votes+" ("+percent+")")
+						$('<div class="result-text">').text(row.votes+" ("+percent+"%)")
 					)
 				)
 			});
