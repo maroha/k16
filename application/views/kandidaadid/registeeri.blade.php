@@ -24,13 +24,6 @@
 				</div>
 			</div>
 			<div class="form-row">
-				<label class="form-label" for="register-idnumber">Isikukood</label>
-				<div class="form-field">
-					{{ e(Auth::user()->isikukood) }}
-					<p class="form-help">(Peidetud)</p>
-				</div>
-			</div>
-			<div class="form-row">
 				<label class="form-label" for="register-address">Elukohaaadress</label>
 				<div class="form-field">
 					<input type="text" size="30" name="address" id="register-address" />
