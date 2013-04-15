@@ -12,11 +12,13 @@ class Home_Controller extends Base_Controller {
 
 	public function get_login() {
 		$facebook = new Facebook(array(
-			'appId' => '547130382005847',
-			'secret' => 'de274483131977f10c7b4be1865a4095',
-			'cookie' => true
+			'appId' => Config::get("facebook.app_id"),
+			'secret' => Config::get("facebook.secret")
 		));
+
 		$loginUrl = $facebook->getLoginUrl(array(
+			'scope' => 'email',
+			'display' => 'popup',
 			'redirect_uri' => URL::to("login_callback")
 		));
 		if(Request::ajax()) {
@@ -28,15 +30,15 @@ class Home_Controller extends Base_Controller {
 			return Redirect::to($loginUrl);
 		}
 	}
-	
-	public function get_login_callback() {	
+
+	public function get_login_callback() {
 		$facebook = new Facebook(array(
-			'appId' => '547130382005847',
-			'secret' => 'de274483131977f10c7b4be1865a4095',
-			'cookie' => true
+			'appId' => Config::get("facebook.app_id"),
+			'secret' => Config::get("facebook.secret")
 		));
-	
+
 		$session = $facebook->getUser();
+		dd($session);
 		$me = null;
 
 		if ($session) {
@@ -44,12 +46,12 @@ class Home_Controller extends Base_Controller {
 				$me = $facebook->api('/me?fields=picture,first_name,last_name,hometown');
 			} catch (FacebookApiException $e) { }
 		}
-	
+
 		dd($facebook->getUser());
-		
+
 		if ($me) {
 			// Facebook andis kasutaja
-	
+
 			// Kontrolli andmebaasist kasutaja olemasolu
 			if($user) {
 				// Logi kasutaja sisse
@@ -60,7 +62,7 @@ class Home_Controller extends Base_Controller {
 				$perenimi = $me['last_name'];
 				$facebook_id =$me['id'];
 				$query = DB::only("SELECT Fb_Id FROM `haaletaja` WHERE Fb_Id = ?", array($facebook_id));
-				
+
 				if ($query = Null) {
 					$valim_piirkond = rand(1,10);
 					$sisestamine = DB::only("INSERT INTO `haaletaja` (Eesnimi, Perekonnanimi, Fb_Id, Valimisringkonna_ID) VALUES (?,?,?,?)", array($eesnimi,$perenimi,$facebook_id,$valim_piirkond));
@@ -74,7 +76,7 @@ class Home_Controller extends Base_Controller {
 			return Redirect::home();
 		}
 	}
-	
+
 
 	public function get_logout() {
 		Auth::logout();
