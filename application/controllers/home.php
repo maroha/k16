@@ -38,7 +38,7 @@ class Home_Controller extends Base_Controller {
 		));
 
 		$session = $facebook->getUser();
-		dd($session);
+
 		$me = null;
 
 		if ($session) {
@@ -47,28 +47,27 @@ class Home_Controller extends Base_Controller {
 			} catch (FacebookApiException $e) { }
 		}
 
-		dd($facebook->getUser());
-
 		if ($me) {
 			// Facebook andis kasutaja
-
+			$facebook_id = $me['id'];
 			// Kontrolli andmebaasist kasutaja olemasolu
+			$user = DB::first("SELECT * FROM `haaletaja` WHERE Fb_Id = ?", array($facebook_id));
 			if($user) {
 				// Logi kasutaja sisse
+				dd($user);
 				Auth::login($user->id);
 				return Redirect::home();
 			} else {
 				$eesnimi = $me['first_name'];
 				$perenimi = $me['last_name'];
-				$facebook_id =$me['id'];
-				$query = DB::only("SELECT Fb_Id FROM `haaletaja` WHERE Fb_Id = ?", array($facebook_id));
 
-				if ($query = Null) {
-					$valim_piirkond = rand(1,10);
-					$sisestamine = DB::only("INSERT INTO `haaletaja` (Eesnimi, Perekonnanimi, Fb_Id, Valimisringkonna_ID) VALUES (?,?,?,?)", array($eesnimi,$perenimi,$facebook_id,$valim_piirkond));
-					Auth::login($user->id);
-					return Redirect::home();
+				$valim_piirkond = rand(1,10);
+				$sisestamine = DB::query("INSERT INTO `haaletaja` (Eesnimi, Perekonnanimi, Fb_Id, Valimisringkonna_ID) VALUES (?,?,?,?)", array($eesnimi,$perenimi,$facebook_id,$valim_piirkond));
+				if($sisestamine) {
+					$id = DB::connection()->pdo->lastInsertId();
+					Auth::login($id);
 				}
+				return Redirect::home();
 			}
 		} else {
 			// Facebook ei andnud kasutajat
