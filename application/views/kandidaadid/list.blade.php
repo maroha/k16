@@ -14,7 +14,11 @@
 			<select name="region" id="sorting">
 				<option value="-1">Kõik valimisringkonnad</option>
 				@foreach($ringkonnad as $ringkond)
-					<option value="{{ $ringkond->id }}">{{ e($ringkond->nimetus) }}</option>
+					@if($ringkond->id == $filtrid["region"])
+						<option value="{{ $ringkond->id }}" selected>{{ e($ringkond->nimetus) }}</option>
+					@else
+						<option value="{{ $ringkond->id }}">{{ e($ringkond->nimetus) }}</option>
+					@endif
 				@endforeach
 			</select>
 			<select name="party">

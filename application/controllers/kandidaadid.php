@@ -70,9 +70,13 @@ EOL;
 
 	public function get_index() {
 		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
-		$kandidaadid = $this->leiaKandidaadid(Input::all());
+		$filtrid = Input::all();
+		$kandidaadid = $this->leiaKandidaadid($filtrid);
+
+		$filtrid = array_merge(array("name" => "", "region" => -1, "party" => -1), $filtrid);
+
 		$this->layout->content = View::make("kandidaadid.list", array(
-			"ringkonnad" => $ringkonnad, "parteid" => $parteid, "kandidaadid" => $kandidaadid
+			"ringkonnad" => $ringkonnad, "parteid" => $parteid, "kandidaadid" => $kandidaadid, "filtrid" => $filtrid
 		));
 		$this->layout->javascript = array("candidates", "list");
 		$this->layout->menu_item = "kandidaadid";
@@ -81,10 +85,16 @@ EOL;
 	public function get_haaleta()
 	{
 		list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
-		$kandidaadid = $this->leiaKandidaadid(Input::all());
+		$filtrid = Input::all();
+		if(Auth::check()) {
+			$filtrid["region"] = Auth::user()->valimisringkonna_id;
+		}
+		$kandidaadid = $this->leiaKandidaadid($filtrid);
+
+		$filtrid = array_merge(array("name" => "", "region" => -1, "party" => -1), $filtrid);
 
 		$this->layout->content = View::make("kandidaadid.list_haaleta", array(
-			"ringkonnad" => $ringkonnad, "parteid" => $parteid, "kandidaadid" => $kandidaadid
+			"ringkonnad" => $ringkonnad, "parteid" => $parteid, "kandidaadid" => $kandidaadid, "filtrid" => $filtrid
 		));
 		$this->layout->javascript = array("candidates", "vote");
 		$this->layout->menu_item = "haaleta";

@@ -17,7 +17,6 @@ class Home_Controller extends Base_Controller {
 		));
 
 		$loginUrl = $facebook->getLoginUrl(array(
-			'scope' => 'email',
 			'display' => 'popup',
 			'redirect_uri' => URL::to("login_callback")
 		));

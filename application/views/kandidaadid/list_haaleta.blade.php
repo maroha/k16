@@ -9,12 +9,20 @@
 		@endif
 	</header>
 	<section>
-		<form id="search-form" action="">
+		<form id="search-form" action="{{ url("haaleta") }}">
 			<input type="text" name="name" placeholder="Sisesta kandidaadi nimi" id="search-name">
-			<select name="region" id="sorting">
+			@if(Auth::check())
+				<select name="region" id="sorting" disabled>
+			@else
+				<select name="region" id="sorting">
+			@endif
 				<option value="-1">Kõik valimisringkonnad</option>
 				@foreach($ringkonnad as $ringkond)
-					<option value="{{ $ringkond->id }}">{{ e($ringkond->nimetus) }}</option>
+					@if($ringkond->id == $filtrid["region"])
+						<option value="{{ $ringkond->id }}" selected>{{ e($ringkond->nimetus) }}</option>
+					@else
+						<option value="{{ $ringkond->id }}">{{ e($ringkond->nimetus) }}</option>
+					@endif
 				@endforeach
 			</select>
 			<select name="party">
