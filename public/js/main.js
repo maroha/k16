@@ -262,8 +262,9 @@ var K16 = {
 						return null;
 					}
 					// Add to results
-					total += person.votes
-					return [{name: person.nimi, votes: person.votes}]
+					var votes = parseInt(person.votes)
+					total += votes
+					return [{name: person.nimi, votes: votes}]
 				});
 			} else { // party
 				total = 0;
@@ -282,8 +283,9 @@ var K16 = {
 						parteid[person.partei_id] = {"name": person.partei_nimi, "votes" : 0}
 						tulemused.push(parteid[person.partei_id]) // Objects are references YAY!
 					}
-					total += person.votes
-					parteid[person.partei_id].votes += person.votes
+					var votes = parseInt(person.votes)
+					total += votes
+					parteid[person.partei_id].votes += votes
 				});
 			}
 			tulemused.sort(function (a, b) {
