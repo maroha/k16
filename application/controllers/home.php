@@ -53,7 +53,6 @@ class Home_Controller extends Base_Controller {
 			$user = DB::first("SELECT * FROM `haaletaja` WHERE Fb_Id = ?", array($facebook_id));
 			if($user) {
 				// Logi kasutaja sisse
-				dd($user);
 				Auth::login($user->id);
 				return Redirect::home();
 			} else {
