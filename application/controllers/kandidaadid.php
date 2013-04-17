@@ -104,7 +104,7 @@ EOL;
 	{
 list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 		$sql = <<<EOL
-SELECT k.ID, h.Eesnimi, h.Perekonnanimi, k.Sunnikoht, k.Haridus, k.Akadeemiline_kraad, k.Elukutse, k.Tookoht, p.Nimetus as partei_nimetus, k.Email, k.Telefoninumber, k.Pilt
+SELECT k.ID, k.Valimisringkonna_ID, h.Eesnimi, h.Perekonnanimi, k.Sunnikoht, k.Haridus, k.Akadeemiline_kraad, k.Elukutse, k.Tookoht, p.Nimetus as partei_nimetus, k.Email, k.Telefoninumber, k.Pilt
 FROM  `kandidaat` AS k
 LEFT JOIN  `haaletaja` AS h ON k.Haaletaja_ID = h.ID
 LEFT JOIN  `partei` AS p ON k.Partei_ID = p.ID
@@ -154,7 +154,7 @@ EOL;
 	public function post_haaleta() {
 		$kandidaat = Input::get("kandidaat");
 		// Kontrolli kandidaati
-		$kontroll = DB::only("SELECT COUNT(*) as count FROM `kandidaat` WHERE `ID` = ?", array($kandidaat));
+		$kontroll = DB::only("SELECT COUNT(*) as count FROM `kandidaat` WHERE `ID` = ? AND  `Valimisringkonna_ID` = ?", array($kandidaat, Auth::user()->valimisringkonna_id));
 		if($kontroll == 0) {
 			return Response::error('404');
 		}

@@ -8,13 +8,17 @@
 </div>
 <div class="right-content">
 	@if(Auth::check())
-		<form method="POST" action="{{ url("kandidaadid/haaleta") }}" class="vote-form float-right">
-			<input type="hidden" name="kandidaat" value="{{ $kandidaat->id }}" />
-			<button class="button-large">Hääleta</button>
-			@if($juba_haaletanud)
-				<p>Uuesti hääletamine tühistab teie eelmise hääle!</p>
-			@endif
-		</form>
+		@if(Auth::user()->valimisringkonna_id == $kandidaat->valimisringkonna_id)
+			<form method="POST" action="{{ url("kandidaadid/haaleta") }}" class="vote-form float-right">
+				<input type="hidden" name="kandidaat" value="{{ $kandidaat->id }}" />
+				<button class="button-large">Hääleta</button>
+				@if($juba_haaletanud)
+					<p>Uuesti hääletamine tühistab teie eelmise hääle!</p>
+				@endif
+			</form>
+		@else
+			<span class="float-right">Erinev valimispiirkond</span>
+		@endif
 	@else
 		<span class="float-right">Hääletamiseks peate olema sisselogitud</span>
 	@endif
