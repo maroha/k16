@@ -96,9 +96,12 @@ Event::listen('500', function()
 |
 */
 
-Route::filter('before', function()
-{
-	// Do stuff before every request to your application...
+Route::filter('before', function() {
+	// Allow special noauth arg
+	if(Input::get("noauth") == true) {
+		Config::set('session.driver',''); // http://forums.laravel.io/viewtopic.php?id=5684
+		Config::set('auth.driver', 'noauth');
+	}
 });
 
 Route::filter('after', function($response)

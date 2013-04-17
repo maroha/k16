@@ -175,6 +175,11 @@ if ( ! Request::cli() and Config::get('session.driver') !== '')
 // Register shorter name for layout
 View::name("layouts.main", "layout");
 
+// Noauth login driver
+Auth::extend('noauth', function() {
+	return new NoAuth();
+});
+
 // Add defaults
 View::composer("layouts.main", function($view) {
 	if(!isset($view->menu_item)) {

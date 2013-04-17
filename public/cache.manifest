@@ -2,15 +2,18 @@ CACHE MANIFEST
 # NB! Change the revision number on the next line every time you change the resources listed in the manifest!
 # rev 00
 FALLBACK:
-tulemused?* tulemused
+
+http://k16.t2t2.eu http://k16.t2t2.eu?noauth=1 #hackiest hack of hackland
+http://k16.dev http://k16.dev?noauth=1 #hackiest hack of hackland
+tulemused tulemused?noauth=1
+tulemused?* tulemused?noauth=1
+kandidaadid kandidaadid?noauth=1
+kandidaadid?* kandidaadid?noauth=1
 
 NETWORK:
 *
 
 CACHE:
-/
-kandidaadid
-tulemused
 css/normalize.min.css
 css/main.css
 js/main.js
