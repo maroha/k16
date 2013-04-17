@@ -9,7 +9,7 @@ var K16 = {
 	common: {
 		init: function () {
 			// application-wide code
-			K16.config = $(document.body).data();
+			K16.config = $.extend({}, {online: true}, $(document.body).data());
 			// if local add a tag to the title to remind the developer
 			if(location.hostname.indexOf(".dev") > -1) {
 				document.title = "[LOCAL] " + document.title
@@ -29,29 +29,35 @@ var K16 = {
 					K16.common.navigateTo(document.location.href, true)
 				});
 			}
+			// Offline
+			if(window.navigator.onLine !== undefined) {
+				$(document.body).on("offline", function () {
+					K16.config.online = false
+					$("nav li[data-item='haaleta'], .user").hide()
+					$(".main-container").before($('<div id="offline" class="alert wrapper">').text("Tähelepanu! Teie olete kaotanud internetiühenduse. Me näitame viimati puhverdatud versioone ning saadaval on ainult kandidaatide nimekiri ja tulemuste leht."))
+				});
+				$(document.body).on("online", function () {
+					K16.config.online = true
+					$("nav li[data-item='haaleta'], .user").show()
+					$("#offline").remove()
+				});
+				if(!window.navigator.onLine) {
+					$(document.body).trigger("offline")
+				}
+			}
 			// Cache results
 			K16.results.update_data()
 			// live server integration
 			if(K16.config.live && Modernizr.websockets) {
-				K16.live = new WebSocket(K16.config.live)
-				K16.live.onmessage = function(e) {
-					K16.storage.set("results", JSON.parse(e.data))
-					if($("#results-table").length > 0) {
-						K16.results.render()
-					}
-				};
-			}
-			if(window.navigator.onLine !== undefined) {
-				$(document.body).bind("offline", function () {
-					$("nav li[data-item='haaleta']").hide()
-					$(".main-container").before($('<div class="message wrapper">').text("Tähelepanu! Teie olete kaotanud internetiühenduse. Me näitame viimati puhverdatud versioone ning saadaval on ainult kandidaatide nimekiri ja tulemuste leht."))
-				});
-				$(document.body).bind("online", function () {
-					$("nav li[data-item='haaleta']").show()
-					$("#offline").remove()
-				});
-				if(!window.navigator.onLine) {
-					$(document.body).fire()
+				try {
+					K16.live = new WebSocket(K16.config.live)
+					K16.live.onmessage = function(e) {
+						K16.storage.set("results", JSON.parse(e.data))
+						if($("#results-table").length > 0) {
+							K16.results.render()
+						}
+					};
+				} catch(e) {
 				}
 			}
 		},
@@ -223,7 +229,11 @@ var K16 = {
 				// 5ft circle of hell: Making dom elements by hand (FUTURE: Use a templating engine, eg. mustache)
 				var candidateRow = $("<tr>").data("id", candidates[i].id).click(K16.candidates.rowListener)
 				$("<td>").text(candidates[i].id).appendTo(candidateRow)
-				$("<td>").append($("<a>").attr({"href": K16.config.url+"/kandidaadid/info/"+candidates[i].id}).text(candidates[i].eesnimi+' '+candidates[i].perekonnanimi)).appendTo(candidateRow)
+				if(K16.config.online) {
+					$("<td>").append($("<a>").attr({"href": K16.config.url+"/kandidaadid/info/"+candidates[i].id}).text(candidates[i].eesnimi+' '+candidates[i].perekonnanimi)).appendTo(candidateRow)
+				} else {
+					$("<td>").text(candidates[i].eesnimi+' '+candidates[i].perekonnanimi).appendTo(candidateRow)
+				}
 				$("<td>").text(candidates[i].valimisringkonna_nimi).appendTo(candidateRow)
 				$("<td>").text(candidates[i].partei_nimi).appendTo(candidateRow)
 				tableBody.append(candidateRow)
@@ -239,9 +249,11 @@ var K16 = {
 	results: {
 		current_filters: {},
 		update_data: function (render) {
-			$.getJSON(K16.config.url+"/tulemused/json", function (results) {
-				K16.storage.set("results", results)
-			});
+			if(K16.config.online) {
+				$.getJSON(K16.config.url+"/tulemused/json", function (results) {
+					K16.storage.set("results", results)
+				});
+			}
 		},
 		update_filters: function () {
 			K16.results.current_filters = {}
