@@ -4,10 +4,13 @@ CACHE MANIFEST
 FALLBACK:
 
 http://k16.t2t2.eu http://k16.t2t2.eu?noauth=1 #hackiest hack of hackland
-http://k16.dev http://k16.dev?noauth=1 #hackiest hack of hackland
+?a /?noauth=1
+http://k16.dev http://k16.dev?noauth=1
 tulemused tulemused?noauth=1
+tulemused?a tulemused?a=1&noauth=1
 tulemused?* tulemused?noauth=1
 kandidaadid kandidaadid?noauth=1
+kandidaadid?a kandidaadid?a=1&noauth=1
 kandidaadid?* kandidaadid?noauth=1
 
 NETWORK:

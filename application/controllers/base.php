@@ -24,7 +24,7 @@ class Base_Controller extends Controller {
 			return $response;
 		}
 
-		if(Request::ajax()) {
+		if(Request::ajax() or Input::get("a") == true) {
 			// fire view composers
 			if($response instanceof View) {
 				Event::fire("laravel.composing: {$response->view}", array($response));
