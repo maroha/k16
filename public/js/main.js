@@ -351,6 +351,21 @@ var K16 = {
 				// K16.common.navigateTo(K16.config.url+"/tulemused?"+arguments)
 				return false;
 			});
+
+			/* Google Map */
+			function initialize()
+			{
+			var mapProp = {
+			  center:new google.maps.LatLng(58.80,25.42),
+			  zoom:6,
+			  mapTypeId:google.maps.MapTypeId.ROADMAP
+			  };
+			var map=new google.maps.Map(document.getElementById("googleMap")
+			  ,mapProp);
+			}
+			
+			google.maps.event.addDomListener(window, 'load', initialize);
+			
 			/* Table sorter */
 			var a_re = /[cdu]\_\d+\_[cdu]/, a_color = 1
 			function hc(s, c) {return (" " + s + " ").indexOf(" " + c + " ") !== -1}
