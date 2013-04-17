@@ -1,14 +1,13 @@
 ﻿CACHE MANIFEST
-# NB! Change the revision number on the next line every time you change the manifest file itself!
+# NB! Change the revision number on the next line every time you change the resources listed in the manifest!
 # rev 00
-# FALLBACK:
+FALLBACK:
+/ ../offline.php
 # NETWORK:
-# CACHE:
-# Kui ei kasuta FALLBACKi ega NETWORKi, siis eraldi CACHE mainida pole vaja ka, muudel juhtudel peab!
+CACHE:
 ../index.php
 ../../application/views/layouts/main.blade.php
 ../kandidaadid?a
-../haaleta?a
 ../tulemused?a
 ../css/main.css
 ../css/normalize.css
@@ -24,4 +23,11 @@
 ../apple-touch-icon-144x144-precomposed.png
 ../apple-touch-icon-precomposed.png
 ../favicon.ico
+../img/ajax-loader.gif
+../img/ajax-loader-small.gif
+../img/map.png
+../img/tableSortArrowDown.gif
+../img/tableSortArrowsInactive.gif
+../img/tableSortArrowUp.gif
+
 
