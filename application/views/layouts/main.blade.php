@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" manifest="../../../public/cache.manifest/cache.manifest"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" manifest="{{ asset("cache.manifest") }}"> <!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -59,9 +59,7 @@
 			Oota natukene, meil on asju leida...
 		</div>
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script>window.jQuery || document.write('<script src="{{ asset("js/vendor/jquery-1.9.1.min.js") }}"><\/script>')</script>
-
+		<script src="{{ asset("js/vendor/jquery-1.9.1.min.js") }}"></script>
 		<script src="{{ asset("js/jquery.autocomplete.js") }}"></script>
 		<script src="{{ asset("js/main.js") }}"></script>
 	</body>

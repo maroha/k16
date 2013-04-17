@@ -1,0 +1,34 @@
+﻿CACHE MANIFEST
+# NB! Change the revision number on the next line every time you change the resources listed in the manifest!
+# rev 00
+FALLBACK:
+
+# NETWORK:
+CACHE:
+/
+/kandidaadid
+/tulemused
+/kandidaadid?a
+/tulemused?a
+/css/main.css
+/css/normalize.css
+/css/normalize.min.css
+/js/main.js
+/js/jquery.autocomplete.js
+/js/vendor/jquery-1.9.1.min.js
+/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js
+/apple-touch-icon.png
+/apple-touch-icon-57x57-precomposed.png
+/apple-touch-icon-72x72-precomposed.png
+/apple-touch-icon-114x114-precomposed.png
+/apple-touch-icon-144x144-precomposed.png
+/apple-touch-icon-precomposed.png
+/favicon.ico
+/img/ajax-loader.gif
+/img/ajax-loader-small.gif
+/img/map.png
+/img/tableSortArrowDown.gif
+/img/tableSortArrowsInactive.gif
+/img/tableSortArrowUp.gif
+
+

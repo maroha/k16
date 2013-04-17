@@ -41,6 +41,19 @@ var K16 = {
 					}
 				};
 			}
+			if(window.navigator.onLine !== undefined) {
+				$(document.body).bind("offline", function () {
+					$("nav li[data-item='haaleta']").hide()
+					$(".main-container").before($('<div class="message wrapper">').text("Tähelepanu! Teie olete kaotanud internetiühenduse. Me näitame viimati puhverdatud versioone ning saadaval on ainult kandidaatide nimekiri ja tulemuste leht."))
+				});
+				$(document.body).bind("online", function () {
+					$("nav li[data-item='haaleta']").show()
+					$("#offline").remove()
+				});
+				if(!window.navigator.onLine) {
+					$(document.body).fire()
+				}
+			}
 		},
 		navigateTo: function (targetURL, popstate) {
 			// Some cache uniqueness just in case
