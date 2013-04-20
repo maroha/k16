@@ -76,6 +76,7 @@
 							<td>
 								<div class="result-row" style="width: {{ $result->percent }}%;"></div>
 								<div class="result-text">{{ "{$result->votes} ({$result->percent}%)" }}</div>
+
 							</td>
 						</tr>
 					@endforeach
