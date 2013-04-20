@@ -54,8 +54,7 @@
 			<button id="submit" type="submit">Värskenda</button>
 		</form>
 		<div class="row-left">
-			<img src="img/map.png" alt="Kaart" />
-			<small class="attrib">Kaart <a href="http://commons.wikimedia.org/wiki/File:Estonia_location_map.svg">CC-by-sa Wikipedia</a></small>
+			<div id="googleMap" style="width:100%;height:418px;"></div>
 		</div>
 		<div class="row-right">
 			<table class="sortable">
