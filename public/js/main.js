@@ -439,6 +439,260 @@ var K16 = {
 			  });
 			  map.fitBounds(bounds);
 			}
+			var Harjumaa1=new google.maps.LatLng(59.234,23.725);
+			var Harjumaa2=new google.maps.LatLng(59.206,23.783);
+			var Harjumaa3=new google.maps.LatLng(59.134,23.904);
+			var Harjumaa4=new google.maps.LatLng(59.13,24.059);
+			var Harjumaa5=new google.maps.LatLng(59.0077,24.2941);
+			var Harjumaa6=new google.maps.LatLng(59.084,24.365);
+			var Harjumaa7=new google.maps.LatLng(59.095,24.563);
+			var Harjumaa8=new google.maps.LatLng(59.193,24.624);
+			var Harjumaa9=new google.maps.LatLng(59.217,24.901);
+			var Harjumaa10=new google.maps.LatLng(59.131,25.016);
+			var Harjumaa11=new google.maps.LatLng(59.0769,25.1977);
+			var Harjumaa12=new google.maps.LatLng(58.982,25.332);
+			var Harjumaa13=new google.maps.LatLng(59.202,25.523);
+			var Harjumaa14=new google.maps.LatLng(59.285,25.784);
+			var Harjumaa15=new google.maps.LatLng(59.310,25.940);
+			var Harjumaa16=new google.maps.LatLng(59.5535,25.8419);
+			var Harjumaa17=new google.maps.LatLng(59.663,25.7046);
+			var Harjumaa18=new google.maps.LatLng(59.642,24.965);
+			var Harjumaa19=new google.maps.LatLng(59.599,24.509);
+			var Harjumaa20=new google.maps.LatLng(59.3048,23.6694);
+
+			var myTrip=[Harjumaa1, Harjumaa2, Harjumaa3, Harjumaa4, Harjumaa5, Harjumaa6, Harjumaa7, Harjumaa8, Harjumaa9, Harjumaa10, Harjumaa11, Harjumaa12, Harjumaa13, Harjumaa14, Harjumaa15, Harjumaa16, Harjumaa17, Harjumaa18, Harjumaa19, Harjumaa20];
+			var flightPath=new google.maps.Polygon({
+			  path:myTrip,
+			  strokeColor:"#0000FF",
+			  strokeOpacity:0.8,
+			  strokeWeight:2,
+			  fillColor:"blue",
+			  fillOpacity:0.4
+			  });
+
+			flightPath.setMap(map);
+			var Laanemaak1=new google.maps.LatLng(58.5231,23.606);
+			var Laanemaak2=new google.maps.LatLng(58.542,23.712);
+			var Laanemaak3=new google.maps.LatLng(58.537,23.748);
+			var Laanemaak4=new google.maps.LatLng(58.5458,23.9114);
+			var Laanemaak5=new google.maps.LatLng(58.641,23.864);
+			var Laanemaak6=new google.maps.LatLng(58.677,23.999);
+			var Laanemaak7=new google.maps.LatLng(58.717,24.149);
+			var Laanemaak8=new google.maps.LatLng(58.880,24.1462);
+			var Laanemaak9=new google.maps.LatLng(59.013,24.084);
+			var Laanemaak10=new google.maps.LatLng(59.053,24.1668);
+			var Laanemaak20=new google.maps.LatLng(59.127,24.0368);
+			var Laanemaak12=new google.maps.LatLng(59.131,23.947);
+			var Laanemaak13=new google.maps.LatLng(59.1357,23.9018);
+			var Laanemaak14=new google.maps.LatLng(59.158,23.785);
+			var Laanemaak15=new google.maps.LatLng(59.225,23.710);
+			var Laanemaak16=new google.maps.LatLng(59.299,23.3316);
+			var Laanemaak17=new google.maps.LatLng(59.022,23.064);
+			var Laanemaak18=new google.maps.LatLng(58.834,23.223);
+			var Laanemaak19=new google.maps.LatLng(58.621,23.465);
+			var myTrip=[Laanemaak1, Laanemaak2, Laanemaak3, Laanemaak4, Laanemaak5, Laanemaak6, Laanemaak7, Laanemaak8, Laanemaak10, Laanemaak20, Laanemaak12, Laanemaak13, Laanemaak15, Laanemaak16, Laanemaak17, Laanemaak18, Laanemaak19];
+			var flightPath=new google.maps.Polygon({
+			  path:myTrip,
+			  strokeColor:"red",
+			  strokeOpacity:0.8,
+			  strokeWeight:2,
+			  fillColor:"#0000FF",
+			  fillOpacity:0.4
+			  });
+
+			flightPath.setMap(map);
+			var Hiiumak1=new google.maps.LatLng(59.070,21.957);
+			var Hiiumak2=new google.maps.LatLng(58.695,21.995);
+			var Hiiumak3=new google.maps.LatLng(58.695,22.924);
+			var Hiiumak4=new google.maps.LatLng(58.826,23.15);
+			var Hiiumak5=new google.maps.LatLng(59.160,22.803);
+			var myTrip=[Hiiumak1, Hiiumak2, Hiiumak3, Hiiumak4, Hiiumak5];
+			var flightPath=new google.maps.Polygon({
+			  path:myTrip,
+			  strokeColor:"green",
+			  strokeOpacity:0.8,
+			  strokeWeight:2,
+			  fillColor:"#0000FF",
+			  fillOpacity:0.4
+			  });
+			flightPath.setMap(map);
+			var Saaremak1=new google.maps.LatLng(58.621,21.715);
+			var Saaremak2=new google.maps.LatLng(57.863,21.781);
+			var Saaremak3=new google.maps.LatLng(57.913,22.424);
+			var Saaremak4=new google.maps.LatLng(58.463,23.495);
+			var Saaremak5=new google.maps.LatLng(58.698,23.352);
+
+			var myTrip=[Saaremak1, Saaremak2, Saaremak3, Saaremak4, Saaremak5];
+			var flightPath=new google.maps.Polygon({
+			  path:myTrip,
+			  strokeColor:"green",
+			  strokeOpacity:0.8,
+			  strokeWeight:2,
+			  fillColor:"#0000FF",
+			  fillOpacity:0.4
+			  });
+
+			flightPath.setMap(map);
+			var Laaneviru1=new google.maps.LatLng(59.563,25.853);
+			var Laaneviru2=new google.maps.LatLng(59.350,25.947);
+			var Laaneviru3=new google.maps.LatLng(59.226,25.635);
+			var Laaneviru4=new google.maps.LatLng(59.176,26.007);
+			var Laaneviru5=new google.maps.LatLng(59.056,25.920);
+			var Laaneviru6=new google.maps.LatLng(58.8825,26.1590);
+			var Laaneviru7=new google.maps.LatLng(58.997,26.801);
+			var Laaneviru8=new google.maps.LatLng(59.056,26.920);
+			var Laaneviru9=new google.maps.LatLng(59.1159,26.8127);
+			var Laaneviru10=new google.maps.LatLng(59.156,26.944);
+			var Laaneviru11=new google.maps.LatLng(59.255,26.851);
+			var Laaneviru12=new google.maps.LatLng(59.237,26.757);
+			var Laaneviru13=new google.maps.LatLng(59.6,26.779);
+			var Laaneviru14=new google.maps.LatLng(59.65,25.889);
+
+
+
+			var myTrip=[Laaneviru1, Laaneviru2, Laaneviru3, Laaneviru4, Laaneviru5, Laaneviru6, Laaneviru7, Laaneviru8, Laaneviru9, Laaneviru10, Laaneviru11, Laaneviru12, Laaneviru13, Laaneviru14];
+			var flightPath=new google.maps.Polygon({
+			  path:myTrip,
+			  strokeColor:"green",
+			  strokeOpacity:0.8,
+			  strokeWeight:2,
+			  fillColor:"#0000FF",
+			  fillOpacity:0.4
+			  });
+
+			flightPath.setMap(map);
+			
+			var Idaviru1=new google.maps.LatLng(59.6,26.779);
+			var Idaviru2=new google.maps.LatLng(59.237,26.757);
+			var Idaviru3=new google.maps.LatLng(59.255,26.851);
+			var Idaviru4=new google.maps.LatLng(59.156,26.944);
+			var Idaviru5=new google.maps.LatLng(59.1159,26.8127);
+			var Idaviru6=new google.maps.LatLng(59.056,26.920);
+			var Idaviru7=new google.maps.LatLng(58.997,26.801);
+			var Idaviru8=new google.maps.LatLng(58.990,27.741);
+			var Idaviru9=new google.maps.LatLng(59.262,27.933);
+			var Idaviru10=new google.maps.LatLng(59.312,28.155);
+			var Idaviru11=new google.maps.LatLng(59.365,28.2107);
+			var Idaviru12=new google.maps.LatLng(59.462,28.043);
+			var myTrip=[Idaviru1, Idaviru2, Idaviru3, Idaviru4, Idaviru5, Idaviru6, Idaviru7, Idaviru8, Idaviru9, Idaviru10, Idaviru11, Idaviru12];
+			var flightPath=new google.maps.Polygon({
+			  path:myTrip,
+			  strokeColor:"black",
+			  strokeOpacity:0.8,
+			  strokeWeight:2,
+			  fillColor:"#0000FF",
+			  fillOpacity:0.4
+			  });
+			flightPath.setMap(map);
+			var Raplamaa1=new google.maps.LatLng(58.698,24.172);
+			var Raplamaa2=new google.maps.LatLng(59.070,24.154);
+			var Raplamaa3=new google.maps.LatLng(59.0077,24.2941);
+			var Raplamaa4=new google.maps.LatLng(59.084,24.365);
+			var Raplamaa5=new google.maps.LatLng(59.095,24.563);
+			var Raplamaa6=new google.maps.LatLng(59.193,24.624);
+			var Raplamaa7=new google.maps.LatLng(59.217,24.901);
+			var Raplamaa8=new google.maps.LatLng(59.131,25.016);
+			var Raplamaa9=new google.maps.LatLng(59.0769,25.1977);
+			var Raplamaa10=new google.maps.LatLng(58.982,25.332);
+			var Raplamaa11=new google.maps.LatLng(58.721,25.198);
+			var Raplamaa12=new google.maps.LatLng(58.699,25.000);
+			var Raplamaa13=new google.maps.LatLng(58.65,24.918);
+			var Raplamaa14=new google.maps.LatLng(58.733,24.896);
+			var myTrip=[Raplamaa1, Raplamaa2, Raplamaa3, Raplamaa4, Raplamaa5, Raplamaa6, Raplamaa7, Raplamaa8, Raplamaa9, Raplamaa10, Raplamaa11, Raplamaa12, Raplamaa13, Raplamaa14];
+			var flightPath=new google.maps.Polygon({
+			  path:myTrip,
+			  strokeColor:"yellow",
+			  strokeOpacity:0.8,
+			  strokeWeight:2,
+			  fillColor:"#0000FF",
+			  fillOpacity:0.4
+			  });
+			flightPath.setMap(map);
+			var Parnumaak1=new google.maps.LatLng(58.5231,23.606);
+			var Parnumaak2=new google.maps.LatLng(58.542,23.712);
+			var Parnumaak3=new google.maps.LatLng(58.537,23.748);
+			var Parnumaak4=new google.maps.LatLng(58.5458,23.9114);
+			var Parnumaak5=new google.maps.LatLng(58.641,23.864);
+			var Parnumaak6=new google.maps.LatLng(58.677,23.999);
+			var Parnumaak7=new google.maps.LatLng(58.717,24.149);
+			var Parnumaak8=new google.maps.LatLng(58.698,24.172);
+			var Parnumaak9=new google.maps.LatLng(58.733,24.896);
+			var Parnumaak10=new google.maps.LatLng(58.65,24.918);
+			var Parnumaak11=new google.maps.LatLng(58.699,25.000);
+			var Parnumaak12=new google.maps.LatLng(58.721,25.198);
+			var Parnumaak13=new google.maps.LatLng(58.684,25.247);
+			var Parnumaak14=new google.maps.LatLng(58.684,25.237);
+			var Parnumaak15=new google.maps.LatLng(58.475,25.0335);
+			var Parnumaak16=new google.maps.LatLng(58.314,24.967);
+			var Parnumaak17=new google.maps.LatLng(58.3265,25.242);
+			var Parnumaak18=new google.maps.LatLng(58.03363,25.039);
+			var Parnumaak19=new google.maps.LatLng(57.855,24.352);
+			var Parnumaak20=new google.maps.LatLng(58.0714,23.715);
+			var myTrip=[Parnumaak1, Parnumaak2, Parnumaak3, Parnumaak4, Parnumaak5, Parnumaak6, Parnumaak7, Parnumaak8, Parnumaak9, Parnumaak10, Parnumaak11, Parnumaak12, Parnumaak13, Parnumaak14, Parnumaak15, Parnumaak16, Parnumaak17, Parnumaak18, Parnumaak19, Parnumaak20];
+			var flightPath=new google.maps.Polygon({
+			  path:myTrip,
+			  strokeColor:"green",
+			  strokeOpacity:0.8,
+			  strokeWeight:2,
+			  fillColor:"orage",
+			  fillOpacity:0.4
+			  });
+			flightPath.setMap(map);
+			var Paidemaa1=new google.maps.LatLng(58.613,25.231);
+			var Paidemaa2=new google.maps.LatLng(58.684,25.764);
+			var Paidemaa3=new google.maps.LatLng(58.875,26.148);
+			var Paidemaa4=new google.maps.LatLng(58.8825,26.1590);
+			var Paidemaa5=new google.maps.LatLng(59.056,25.920);
+			var Paidemaa6=new google.maps.LatLng(59.176,26.007);
+			var Paidemaa7=new google.maps.LatLng(59.226,25.635);
+			var Paidemaa8=new google.maps.LatLng(59.215,25.563);
+			var Paidemaa9=new google.maps.LatLng(59.004,25.370);
+			var Paidemaa10=new google.maps.LatLng(58.733,25.208);
+			var myTrip=[Paidemaa1, Paidemaa2, Paidemaa3, Paidemaa4, Paidemaa5, Paidemaa6, Paidemaa7, Paidemaa8, Paidemaa9, Paidemaa10];
+			var flightPath=new google.maps.Polygon({
+			  path:myTrip,
+			  strokeColor:"red",
+			  strokeOpacity:0.8,
+			  strokeWeight:2,
+			  fillColor:"orage",
+			  fillOpacity:0.4
+			  });
+			flightPath.setMap(map);
+			var Viljandimaa1=new google.maps.LatLng(58.613,25.231);
+			var Viljandimaa2=new google.maps.LatLng(58.684,25.764);
+			var Viljandimaa3=new google.maps.LatLng(58.8825,26.1590);
+			var Viljandimaa4=new google.maps.LatLng(58.997,26.801);
+			var Viljandimaa5=new google.maps.LatLng(58.990,27.741);
+			var Viljandimaa16=new google.maps.LatLng(58.773,27.351);
+			var Viljandimaa17=new google.maps.LatLng(58.349,27.543);
+			var Viljandimaa18=new google.maps.LatLng(58.080,27.615);
+			var Viljandimaa19=new google.maps.LatLng(57.864,27.802);
+			var Viljandimaa20=new google.maps.LatLng(57.8119,27.5439);
+			var Viljandimaa21=new google.maps.LatLng(57.5181,27.3077);
+			var Viljandimaa22=new google.maps.LatLng(57.6094,26.9287);
+			var Viljandimaa23=new google.maps.LatLng(57.4974,26.5551);
+			var Viljandimaa24=new google.maps.LatLng(57.7474,26.0443);
+			var Viljandimaa25=new google.maps.LatLng(57.9404,25.5773);
+			var Viljandimaa6=new google.maps.LatLng(57.949,25.577);
+			var Viljandimaa7=new google.maps.LatLng(58.068,25.286);
+			var Viljandimaa8=new google.maps.LatLng(57.921,25.291);
+			var Viljandimaa9=new google.maps.LatLng(57.989,25.225);
+			var Viljandimaa10=new google.maps.LatLng(58.083,25.203);
+			var Viljandimaa11=new google.maps.LatLng(58.03363,25.039);
+			var Viljandimaa12=new google.maps.LatLng(58.3265,25.242);
+			var Viljandimaa13=new google.maps.LatLng(58.314,24.967);
+			var Viljandimaa14=new google.maps.LatLng(58.475,25.0335);
+			var Viljandimaa15=new google.maps.LatLng(58.684,25.237);
+			var myTrip=[Viljandimaa1, Viljandimaa2, Viljandimaa3, Viljandimaa4, Viljandimaa4, Viljandimaa5, Viljandimaa16, Viljandimaa17, Viljandimaa18, Viljandimaa19, Viljandimaa20, Viljandimaa21, Viljandimaa22, Viljandimaa23, Viljandimaa24, Viljandimaa25, Viljandimaa6, Viljandimaa7, Viljandimaa8, Viljandimaa9, Viljandimaa10, Viljandimaa11, Viljandimaa12, Viljandimaa13, Viljandimaa14, Viljandimaa15];
+			var flightPath=new google.maps.Polygon({
+			  path:myTrip,
+			  strokeColor:"blue",
+			  strokeOpacity:0.8,
+			  strokeWeight:2,
+			  fillColor:"orage",
+			  fillOpacity:0.4
+			  });
+			flightPath.setMap(map);
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);
 			
