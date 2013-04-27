@@ -23,6 +23,7 @@
 
 $environments = array(
 
+  'testing' => array('http://localhost:16161*'),
 	'local' => array('http://localhost*', '*.dev'),
   'production' => array('http://k16.t2t2.eu'),
 
