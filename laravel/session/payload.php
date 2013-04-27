@@ -67,7 +67,7 @@ class Payload {
 		if ( ! $this->has(Session::csrf_token))
 		{
 			$this->put(Session::csrf_token, Str::random(40));
-		}		
+		}
 	}
 
 	/**
@@ -313,7 +313,7 @@ class Payload {
 	 *
 	 * If the session driver is a sweeper, it must clean up expired sessions
 	 * from time to time. This method triggers garbage collection.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function sweep()
@@ -348,7 +348,7 @@ class Payload {
 
 		$minutes = ( ! $expire_on_close) ? $lifetime : 0;
 
-		Cookie::put($cookie, $this->session['id'], $minutes, $path, $domain, $secure);	
+		Cookie::put($cookie, $this->session['id'], $minutes, $path, $domain, $secure);
 	}
 
 }

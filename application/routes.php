@@ -39,9 +39,6 @@ Route::get("haaleta", "kandidaadid@haaleta");
 Route::get("login", "home@login");
 Route::get("login_callback", "home@login_callback");
 Route::get("logout", "home@logout");
-/*Route::get('/', function () {
-  return View::make("offline");
-});*/
 
 /*
 |--------------------------------------------------------------------------

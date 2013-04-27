@@ -31,7 +31,11 @@ class Tulemused_Controller extends Base_Controller {
 		}
 		// Create query of awesome
 		if($filters["type"] == "person") {
-			$selector = "k.ID, CONCAT(u.Eesnimi, \" \", u.Perekonnanimi) AS Nimi, COUNT(h.ID) AS votes";
+			if(DB::connection()->driver() == "sqlite") {
+				$selector = "k.ID, u.Eesnimi || \" \" || u.Perekonnanimi AS Nimi, COUNT(h.ID) AS votes";
+			} else {
+				$selector = "k.ID, CONCAT(u.Eesnimi, \" \", u.Perekonnanimi) AS Nimi, COUNT(h.ID) AS votes";
+			}
 			$leftjoin = "LEFT JOIN haaletaja AS u ON k.Haaletaja_ID = u.ID";
 			$groupby = "GROUP BY k.ID";
 		} else { // == "party" (by default)
@@ -86,7 +90,12 @@ class Tulemused_Controller extends Base_Controller {
 		$this->layout->menu_item = "tulemused";
 	}
 	public function get_json() {
-		$sql = "SELECT k.ID, CONCAT(u.Eesnimi, \" \", u.Perekonnanimi) AS Nimi, k.Partei_ID, p.Nimetus as Partei_Nimi, k.Valimisringkonna_ID, COUNT(h.ID) AS votes FROM kandidaat as k LEFT JOIN haaletaja AS u ON k.Haaletaja_ID = u.ID LEFT JOIN partei AS p ON k.Partei_ID = p.ID  LEFT JOIN haal AS h ON h.Kandidaadi_ID = k.ID GROUP BY k.ID";
+		if(DB::connection()->driver() == "sqlite") {
+			$ustr = "u.Eesnimi || \" \" || u.Perekonnanimi";
+		} else {
+			$ustr = "CONCAT(u.Eesnimi, \" \", u.Perekonnanimi)";
+		}
+		$sql = "SELECT k.ID, {$ustr} AS Nimi, k.Partei_ID, p.Nimetus as Partei_Nimi, k.Valimisringkonna_ID, COUNT(h.ID) AS votes FROM kandidaat as k LEFT JOIN haaletaja AS u ON k.Haaletaja_ID = u.ID LEFT JOIN partei AS p ON k.Partei_ID = p.ID  LEFT JOIN haal AS h ON h.Kandidaadi_ID = k.ID GROUP BY k.ID";
 
 		$results = DB::query($sql);
 		return Response::json($results);

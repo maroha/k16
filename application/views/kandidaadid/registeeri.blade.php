@@ -91,7 +91,7 @@
 				</div>
 			</div>
 			<div class="form-row">
-				<label class="form-label" for="register-occupation">Pilt</label>
+				<label class="form-label" for="register-picture">Pilt</label>
 				<div class="form-field">
 					<input type="file" name="picture" size="20" />
 				</div>
