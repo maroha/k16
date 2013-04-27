@@ -62,6 +62,7 @@
 		<script src="{{ asset("js/vendor/jquery-1.9.1.min.js") }}"></script>
 		<script src="{{ asset("js/jquery.autocomplete.js") }}"></script>
 		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAY_6ETr1c7dQHucQJatGqBehz6LG0oCLc&sensor=false"></script>
+		<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/styledmarker/src/StyledMarker.js"></script>
 		<script src="{{ asset("js/main.js") }}"></script>
 		<iframe height="0" width="0" src="{{ asset("offline.html") }}"></iframe>
 	</body>

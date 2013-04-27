@@ -354,21 +354,16 @@ var K16 = {
 
 			/* Google Maps */
 			var markers = [
-			  ['Tallinn', 59.437222, 24.745278],
-			  ['Kardla', 59, 22.75],
-			  ['Johvi', 59.3575, 27.426944],
-			  ['Jogeva', 58.746944, 26.4],
-			  ['Paide', 58.883333, 25.557222],
-			  ['Haapsalu', 58.939444, 23.540833],
-			  ['Rakvere', 59.35, 26.35],
-			  ['Polva', 58.053056, 27.051667],
-			  ['Parnu', 58.383333, 24.5],
-			  ['Rapla', 58.994444, 24.801111],
-			  ['Kuressaare', 58.25, 22.483333],
-			  ['Tartu', 58.383333, 26.716667],
-			  ['Valga', 57.783333, 26.033333],
-			  ['Viljandi', 58.366667, 25.6],
-			  ['Voru', 57.85, 27]
+			  ['Tallinn', 59.2, 24, "ff0000"],
+			  ['Kardla', 59, 22.5, "ffff00"],
+			  ['Johvi', 59, 26.9, "00cc00"],
+			  ['Paide', 58.8, 25.8, "0000ff"],
+			  ['Haapsalu', 58.8, 23.540833, "ff0066"],
+			  ['Rakvere', 59.4, 26, "ccffff"],
+			  ['Parnu', 58, 24.5, "33cc33"],
+			  ['Rapla', 59, 25, "9900ff"],
+			  ['Kuressaare', 58.4, 22.5, "ccff66"],
+			  ['Tartu', 58.2, 25.8, "999966"]
 			];			
 			function initialize()
 			{
@@ -430,21 +425,18 @@ var K16 = {
 			  ,mapProp);
 			map.mapTypes.set('map_style', styledMap);
 			map.setMapTypeId('map_style');
-			var infowindow = new google.maps.InfoWindow(), marker, i;
 			var bounds = new google.maps.LatLngBounds();
 			for (i = 0; i < markers.length; i++) {  
 			  var pos = new google.maps.LatLng(markers[i][1], markers[i][2]);
 			  bounds.extend(pos);
-			  marker = new google.maps.Marker({
-			    position: pos,
-			    map: map
+			  marker = new StyledMarker({
+			    styleIcon:new StyledIcon(StyledIconTypes.BUBBLE,{
+				  color:markers[i][3],
+				  text:markers[i][0]
+				  }),
+				  position:pos,
+				  map:map
 			  });
-			  google.maps.event.addListener(marker, 'click', (function(marker, i) {
-			    return function() {
-				  infowindow.setContent(markers[i][0]);
-				  infowindow.open(map, marker);
-			    }
-			  })(marker, i));
 			  map.fitBounds(bounds);
 			}
 			}
