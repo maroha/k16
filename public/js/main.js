@@ -369,16 +369,16 @@ var K16 = {
 			
 			/* Google Maps */
 			var markers = [
-			  ['Tallinn', 59.2, 24, "ff0000"],
-			  ['Kardla', 59, 22.5, "ffff00"],
-			  ['Johvi', 59, 26.9, "00cc00"],
+			  ['Tallinn', 59.5, 24.6, "ff0000"],
+			  ['Kardla', 58.7, 22.0, "ffff00"],
+			  ['Johvi', 59.1, 27.5, "00cc00"],
 			  ['Paide', 58.8, 25.8, "0000ff"],
-			  ['Haapsalu', 58.8, 23.540833, "ff0066"],
-			  ['Rakvere', 59.4, 26, "ccffff"],
+			  ['Haapsalu', 59.1, 23.240833, "ff0066"],
+			  ['Rakvere', 59.5, 26.2, "ccffff"],
 			  ['Parnu', 58, 24.5, "33cc33"],
-			  ['Rapla', 59, 25, "9900ff"],
-			  ['Kuressaare', 58.4, 22.5, "ccff66"],
-			  ['Tartu', 58.2, 25.8, "999966"]
+			  ['Rapla', 58.71, 24.3, "9900ff"],
+			  ['Kuressaare', 58.2, 21.9, "ccff66"],
+			  ['Tartu', 58.0, 26.2, "999966"]
 			];			
 			var styles = [ 
 			  { featureType: "administrative",
