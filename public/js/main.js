@@ -352,6 +352,21 @@ var K16 = {
 				return false;
 			});
 
+			var tulemused = {}
+			$.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], function(key, regionid) {
+				tulemused[regionid] = []
+			});
+			$.each(K16.storage.get("results"), function (key, person) {
+				if(tulemused[person.valimisringkonna_id][person.partei_id]) {
+					tulemused[person.valimisringkonna_id][person.partei_id] += parseInt(person.votes)
+				} else {
+					tulemused[person.valimisringkonna_id][person.partei_id] = parseInt(person.votes)
+				}
+			});
+			
+			//console.log(tulemused)
+			
+			
 			/* Google Maps */
 			var markers = [
 			  ['Tallinn', 59.2, 24, "ff0000"],
@@ -365,8 +380,6 @@ var K16 = {
 			  ['Kuressaare', 58.4, 22.5, "ccff66"],
 			  ['Tartu', 58.2, 25.8, "999966"]
 			];			
-			function initialize()
-			{
 			var styles = [ 
 			  { featureType: "administrative",
 			    elementType: "labels",
@@ -403,8 +416,8 @@ var K16 = {
 			var styledMap = new google.maps.StyledMapType(styles,
 			  {name: "Styled Map"});
 			var mapProp = {
-			  //center:new google.maps.LatLng(58.6,24.7),
-			  //zoom:6,
+			  center:new google.maps.LatLng(58.6,24.7),
+			  zoom:6,
 			  mapTypeControl: false,
 			  draggable: false,
 			  scaleControl: false,
@@ -425,10 +438,10 @@ var K16 = {
 			  ,mapProp);
 			map.mapTypes.set('map_style', styledMap);
 			map.setMapTypeId('map_style');
-			var bounds = new google.maps.LatLngBounds();
+			//var bounds = new google.maps.LatLngBounds();
 			for (i = 0; i < markers.length; i++) {  
 			  var pos = new google.maps.LatLng(markers[i][1], markers[i][2]);
-			  bounds.extend(pos);
+			  //bounds.extend(pos);
 			  marker = new StyledMarker({
 			    styleIcon:new StyledIcon(StyledIconTypes.BUBBLE,{
 				  color:markers[i][3],
@@ -437,8 +450,32 @@ var K16 = {
 				  position:pos,
 				  map:map
 			  });
-			  map.fitBounds(bounds);
+			  //map.fitBounds(bounds);
 			}
+			var layer = new google.maps.FusionTablesLayer({
+			  query: {
+			    select: 'Location',
+				from: '1NIVOZxrr-uoXhpWSQH2YJzY5aWhkRZW0bWhfZw'
+			  },
+			  map: map
+			});
+			var legend = document.createElement('div');
+			legend.id = 'legend';
+			var content = [];
+			content.push('<div class="color red"></div>Partei 1');
+			content.push('<br><div class="color yellow"></div>Partei 2');
+			content.push('<br><div class="color green"></div>Partei 3');
+			content.push('<br><div class="color blue"></div>Partei 4');
+			content.push('<br><div class="color purple"></div>Partei 5');
+			content.push('<br><div class="color orangered"></div>Partei 6');
+			content.push('<br><div class="color khaki"></div>Partei 7');
+			content.push('<br><div class="color olive"></div>Partei 8');
+			content.push('<br><div class="color lavender"></div>Partei 9');
+			content.push('<br><div class="color deeppink"></div>Partei 10');
+			legend.innerHTML = content.join('');
+			legend.index = 1;
+			map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
+
 			var Harjumaa1=new google.maps.LatLng(59.234,23.725);
 			var Harjumaa2=new google.maps.LatLng(59.206,23.783);
 			var Harjumaa3=new google.maps.LatLng(59.134,23.904);
@@ -693,8 +730,7 @@ var K16 = {
 			  fillOpacity:0.4
 			  });
 			flightPath.setMap(map);
-			}
-			google.maps.event.addDomListener(window, 'load', initialize);
+
 			
 			/* Table sorter */
 			var a_re = /[cdu]\_\d+\_[cdu]/, a_color = 1

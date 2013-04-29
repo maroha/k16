@@ -437,6 +437,62 @@ nav a:hover {
 	margin: 0 auto;
 }
 
+/* Google Maps: Fusion Tables */
+#legend {
+	background: transparent;
+	padding: 10px;
+	margin: 5px;
+	font-size: 12px;
+	font-family: Arial, sans-serif;
+}
+
+.color {
+	border: 1px solid;
+	height: 12px;
+	width: 12px;
+	margin-right: 3px;
+	float: left;
+}
+
+.red {
+	background: #FF0000;
+}
+
+.yellow {
+	background: #FFFF00;
+}
+
+.green {
+	background: #008000;
+}
+
+.blue {
+	background: #0000FF;
+}
+
+.purple {
+	background: #800080;
+}
+
+.orangered {
+	background: #FF4500;
+}
+
+.khaki {
+	background: #F0E68C;
+}
+
+.olive {
+	background: #808000;
+}
+
+.lavender {
+	background: #E6E6FA;
+}
+
+.deeppink {
+	background: #FF1493;
+}
 
 /* ==========================================================================
    Media Queries
