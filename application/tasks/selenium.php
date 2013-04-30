@@ -44,6 +44,7 @@ class Selenium_Task extends Task {
 		$this->web_driver = new WebDriver($wd_host);
 
 		$results = array();
+		$summary = array("success" => 0, "failure" => 0);
 
 		foreach ($this->tests as $key => $test) {
 			echo "# Test #{$key} - ".$test["name"]."...".PHP_EOL;
@@ -60,6 +61,7 @@ class Selenium_Task extends Task {
 				ob_end_clean();
 				echo "SUCCESS!".PHP_EOL;
 				$result["success"] = true;
+				$summary["success"]++;
 			} catch (Testing_Exception $e) {
 				$log = ob_get_contents();
 				ob_end_flush();
@@ -67,12 +69,14 @@ class Selenium_Task extends Task {
 				$e->data["screenshot"] = $this->session->screenshot();
 				$result["success"] = false;
 				$result["error"] = $e;
+				$summary["failure"]++;
 			} catch (Exception $e) {
 				$log = ob_get_contents();
 				ob_end_flush();
 				echo "FAIL! Unhandled Expection!".PHP_EOL;
 				$result["success"] = false;
 				$result["error"] = new Testing_Exception("Unhandled Expection!", array(), 0, $e);
+				$summary["failure"]++;
 			}
 
 			$result["log"] = $log;
@@ -88,7 +92,7 @@ class Selenium_Task extends Task {
 		}
 
 		$filename = path("storage")."tests/results-".date('Y-m-d-H-i-s').".html";
-		File::put($filename, View::make("selenium", array("tests" => $this->tests, "results" => $results)));
+		File::put($filename, View::make("selenium", array("summary" => $summary, "tests" => $this->tests, "results" => $results)));
 		echo "Test results written to {$filename}";
 	}
 	public function serve($arguments) {
@@ -223,16 +227,20 @@ class Selenium_Task extends Task {
 		sleep(1);
 
 		echo "Checking for success message".PHP_EOL;
-		$alert_text = $this->session->element("class name", "alert")->text();
-		if($alert_text != "Te olete lisatud kandidaadina!") {
-			throw new Test_Exception("Didn't find successful registartion confirmation message!", array("alert_text" => $alert_text));
+		try {
+			$alert_text = $this->session->element("class name", "alert")->text();
+			if($alert_text != "Te olete lisatud kandidaadina!") {
+				throw new Testing_Exception("Didn't find successful registartion confirmation message!", array("alert_text" => $alert_text));
+			}
+		} catch (Exception $e) {
+			throw new Testing_Exception("Didn't find successful registartion confirmation message!", array(), 0, $e);
+
 		}
-		sleep(1);
 
 		echo "Checking database".PHP_EOL;
 		$user_check = DB::first("SELECT * FROM `kandidaat` WHERE `Haaletaja_ID` = ? LIMIT 1;", array($this->user_id));
 		if(!$user_check) {
-			throw new Test_Exception("Didn't find successful registartion confirmation!", array("user_check" => $user_check));
+			throw new Testing_Exception("Didn't find successful registartion confirmation!", array("user_check" => $user_check));
 		}
 	}
 
@@ -240,7 +248,6 @@ class Selenium_Task extends Task {
 		echo "Navigating to candidates...".PHP_EOL;
 		$this->session->element("css selector", "[data-item=kandidaadid] a")->click("");
 		$this->wait_for_ajax();
-		sleep(1);
 
 		echo "Searching by name. Expecting 1".PHP_EOL;
 		$this->session->element("id", "search-name")->value(array("value" => str_split("Sinine Laev")));
@@ -292,24 +299,25 @@ class Selenium_Task extends Task {
 		try {
 			$target->click("");
 		} catch (Exception $e) {
-			throw new Test_Exception("Error Processing Request", array("target" => $target), 0, $e);
+			throw new Testing_Exception("Error Processing Request", array("target" => $target), 0, $e);
 		}
 		$this->wait_for_ajax();
 
 		echo "Voting!".PHP_EOL;
-		$this->session->element("css selector", ".vote-form button").click("");
+		$this->session->element("css selector", ".vote-form .button-large")->click("");
 		sleep(1);
+		$this->wait_for_ajax();
 
 		echo "Checking for success message".PHP_EOL;
 		$alert_text = $this->session->element("class name", "alert")->text();
 		if($alert_text != "Teie hääl on salvestatud!") {
-			throw new Test_Exception("Didn't find successful voting confirmation message!", array("alert_text" => $alert_text));
+			throw new Testing_Exception("Didn't find successful voting confirmation message!", array("alert_text" => $alert_text));
 		}
 
 		echo "Checking with the database".PHP_EOL;
 		$vote_check = DB::first("SELECT * FROM `haal` WHERE `Haaletaja_ID` = ? AND `Kandidaadi_ID` = ? LIMIT 1;", array($this->user_id, 2));
 		if(!$vote_check) {
-			throw new Test_Exception("Didn't find successful registartion confirmation!", array("vote_check" => $vote_check));
+			throw new Testing_Exception("Didn't find successful registartion confirmation!", array("vote_check" => $vote_check));
 		}
 	}
 }
