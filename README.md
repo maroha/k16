@@ -38,3 +38,8 @@ Teadetetahvle
 --------
 [Tag 5](https://github.com/t2t2/k16/tree/5)
 [Kloonimisjuhend](https://github.com/t2t2/k16/wiki/Kloonimine-&-K%C3%A4ima-Panemine) lisaks liveserveri kohta. [Diff](https://github.com/t2t2/k16/wiki/Kloonimine-&-K%C3%A4ima-Panemine/_compare/f63fa63abbbc2f68509a72d4ca6e6084350e727a%5E...f63fa63abbbc2f68509a72d4ca6e6084350e727a)
+
+6. Etapp
+--------
+[Tag 6](https://github.com/t2t2/k16/tree/6)
+[Kloonimisjuhend](https://github.com/t2t2/k16/wiki/Kloonimine-&-K%C3%A4ima-Panemine) lisaks testimise kohta.

@@ -438,12 +438,16 @@ nav a:hover {
 }
 
 /* Google Maps: Fusion Tables */
-#legend {
+.legend {
 	background: transparent;
 	padding: 10px;
 	margin: 5px;
 	font-size: 12px;
+	line-height: 12px;
 	font-family: Arial, sans-serif;
+}
+.legend>div {
+	margin: 8px 0;
 }
 
 .color {
@@ -454,44 +458,48 @@ nav a:hover {
 	float: left;
 }
 
-.red {
+.color.red {
 	background: #FF0000;
 }
 
-.yellow {
+.color.yellow {
 	background: #FFFF00;
 }
 
-.green {
+.color.green {
 	background: #008000;
 }
 
-.blue {
+.color.blue {
 	background: #0000FF;
 }
 
-.purple {
+.color.purple {
 	background: #800080;
 }
 
-.orangered {
+.color.orangered {
 	background: #FF4500;
 }
 
-.khaki {
+.color.khaki {
 	background: #F0E68C;
 }
 
-.olive {
+.color.olive {
 	background: #808000;
 }
 
-.lavender {
+.color.lavender {
 	background: #E6E6FA;
 }
 
-.deeppink {
+.color.deeppink {
 	background: #FF1493;
+}
+
+.color.hotpink {
+	background: #fe57a1;
 }
 
 /* ==========================================================================
@@ -809,5 +817,5 @@ nav a:hover {
 		height: 5px;
 		margin: 10px 5px 10px -5px;
 	}
-	
+
 }

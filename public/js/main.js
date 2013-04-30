@@ -54,7 +54,7 @@ var K16 = {
 					K16.live.onmessage = function(e) {
 						K16.storage.set("results", JSON.parse(e.data))
 						if($("#results-table").length > 0) {
-							K16.results.render()
+							K16.results.render_results()
 						}
 					};
 				} catch(e) {
@@ -131,7 +131,7 @@ var K16 = {
 					if(Modernizr.history) {
 						history.pushState({}, "", permaURL)
 					}
-					// Render results
+					// render results
 					K16.candidates.drawSearchResults(response)
 				});
 				return false; // Don't submit it
@@ -247,8 +247,119 @@ var K16 = {
 		}
 	},
 	results: {
+		init: function () {
+			// Results page
+			K16.results.update_filters()
+			K16.results.update_data()
+			/* Search filter thingy */
+			var onChangeDo = function() {
+				K16.results.update_filters()
+				K16.results.render_results()
+
+				// UPDATE LOCAL URL
+				if(Modernizr.history) {
+					var arguments = $(this).serialize()
+					history.pushState({}, "", K16.config.url+"/tulemused?"+arguments)
+				}
+				// And just hand it off
+				// K16.common.navigateTo(K16.config.url+"/tulemused?"+arguments)
+				return false;
+			}
+			$('#tulemused-filter').submit(onChangeDo);
+			$('#tulemused-filter select, #tulemused-filter input').change(onChangeDo);
+			$('#tulemused-submit').hide() // No need for you with javascript enabled
+			/* Google Maps */
+			var styles = [
+				{featureType: "administrative", elementType: "labels", stylers: [{ visibility: "off" }]},
+				{featureType: "landscape", stylers: [{visibility: "off"}]},
+				{featureType: "poi", stylers: [{visibility: "off"}]},
+				{featureType: "road", stylers: [{visibility: "off"}]},
+				{featureType: "transit", stylers: [{visibility: "off"}]},
+				{featureType: "water", stylers: [{visibility: "simplified"}]}
+			];
+
+			var styledMap = new google.maps.StyledMapType(styles, {name: "Styled Map"});
+			var mapProp = {
+				center:new google.maps.LatLng(58.6,24.7),
+				zoom:6,
+				mapTypeControl: false,
+				draggable: false,
+				scaleControl: false,
+				scrollwheel: false,
+				navigationControl: false,
+				panControl: false,
+				zoomControl: false,
+				scaleControl: false,
+				streetViewControl: false,
+				overviewMapControl: false,
+				rotateControl: false,
+				disableDoubleClickZoom: true,
+				mapTypeControlOptions: {
+					mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+				}
+			};
+			K16.results.map = new google.maps.Map($("#googleMap").get(0), mapProp);
+			K16.results.map.mapTypes.set('map_style', styledMap);
+			K16.results.map.setMapTypeId('map_style');
+			K16.results.updateMap();
+
+			/* Table sorter */
+			var a_re = /[cdu]\_\d+\_[cdu]/, a_color = 1
+			function hc(s, c) {return (" " + s + " ").indexOf(" " + c + " ") !== -1}
+			function ac(e, c) {var s = e.className; if (!hc(s, c)) e.className += " " + c}
+			prepTabs = function (t){
+				var el, th, cs, c, cell, axis, ts = (t && t.className) ? [t] : document.getElementsByTagName("table")
+				for (var e in ts) {
+					el = ts[e]
+					if (hc(el.className, "sortable")) {
+						if (!el.tHead) {
+							th = document.createElement("thead")
+							th.appendChild(el.rows[0])
+							el.appendChild(th)
+						}
+						th = el.tHead
+						ac(th, "c_0_c")
+						th.title = "Sorteeri selle veeru järgi"
+						th.onclick = clicktab
+						el.sorted = NaN
+					}
+				}
+			}
+			var clicktab = function (e) {
+				e = e || window.event
+				var obj = e.target || e.srcElement
+				while (!obj.tagName.match(/^(th|td)$/i)) obj = obj.parentNode
+				var i = obj.cellIndex, t = obj.parentNode
+				while (!t.tagName.match(/^table$/i)) t = t.parentNode
+
+				var cn = obj.className, verse = /d\_\d+\_d/.test(cn),
+				dir = (verse) ? "u" : "d", new_cls = dir + "_" + a_color + "_" + dir
+				if (a_color < 0) a_color++
+				if (a_re.test(cn)) obj.className = cn.replace(a_re, new_cls)
+				else obj.className = new_cls
+
+				var j = 0, tb = t.tBodies[0], rows = tb.rows, l = rows.length, c, v, vi
+				if (i !== t.sorted) {
+					t.sarr = []
+					for (j; j < l; j++) {
+						c = rows[j].cells[i]
+						v = (c) ? (c.innerHTML.replace(/\<[^<>]+?\>/g, "")) : ""
+						vi = Math.round(100 * parseFloat(v)).toString()
+						if (!isNaN(vi)) while (vi.length < 10) vi = "0" + vi
+						else vi = v
+						t.sarr[j] = [vi + (j/1000000000).toFixed(10), rows[j]]
+					}
+				}
+				t.sarr = t.sarr.sort()
+				if (verse) t.sarr = t.sarr.reverse()
+				t.sorted = i
+				for (j = 0; j < l; j++) tb.appendChild(t.sarr[j][1])
+				//obj.title = "Sorteeritud " + ((verse) ? "kahanevalt" : "kasvavalt")
+			}
+			prepTabs()
+		},
 		current_filters: {},
-		update_data: function (render) {
+		update_data: function () {
 			if(K16.config.online) {
 				$.getJSON(K16.config.url+"/tulemused/json", function (results) {
 					K16.storage.set("results", results)
@@ -273,7 +384,7 @@ var K16 = {
 			}
 			K16.results.current_filters.type = type
 		},
-		render: function () {
+		render_results: function () {
 			$("#results-type").text(K16.results.current_filters.type == "person" ? "Isik" : "Partei")
 			var total, tulemused = [];
 			if(K16.results.current_filters.type == "person") {
@@ -333,150 +444,96 @@ var K16 = {
 			$("#results-table").empty().append(newTable)
 
 		},
-		init: function () {
-			// Results page
-			K16.results.update_filters()
-			K16.results.update_data()
-			/* Search filter thingy */
-			$('#tulemused-filter').submit(function() {
-				K16.results.update_filters()
-				K16.results.render()
+		map: null,
+		mapItems: [],
+		updateMap: function() {
+			var regions = [
+				{id: 1, name: "Tallinn", pos: [59.5, 24.6]},
+				{id: 2, name: "Kärdla", pos: [58.7, 22.0]},
+				{id: 3, name: "Jõhvi", pos: [59.1, 27.5]},
+				{id: 4, name: "Paide", pos: [58.8, 25.8]},
+				{id: 5, name: "Haapsalu", pos: [59.1, 23.24]},
+				{id: 6, name: "Rakvere", pos: [59.5, 26.2]},
+				{id: 7, name: "Pärnu", pos: [58, 24.5]},
+				{id: 8, name: "Rapla", pos: [58.71, 24.3]},
+				{id: 9, name: "Kuressaare", pos: [58.2, 21.9]},
+				{id: 10, name: "Tartu", pos: [58.0, 26.2]}
+			];
+			var parties = {
+				1: {name: "Party 1", color: "FF0000", legendClass: "red"},
+				2: {name: "Party 2", color: "FFFF00", legendClass: "yellow"},
+				3: {name: "Party 3", color: "008000", legendClass: "green"},
+				4: {name: "Party 4", color: "0000FF", legendClass: "blue"},
+				5: {name: "Party 5", color: "800080", legendClass: "purple"},
+				6: {name: "Party 6", color: "FF4500", legendClass: "orangered"},
+				7: {name: "Party 7", color: "F0E68C", legendClass: "khaki"},
+				8: {name: "Party 8", color: "808000", legendClass: "olive"},
+				9: {name: "Party 9", color: "E6E6FA", legendClass: "lavender"},
+				10: {name: "Party 10", color: "FF1493", legendClass: "deeppink"},
+				11: {name: "Üksikkanddaat", color: "fe57a1", legendClass: "hotpink"}
+			};
 
-				// UPDATE LOCAL URL
-				if(Modernizr.history) {
-					var arguments = $(this).serialize()
-					history.pushState({}, "", K16.config.url+"/tulemused?"+arguments)
-				}
-				// And just hand it off
-				// K16.common.navigateTo(K16.config.url+"/tulemused?"+arguments)
-				return false;
+			// Legend
+			var legend = $("<div>").addClass("legend")
+			$.each(parties, function(key, party) {
+				var row = $("<div>").addClass("clearfix").text(party.name)
+				row.prepend($("<div>").addClass("color "+party.legendClass))
+				legend.append(row)
 			});
+			legend = legend.get(0)
+			legend.index = 1;
+			K16.results.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
 
-			var tulemused = {}
-			$.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], function(key, regionid) {
-				tulemused[regionid] = []
+			// EVERYTHING BELLOW THIS LINE CAN BE CALLED AGAIN ON RESULTS UPDATE, MOVE ABOVE AWAY PLEASE.
+
+			// Cleanup
+			$.each(K16.results.mapItems, function (key, item) {
+				item.setMap(null)
+			});
+			K16.results.mapItems = []
+
+			// Results
+			var results = {}
+			$.each(regions, function(key, region) {
+				results[region.id] = {}
+				$.each(parties, function(id, party) {
+					results[region.id][id] = 0
+				});
 			});
 			$.each(K16.storage.get("results"), function (key, person) {
-				if(tulemused[person.valimisringkonna_id][person.partei_id]) {
-					tulemused[person.valimisringkonna_id][person.partei_id] += parseInt(person.votes)
-				} else {
-					tulemused[person.valimisringkonna_id][person.partei_id] = parseInt(person.votes)
-				}
+				results[person.valimisringkonna_id][person.partei_id] += parseInt(person.votes)
 			});
-			
-			//console.log(tulemused)
-			
-			
-			/* Google Maps */
-			var markers = [
-			  ['Tallinn', 59.5, 24.6, "ff0000"],
-			  ['Kardla', 58.7, 22.0, "ffff00"],
-			  ['Johvi', 59.1, 27.5, "00cc00"],
-			  ['Paide', 58.8, 25.8, "0000ff"],
-			  ['Haapsalu', 59.1, 23.240833, "ff0066"],
-			  ['Rakvere', 59.5, 26.2, "ccffff"],
-			  ['Parnu', 58, 24.5, "33cc33"],
-			  ['Rapla', 58.71, 24.3, "9900ff"],
-			  ['Kuressaare', 58.2, 21.9, "ccff66"],
-			  ['Tartu', 58.0, 26.2, "999966"]
-			];			
-			var styles = [ 
-			  { featureType: "administrative",
-			    elementType: "labels",
-				stylers: [ 
-				  { visibility: "off" }
-				]
-			  },{
-			    featureType: "landscape",
-				stylers: [
-				  { visibility: "off" }
-				]
-			  },{
-			    featureType: "poi",
-				stylers: [
-				  { visibility: "off" }
-				]
-			  },{ 
-			    featureType: "road",
-				stylers: [
-				  { visibility: "off" }
-				]
-			  },{
-			    featureType: "transit",
-				stylers: [
-				  { visibility: "off" }
-				]
-			  },{
-			    featureType: "water",
-				stylers: [
-				{ visibility: "simplified" }
-				]
-			  } 
-			];
-			var styledMap = new google.maps.StyledMapType(styles,
-			  {name: "Styled Map"});
-			var mapProp = {
-			  center:new google.maps.LatLng(58.6,24.7),
-			  zoom:6,
-			  mapTypeControl: false,
-			  draggable: false,
-			  scaleControl: false,
-			  scrollwheel: false,
-			  navigationControl: false,
-			  panControl:false,
-			  zoomControl:false,
-			  scaleControl:false,
-			  streetViewControl:false,
-			  overviewMapControl:false,
-			  rotateControl:false,
-			  disableDoubleClickZoom: true,
-			  mapTypeControlOptions: {
-			    mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
-			  } 
-			};
-			var map = new google.maps.Map(document.getElementById("googleMap")
-			  ,mapProp);
-			map.mapTypes.set('map_style', styledMap);
-			map.setMapTypeId('map_style');
-			//var bounds = new google.maps.LatLngBounds();
-			for (i = 0; i < markers.length; i++) {  
-			  var pos = new google.maps.LatLng(markers[i][1], markers[i][2]);
-			  //bounds.extend(pos);
-			  marker = new StyledMarker({
-			    styleIcon:new StyledIcon(StyledIconTypes.BUBBLE,{
-				  color:markers[i][3],
-				  text:markers[i][0]
-				  }),
-				  position:pos,
-				  map:map
-			  });
-			  //map.fitBounds(bounds);
-			}
-			var layer = new google.maps.FusionTablesLayer({
-			  query: {
-			    select: 'Location',
-				from: '1NIVOZxrr-uoXhpWSQH2YJzY5aWhkRZW0bWhfZw'
-			  },
-			  map: map
+			console.log(results)
+
+			// Drawings
+			$.each(regions, function (key, region) {
+				var winningParty = 0;
+				var voteCount = 0;
+				$.each(results[region.id], function (partyid, votes) {
+					if(voteCount <= votes) { // Yes, <= is intentional
+						winningParty = partyid
+						voteCount = votes
+					}
+				});
+				// Markers
+				var pos = new google.maps.LatLng(region.pos[0], region.pos[1]);
+				var marker = new StyledMarker({
+					styleIcon: new StyledIcon(StyledIconTypes.BUBBLE, {
+						color: parties[winningParty].color,
+						text: region.name
+					}),
+					position: pos,
+					map: K16.results.map
+				});
+				K16.results.mapItems.push(marker)
+				// Polygons
+
 			});
-			var legend = document.createElement('div');
-			legend.id = 'legend';
-			var content = [];
-			content.push('<div class="color red"></div>Partei 1');
-			content.push('<br><div class="color yellow"></div>Partei 2');
-			content.push('<br><div class="color green"></div>Partei 3');
-			content.push('<br><div class="color blue"></div>Partei 4');
-			content.push('<br><div class="color purple"></div>Partei 5');
-			content.push('<br><div class="color orangered"></div>Partei 6');
-			content.push('<br><div class="color khaki"></div>Partei 7');
-			content.push('<br><div class="color olive"></div>Partei 8');
-			content.push('<br><div class="color lavender"></div>Partei 9');
-			content.push('<br><div class="color deeppink"></div>Partei 10');
-			legend.innerHTML = content.join('');
-			legend.index = 1;
-			map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
 
 
+
+
+			/*
 			var myTrip=[new google.maps.LatLng(59.234,23.725), new google.maps.LatLng(59.206,23.783), new google.maps.LatLng(59.134,23.904), new google.maps.LatLng(59.13,24.059), new google.maps.LatLng(59.0077,24.2941), new google.maps.LatLng(59.084,24.365), new google.maps.LatLng(59.095,24.563), new google.maps.LatLng(59.193,24.624), new google.maps.LatLng(59.217,24.901), new google.maps.LatLng(59.131,25.016), new google.maps.LatLng(59.0769,25.1977), new google.maps.LatLng(58.982,25.332), new google.maps.LatLng(59.202,25.523), new google.maps.LatLng(59.285,25.784), new google.maps.LatLng(59.310,25.940), new google.maps.LatLng(59.5535,25.8419), new google.maps.LatLng(59.663,25.7046), new google.maps.LatLng(59.642,24.965), Harjumaa19=new google.maps.LatLng(59.599,24.509), new google.maps.LatLng(59.3048,23.6694)];
 			var flightPath=new google.maps.Polygon({
 			  path:myTrip,
@@ -589,73 +646,20 @@ var K16 = {
 			  fillOpacity:0.4
 			  });
 			google.maps.event.addListener(flightPath, 'click', abc);
-			//var stats=abc();  
+			//var stats=abc();
 			flightPath.setMap(map);
 
-			
-			
+
+
 			function abc() {
 				//alert("I am an alert box!");
 				$("#filter-region").val(1);
 				}
-			
-			
-			
-			
-			/* Table sorter */
-			var a_re = /[cdu]\_\d+\_[cdu]/, a_color = 1
-			function hc(s, c) {return (" " + s + " ").indexOf(" " + c + " ") !== -1}
-			function ac(e, c) {var s = e.className; if (!hc(s, c)) e.className += " " + c}
-			prepTabs = function (t){
-				var el, th, cs, c, cell, axis, ts = (t && t.className) ? [t] : document.getElementsByTagName("table")
-				for (var e in ts) {
-					el = ts[e]
-					if (hc(el.className, "sortable")) {
-						if (!el.tHead) {
-							th = document.createElement("thead")
-							th.appendChild(el.rows[0])
-							el.appendChild(th)
-						}
-						th = el.tHead
-						ac(th, "c_0_c")
-						th.title = "Sorteeri selle veeru järgi"
-						th.onclick = clicktab
-						el.sorted = NaN
-					}
-				}
-			}
-			var clicktab = function (e) {
-				e = e || window.event
-				var obj = e.target || e.srcElement
-				while (!obj.tagName.match(/^(th|td)$/i)) obj = obj.parentNode
-				var i = obj.cellIndex, t = obj.parentNode
-				while (!t.tagName.match(/^table$/i)) t = t.parentNode
 
-				var cn = obj.className, verse = /d\_\d+\_d/.test(cn),
-				dir = (verse) ? "u" : "d", new_cls = dir + "_" + a_color + "_" + dir
-				if (a_color < 0) a_color++
-				if (a_re.test(cn)) obj.className = cn.replace(a_re, new_cls)
-				else obj.className = new_cls
 
-				var j = 0, tb = t.tBodies[0], rows = tb.rows, l = rows.length, c, v, vi
-				if (i !== t.sorted) {
-					t.sarr = []
-					for (j; j < l; j++) {
-						c = rows[j].cells[i]
-						v = (c) ? (c.innerHTML.replace(/\<[^<>]+?\>/g, "")) : ""
-						vi = Math.round(100 * parseFloat(v)).toString()
-						if (!isNaN(vi)) while (vi.length < 10) vi = "0" + vi
-						else vi = v
-						t.sarr[j] = [vi + (j/1000000000).toFixed(10), rows[j]]
-					}
-				}
-				t.sarr = t.sarr.sort()
-				if (verse) t.sarr = t.sarr.reverse()
-				t.sorted = i
-				for (j = 0; j < l; j++) tb.appendChild(t.sarr[j][1])
-				//obj.title = "Sorteeritud " + ((verse) ? "kahanevalt" : "kasvavalt")
-			}
-			prepTabs()
+
+
+			*/
 		}
 	},
 	storage: {

@@ -51,7 +51,7 @@
 				@endif
 				 Isik
 			</label>
-			<button id="submit" type="submit">Värskenda</button>
+			<button id="tulemused-submit" type="submit">Värskenda</button>
 		</form>
 		<div class="row-left">
 			<div id="googleMap" style="width:100%;height:418px;"></div>
@@ -75,7 +75,6 @@
 							<td>
 								<div class="result-row" style="width: {{ $result->percent }}%;"></div>
 								<div class="result-text">{{ "{$result->votes} ({$result->percent}%)" }}</div>
-
 							</td>
 						</tr>
 					@endforeach
