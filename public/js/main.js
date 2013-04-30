@@ -448,16 +448,36 @@ var K16 = {
 		mapItems: [],
 		updateMap: function() {
 			var regions = [
-				{id: 1, name: "Tallinn", pos: [59.5, 24.6]},
-				{id: 2, name: "Kärdla", pos: [58.7, 22.0]},
-				{id: 3, name: "Jõhvi", pos: [59.1, 27.5]},
-				{id: 4, name: "Paide", pos: [58.8, 25.8]},
-				{id: 5, name: "Haapsalu", pos: [59.1, 23.24]},
-				{id: 6, name: "Rakvere", pos: [59.5, 26.2]},
-				{id: 7, name: "Pärnu", pos: [58, 24.5]},
-				{id: 8, name: "Rapla", pos: [58.71, 24.3]},
-				{id: 9, name: "Kuressaare", pos: [58.2, 21.9]},
-				{id: 10, name: "Tartu", pos: [58.0, 26.2]}
+				{id: 1, name: "Tallinn", pos: [59.5, 24.6], color: "#0000FF", fillColor: "blue",
+					poly: [[59.234,23.725],[59.206,23.783],[59.134,23.904],[59.13,24.059],[59.0077,24.2941],[59.084,24.365],[59.095,24.563],[59.193,24.624],[59.217,24.901],[59.131,25.016],[59.0769,25.1977],[58.982,25.332],[59.202,25.523],[59.285,25.784],[59.310,25.940],[59.5535,25.8419],[59.663,25.7046],[59.642,24.965],[59.599,24.509],[59.3048,23.6694]]
+				},
+				{id: 2, name: "Kärdla", pos: [58.7, 22.0], color: "", fillColor: "",
+					poly: []
+				},
+				{id: 3, name: "Jõhvi", pos: [59.1, 27.5], color: "", fillColor: "",
+					poly: []
+				},
+				{id: 4, name: "Paide", pos: [58.8, 25.8], color: "", fillColor: "",
+					poly: []
+				},
+				{id: 5, name: "Haapsalu", pos: [59.1, 23.24], color: "", fillColor: "",
+					poly: []
+				},
+				{id: 6, name: "Rakvere", pos: [59.5, 26.2], color: "", fillColor: "",
+					poly: []
+				},
+				{id: 7, name: "Pärnu", pos: [58, 24.5], color: "", fillColor: "",
+					poly: []
+				},
+				{id: 8, name: "Rapla", pos: [58.71, 24.3], color: "", fillColor: "",
+					poly: []
+				},
+				{id: 9, name: "Kuressaare", pos: [58.2, 21.9], color: "", fillColor: "",
+					poly: []
+				},
+				{id: 10, name: "Tartu", pos: [58.0, 26.2], color: "", fillColor: "",
+					poly: []
+				}
 			];
 			var parties = {
 				1: {name: "Party 1", color: "FF0000", legendClass: "red"},
@@ -503,7 +523,6 @@ var K16 = {
 			$.each(K16.storage.get("results"), function (key, person) {
 				results[person.valimisringkonna_id][person.partei_id] += parseInt(person.votes)
 			});
-			console.log(results)
 
 			// Drawings
 			$.each(regions, function (key, region) {
@@ -527,7 +546,20 @@ var K16 = {
 				});
 				K16.results.mapItems.push(marker)
 				// Polygons
-
+				var points = []
+				$.each(region.poly, function(i, coords) {
+					points.push(new google.maps.LatLng(coords[0], coords[1]))
+				});
+				var polygon = new google.maps.Polygon({
+					path: points,
+					strokeColor: region.color,
+					strokeOpacity: 0.8,
+					strokeWeight: 2,
+					fillColor: region.fillColor,
+					fillOpacity: 0.4,
+					map: K16.results.map
+				});
+				K16.results.mapItems.push(polygon)
 			});
 
 
