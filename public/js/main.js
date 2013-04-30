@@ -560,6 +560,10 @@ var K16 = {
 					map: K16.results.map
 				});
 				K16.results.mapItems.push(polygon)
+				var switcher = function () {
+					$("#filter-region").val(region.id).change();
+				}
+				google.maps.event.addListener(polygon, 'click', switcher);
 			});
 
 
