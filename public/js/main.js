@@ -564,6 +564,7 @@ var K16 = {
 					$("#filter-region").val(region.id).change();
 				}
 				google.maps.event.addListener(polygon, 'click', switcher);
+				google.maps.event.addListener(marker, 'click', switcher);
 			});
 
 
