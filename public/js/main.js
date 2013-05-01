@@ -55,6 +55,7 @@ var K16 = {
 						K16.storage.set("results", JSON.parse(e.data))
 						if($("#results-table").length > 0) {
 							K16.results.render_results()
+							K16.results.updateMap()
 						}
 					};
 				} catch(e) {
@@ -301,6 +302,17 @@ var K16 = {
 			K16.results.map = new google.maps.Map($("#googleMap").get(0), mapProp);
 			K16.results.map.mapTypes.set('map_style', styledMap);
 			K16.results.map.setMapTypeId('map_style');
+			// Legend
+			var legend = $("<div>").addClass("legend")
+			$.each(K16.results.parties, function(key, party) {
+				var row = $("<div>").addClass("clearfix").text(party.name)
+				row.prepend($("<div>").addClass("color "+party.legendClass))
+				legend.append(row)
+			});
+			legend = legend.get(0)
+			legend.index = 1;
+			K16.results.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
+			// Draw on it!
 			K16.results.updateMap();
 
 			/* Table sorter */
@@ -446,66 +458,52 @@ var K16 = {
 		},
 		map: null,
 		mapItems: [],
+		regions: [
+			{id: 1, name: "Tallinn", pos: [59.5, 24.6], color: "black",
+				poly: [[59.234,23.725],[59.206,23.783],[59.134,23.904],[59.13,24.059],[59.0077,24.2941],[59.084,24.365],[59.095,24.563],[59.193,24.624],[59.217,24.901],[59.131,25.016],[59.0769,25.1977],[58.982,25.332],[59.202,25.523],[59.285,25.784],[59.310,25.940],[59.5535,25.8419],[59.663,25.7046],[59.642,24.965],[59.599,24.509],[59.3048,23.6694]]
+			},
+			{id: 2, name: "Kärdla", pos: [58.7, 22.0], color: "black",
+				poly: [[59.070,21.957],[58.695,21.995],[58.695,22.924],[58.826,23.15],[59.160,22.803]]
+			},
+			{id: 3, name: "Jõhvi", pos: [59.1, 27.5], color: "black",
+				poly: [[59.6,26.779],[59.237,26.757],[59.255,26.851],[59.156,26.944],[59.1159,26.8127],[59.056,26.920],[58.997,26.801],[58.990,27.741],[59.262,27.933],[59.312,28.155],[59.365,28.2107],[59.462,28.043]]
+			},
+			{id: 4, name: "Paide", pos: [58.8, 25.8], color: "black",
+				poly: [[58.613,25.231],[58.684,25.764],[58.875,26.148],[58.8825,26.1590],[59.056,25.920],[59.176,26.007],[59.226,25.635],[59.215,25.563],[59.004,25.370],[58.733,25.208]]
+			},
+			{id: 5, name: "Haapsalu", pos: [59.1, 23.24], color: "black",
+				poly: [[58.5231,23.606],[58.542,23.712],[58.5458,23.9114],[58.5458,23.9114],[58.641,23.864],[58.677,23.999],[58.717,24.149],[58.880,24.1462],[59.053,24.1668],[59.127,24.0368],[59.131,23.947],[59.1357,23.9018],[59.225,23.710],[59.299,23.3316],[59.022,23.064],[58.834,23.223],[58.621,23.465]]
+			},
+			{id: 6, name: "Rakvere", pos: [59.5, 26.2], color: "black",
+				poly: [[59.563,25.853],[59.350,25.947],[59.226,25.635],[59.176,26.007],[59.056,25.920],[58.8825,26.1590],[58.997,26.801],[59.056,26.920],[59.1159,26.8127],[59.156,26.944],[59.255,26.851],[59.237,26.757],[59.6,26.779],[59.65,25.889]]
+			},
+			{id: 7, name: "Pärnu", pos: [58, 24.5], color: "black",
+				poly: [[58.5231,23.606],[58.542,23.712],[58.537,23.748],[58.5458,23.9114],[58.641,23.864],[58.677,23.999],[58.717,24.149],[58.698,24.172],[58.733,24.896],[58.65,24.918],[58.699,25.000],[58.721,25.198],[58.684,25.247],[58.684,25.237],[58.475,25.0335],[58.314,24.967],[58.3265,25.242],[58.03363,25.039],[57.855,24.352],[58.0714,23.715]]
+			},
+			{id: 8, name: "Rapla", pos: [58.71, 24.3], color: "black",
+				poly: [[58.698,24.172],[59.070,24.154],[59.0077,24.2941],[59.084,24.365],[59.095,24.563],[59.193,24.624],[59.217,24.901],[59.131,25.016],[59.0769,25.1977],[58.982,25.332],[58.721,25.198],[58.699,25.000],[58.65,24.918],[58.733,24.896]]
+			},
+			{id: 9, name: "Kuressaare", pos: [58.2, 21.9], color: "black",
+				poly: [[58.621,21.715],[57.863,21.781],[57.913,22.424],[58.463,23.495],[58.698,23.352]]
+			},
+			{id: 10, name: "Tartu", pos: [58.0, 26.2], color: "black",
+				poly: [[58.613,25.23],[58.684,25.764],[58.8825,26.1590],[58.997,26.801],[58.990,27.741],[58.773,27.351],[58.349,27.543],[58.080,27.615],[57.864,27.802],[57.8119,27.5439],[57.5181,27.3077],[57.6094,26.9287],[57.4974,26.5551],[57.7474,26.0443],[57.9404,25.5773],[57.949,25.577],[58.068,25.286],[57.921,25.291],[57.989,25.225],[58.083,25.203],[58.03363,25.039],[58.3265,25.242],[58.314,24.967],[58.475,25.0335],[58.684,25.237]]
+			}
+		],
+		parties: {
+			1: {name: "Party 1", color: "FF0000", legendClass: "red"},
+			2: {name: "Party 2", color: "FFFF00", legendClass: "yellow"},
+			3: {name: "Party 3", color: "008000", legendClass: "green"},
+			4: {name: "Party 4", color: "0000FF", legendClass: "blue"},
+			5: {name: "Party 5", color: "800080", legendClass: "purple"},
+			6: {name: "Party 6", color: "FF4500", legendClass: "orangered"},
+			7: {name: "Party 7", color: "F0E68C", legendClass: "khaki"},
+			8: {name: "Party 8", color: "808000", legendClass: "olive"},
+			9: {name: "Party 9", color: "E6E6FA", legendClass: "lavender"},
+			10: {name: "Party 10", color: "FF1493", legendClass: "deeppink"},
+			11: {name: "Üksikkanddaat", color: "fe57a1", legendClass: "hotpink"}
+		},
 		updateMap: function() {
-			var regions = [
-				{id: 1, name: "Tallinn", pos: [59.5, 24.6], color: "black", fillColor: "blue",
-					poly: [[59.234,23.725],[59.206,23.783],[59.134,23.904],[59.13,24.059],[59.0077,24.2941],[59.084,24.365],[59.095,24.563],[59.193,24.624],[59.217,24.901],[59.131,25.016],[59.0769,25.1977],[58.982,25.332],[59.202,25.523],[59.285,25.784],[59.310,25.940],[59.5535,25.8419],[59.663,25.7046],[59.642,24.965],[59.599,24.509],[59.3048,23.6694]]
-				},
-				{id: 2, name: "Kärdla", pos: [58.7, 22.0], color: "black", fillColor: "red",
-					poly: [[59.070,21.957],[58.695,21.995],[58.695,22.924],[58.826,23.15],[59.160,22.803]]
-				},
-				{id: 3, name: "Jõhvi", pos: [59.1, 27.5], color: "black", fillcolor: "black",
-					poly: [[59.6,26.779],[59.237,26.757],[59.255,26.851],[59.156,26.944],[59.1159,26.8127],[59.056,26.920],[58.997,26.801],[58.990,27.741],[59.262,27.933],[59.312,28.155],[59.365,28.2107],[59.462,28.043]]
-				},
-				{id: 4, name: "Paide", pos: [58.8, 25.8], color: "black", fillColor: "",
-					poly: [[58.613,25.231],[58.684,25.764],[58.875,26.148],[58.8825,26.1590],[59.056,25.920],[59.176,26.007],[59.226,25.635],[59.215,25.563],[59.004,25.370],[58.733,25.208]]
-				},
-				{id: 5, name: "Haapsalu", pos: [59.1, 23.24], color: "black", fillColor: "green",
-					poly: [[58.5231,23.606],[58.542,23.712],[58.5458,23.9114],[58.5458,23.9114],[58.641,23.864],[58.677,23.999],[58.717,24.149],[58.880,24.1462],[59.053,24.1668],[59.127,24.0368],[59.131,23.947],[59.1357,23.9018],[59.225,23.710],[59.299,23.3316],[59.022,23.064],[58.834,23.223],[58.621,23.465]]
-				},
-				{id: 6, name: "Rakvere", pos: [59.5, 26.2], color: "black", fillColor: "",
-					poly: [[59.563,25.853],[59.350,25.947],[59.226,25.635],[59.176,26.007],[59.056,25.920],[58.8825,26.1590],[58.997,26.801],[59.056,26.920],[59.1159,26.8127],[59.156,26.944],[59.255,26.851],[59.237,26.757],[59.6,26.779],[59.65,25.889]]
-				},
-				{id: 7, name: "Pärnu", pos: [58, 24.5], color: "black", fillColor: "",
-					poly: [[58.5231,23.606],[58.542,23.712],[58.537,23.748],[58.5458,23.9114],[58.641,23.864],[58.677,23.999],[58.717,24.149],[58.698,24.172],[58.733,24.896],[58.65,24.918],[58.699,25.000],[58.721,25.198],[58.684,25.247],[58.684,25.237],[58.475,25.0335],[58.314,24.967],[58.3265,25.242],[58.03363,25.039],[57.855,24.352],[58.0714,23.715]]
-				},
-				{id: 8, name: "Rapla", pos: [58.71, 24.3], color: "black", fillColor: "",
-					poly: [[58.698,24.172],[59.070,24.154],[59.0077,24.2941],[59.084,24.365],[59.095,24.563],[59.193,24.624],[59.217,24.901],[59.131,25.016],[59.0769,25.1977],[58.982,25.332],[58.721,25.198],[58.699,25.000],[58.65,24.918],[58.733,24.896]]
-				},
-				{id: 9, name: "Kuressaare", pos: [58.2, 21.9], color: "black", fillColor: "",
-					poly: [[58.621,21.715],[57.863,21.781],[57.913,22.424],[58.463,23.495],[58.698,23.352]]
-				},
-				{id: 10, name: "Tartu", pos: [58.0, 26.2], color: "black", fillColor: "",
-					poly: [[58.613,25.23],[58.684,25.764],[58.8825,26.1590],[58.997,26.801],[58.990,27.741],[58.773,27.351],[58.349,27.543],[58.080,27.615],[57.864,27.802],[57.8119,27.5439],[57.5181,27.3077],[57.6094,26.9287],[57.4974,26.5551],[57.7474,26.0443],[57.9404,25.5773],[57.949,25.577],[58.068,25.286],[57.921,25.291],[57.989,25.225],[58.083,25.203],[58.03363,25.039],[58.3265,25.242],[58.314,24.967],[58.475,25.0335],[58.684,25.237]]
-				}
-			];
-			var parties = {
-				1: {name: "Party 1", color: "FF0000", legendClass: "red"},
-				2: {name: "Party 2", color: "FFFF00", legendClass: "yellow"},
-				3: {name: "Party 3", color: "008000", legendClass: "green"},
-				4: {name: "Party 4", color: "0000FF", legendClass: "blue"},
-				5: {name: "Party 5", color: "800080", legendClass: "purple"},
-				6: {name: "Party 6", color: "FF4500", legendClass: "orangered"},
-				7: {name: "Party 7", color: "F0E68C", legendClass: "khaki"},
-				8: {name: "Party 8", color: "808000", legendClass: "olive"},
-				9: {name: "Party 9", color: "E6E6FA", legendClass: "lavender"},
-				10: {name: "Party 10", color: "FF1493", legendClass: "deeppink"},
-				11: {name: "Üksikkanddaat", color: "fe57a1", legendClass: "hotpink"}
-			};
-
-			// Legend
-			var legend = $("<div>").addClass("legend")
-			$.each(parties, function(key, party) {
-				var row = $("<div>").addClass("clearfix").text(party.name)
-				row.prepend($("<div>").addClass("color "+party.legendClass))
-				legend.append(row)
-			});
-			legend = legend.get(0)
-			legend.index = 1;
-			K16.results.map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
-
-			// EVERYTHING BELLOW THIS LINE CAN BE CALLED AGAIN ON RESULTS UPDATE, MOVE ABOVE AWAY PLEASE.
-
 			// Cleanup
 			$.each(K16.results.mapItems, function (key, item) {
 				item.setMap(null)
@@ -514,9 +512,9 @@ var K16 = {
 
 			// Results
 			var results = {}
-			$.each(regions, function(key, region) {
+			$.each(K16.results.regions, function(key, region) {
 				results[region.id] = {}
-				$.each(parties, function(id, party) {
+				$.each(K16.results.parties, function(id, party) {
 					results[region.id][id] = 0
 				});
 			});
@@ -525,7 +523,7 @@ var K16 = {
 			});
 
 			// Drawings
-			$.each(regions, function (key, region) {
+			$.each(K16.results.regions, function (key, region) {
 				var winningParty = 0;
 				var voteCount = 0;
 				$.each(results[region.id], function (partyid, votes) {
@@ -538,7 +536,7 @@ var K16 = {
 				var pos = new google.maps.LatLng(region.pos[0], region.pos[1]);
 				var marker = new StyledMarker({
 					styleIcon: new StyledIcon(StyledIconTypes.BUBBLE, {
-						color: parties[winningParty].color,
+						color: K16.results.parties[winningParty].color,
 						text: region.name
 					}),
 					position: pos,
@@ -555,7 +553,7 @@ var K16 = {
 					strokeColor: region.color,
 					strokeOpacity: 0.8,
 					strokeWeight: 2,
-					fillColor: region.fillColor,
+					fillColor: "#"+K16.results.parties[winningParty].color,
 					fillOpacity: 0.4,
 					map: K16.results.map
 				});

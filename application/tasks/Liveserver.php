@@ -3,6 +3,7 @@ class Liveserver_Task {
 
 
 	public function run($arguments) {
+		ob_end_flush();
 		// Do the awesome
 		$loop = React\EventLoop\Factory::create();
 
