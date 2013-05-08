@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 		<title>e-Valimised</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width">
@@ -28,7 +28,7 @@
 					@if(Auth::check())
 						Tere {{ Auth::user()->eesnimi }} {{ Auth::user()->perekonnanimi }}! &ndash; <a href="{{ url("logout") }}">logi välja &rsaquo;</a>
 					@else
-						Pole sisse loginud &ndash; <a href="{{ url("login") }}"><img src="img/fb_login.png" class="fb-login"></a>
+						Pole sisse loginud &ndash; <a href="{{ url("login") }}"><img src="img/fb_login.png" class="fb-login" alt="fb-login"></a>
 					@endif
 				</div>
 				<nav class="clearfix">
