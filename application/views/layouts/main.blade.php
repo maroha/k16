@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
-		<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 		<title>e-Valimised</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width">
@@ -62,7 +61,7 @@
 		<script src="{{ asset("js/vendor/jquery-1.9.1.min.js") }}"></script>
 		<script src="{{ asset("js/jquery.autocomplete.js") }}"></script>
 		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAY_6ETr1c7dQHucQJatGqBehz6LG0oCLc&amp;sensor=false"></script>
-		<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/styledmarker/src/StyledMarker.js"></script>
+		<script type="text/javascript" src="{{ asset("js/vendor/StyledMarker.js") }}"></script>
 		<script src="{{ asset("js/main.js") }}"></script>
 		<iframe class="hidden" height="0" width="0" src="{{ asset("offline.html") }}"></iframe>
 	</body>
