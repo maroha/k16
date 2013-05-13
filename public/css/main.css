@@ -21,11 +21,13 @@ body {
 	color: #222;
 }
 
+/*
 ::selection {
-	background: #b3d4fc; /* rip hot pink :'( */
+	background: #b3d4fc;
 	text-shadow: none;
 	color: #222;
 }
+*/
 
 hr {
 	display: block;
@@ -265,7 +267,7 @@ label {
 	top:0;
 	left:0;
 	z-index:-1;
-	filter:mask();
+    /*filter:mask();*/
 	width:3000px;
 	height:3000px;
 }
@@ -632,9 +634,9 @@ nav a:hover {
 	.form-horizontal .form-help {
 		display: inline;
 		margin-left: 5px;
-	}
-
 		font-weight:bold
+	}
+	
 	.form-horizontal .form-buttons {
 		padding-left: 210px;
 	}
@@ -660,7 +662,7 @@ nav a:hover {
 	background-color: transparent;
 	border: 0;
 	overflow: hidden;
-	*text-indent: -9999px;
+	text-indent: -9999px;
 }
 
 .ir:before {
@@ -709,10 +711,11 @@ nav a:hover {
 .clearfix:after {
 	clear: both;
 }
-
+/*
 .clearfix {
 	*zoom: 1;
 }
+*/
 
 /* ==========================================================================
    Print styles
@@ -768,7 +771,7 @@ nav a:hover {
 		max-width: 100% !important;
 	}
 
-	@page {
+	page {
 		margin: 0.5cm;
 	}
 
