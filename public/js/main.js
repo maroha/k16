@@ -3,7 +3,7 @@
  * http://paulirish.com/2009/markup-based-unobtrusive-comprehensive-dom-ready-execution/
  * http://viget.com/inspire/extending-paul-irishs-comprehensive-dom-ready-execution
  */
-
+"use strict"; /* "use yolo"; */
 var K16 = {
 	config: {}, // Loaded bellow, all data in body tag
 	common: {
@@ -12,63 +12,63 @@ var K16 = {
 			K16.config = $.extend({}, {online: true}, $(document.body).data());
 			// if local add a tag to the title to remind the developer
 			if(location.hostname.indexOf(".dev") > -1) {
-				document.title = "[LOCAL] " + document.title
+				document.title = "[LOCAL] " + document.title;
 			}
 			// ajax navigation
-			$(document).on("click", "a", function (event) { // Listen for all link tags, even in the future!
+			$(document).on("click", "a", function () { // Listen for all link tags, even in the future!
 				var targetURL = $(this).get(0).href;
-				if(targetURL.indexOf(location.protocol+"//"+location.hostname) > -1 && targetURL.indexOf(location.href+"#") == -1) {
+				if(targetURL.indexOf(location.protocol+"//"+location.hostname) > -1 && targetURL.indexOf(location.href+"#") === -1) {
 					// Ignores external links and links just #
-					K16.common.navigateTo(targetURL)
+					K16.common.navigateTo(targetURL);
 					return false;
 				}
 			});
 			if(Modernizr.history) {
-				$(window).on("popstate", function (event) {
+				$(window).on("popstate", function () {
 					// console.log(event);
-					K16.common.navigateTo(document.location.href, true)
+					K16.common.navigateTo(document.location.href, true);
 				});
 			}
 			// Offline
 			if(window.navigator.onLine !== undefined) {
 				$(document.body).on("offline", function () {
-					K16.config.online = false
-					$("nav li[data-item='haaleta'], .user").hide()
-					$(".main-container").before($('<div id="offline" class="alert wrapper">').text("Tähelepanu! Teie olete kaotanud internetiühenduse. Me näitame viimati puhverdatud versioone ning saadaval on ainult kandidaatide nimekiri ja tulemuste leht."))
+					K16.config.online = false;
+					$("nav li[data-item='haaleta'], .user").hide();
+					$(".main-container").before($('<div id="offline" class="alert wrapper">').text("Tähelepanu! Teie olete kaotanud internetiühenduse. Me näitame viimati puhverdatud versioone ning saadaval on ainult kandidaatide nimekiri ja tulemuste leht."));
 				});
 				$(document.body).on("online", function () {
-					K16.config.online = true
-					$("nav li[data-item='haaleta'], .user").show()
-					$("#offline").remove()
+					K16.config.online = true;
+					$("nav li[data-item='haaleta'], .user").show();
+					$("#offline").remove();
 				});
 				if(!window.navigator.onLine) {
-					$(document.body).trigger("offline")
+					$(document.body).trigger("offline");
 				}
 			}
 			// Cache results
-			K16.results.update_data()
+			K16.results.update_data();
 			// live server integration
 			if(K16.config.live && Modernizr.websockets) {
 				try {
-					K16.live = new WebSocket(K16.config.live)
+					K16.live = new WebSocket(K16.config.live);
 					K16.live.onmessage = function(e) {
-						K16.storage.set("results", JSON.parse(e.data))
+						K16.storage.set("results", JSON.parse(e.data));
 						if($("#results-table").length > 0) {
-							K16.results.render_results()
-							K16.results.updateMap()
+							K16.results.render_results();
+							K16.results.updateMap();
 						}
 					};
-				} catch(e) {
+				} catch(ignore) {
 				}
 			}
 		},
 		navigateTo: function (targetURL, popstate) {
 			// Some cache uniqueness just in case
-			var ajaxURL
+			var ajaxURL;
 			if(targetURL.indexOf("?") > 0) {
-				ajaxURL = targetURL + "&a"
+				ajaxURL = targetURL + "&a";
 			} else {
-				ajaxURL = targetURL +  "?a"
+				ajaxURL = targetURL +  "?a";
 			}
 			$("#ajax-loader").show();
 			$.get(ajaxURL, function (data, status, jqXHR) {
@@ -77,52 +77,46 @@ var K16 = {
 					location.reload(); return false;
 				}
 				if(metadata.redirect) {
-					location = metadata.redirect; return false;
+					location.href = metadata.redirect; return false;
 				}
 				if(Modernizr.history && !popstate) {
-					history.pushState({}, "", targetURL)
+					history.pushState({}, "", targetURL);
 				}
 				$("#ajax-loader").hide();
 				$("#content").html(data);
-				$("nav .active").removeClass("active")
+				$("nav .active").removeClass("active");
 				if(metadata.menuItem) {
-					$('nav li[data-item="'+metadata.menuItem+'"]').addClass("active")
+					$('nav li[data-item="'+metadata.menuItem+'"]').addClass("active");
 				}
 				if(metadata.javascript.length > 0) {
 					// Execute related javascript
 					UTIL.exec(metadata.javascript[0]);
-					if(metadata.javascript[1])
+					if(metadata.javascript[1]) {
 						UTIL.exec(metadata.javascript[0], metadata.javascript[1]);
+					}
 				}
 			});
 		}
 	},
 	home: {
-		init: function () {
-			// Home page
-		}
 	},
 	candidates: {
-		init: function () {
-			// All candidate pages
-		},
 		list: function () {
 			// Candidate list page
 			$("#search-form").submit(function () {
-				var searchForm = this;
-				var search = {}
+				var searchForm = this, search = {};
 				if(searchForm.children.name.value) { // Must use children because name is a dom property
-					search.name = searchForm.children.name.value
+					search.name = searchForm.children.name.value;
 				}
-				if(searchForm.region.value != -1) {
-					search.region = searchForm.region.value
+				if(searchForm.region.value !== "-1") {
+					search.region = searchForm.region.value;
 				}
-				if(searchForm.party.value != -1) {
-					search.party = searchForm.party.value
+				if(searchForm.party.value !== "-1") {
+					search.party = searchForm.party.value;
 				}
 				// Serialize only filled fields - http://stackoverflow.com/a/6240619/211088
-				console.log($(this).clone().find('input:text[value=""],select[value="-1"]').remove().end())
-				var permaURL = $(this).attr("action")+"?"+$("input,select", this).filter(function(){ return $(this).val() && (this.tagName != "SELECT" || $(this).val() != -1); }).serialize();
+				// console.log($(this).clone().find('input:text[value=""],select[value="-1"]').remove().end())
+				var permaURL = $(this).attr("action")+"?"+$("input,select", this).filter(function(){ return $(this).val() && (this.tagName !== "SELECT" || $(this).val() !== "-1"); }).serialize();
 
 				// console.log(search, ajaxroute);
 				$('#ajax-loader').show();
@@ -130,89 +124,89 @@ var K16 = {
 					$('#ajax-loader').hide();
 					// console.log(response);
 					if(Modernizr.history) {
-						history.pushState({}, "", permaURL)
+						history.pushState({}, "", permaURL);
 					}
 					// render results
-					K16.candidates.drawSearchResults(response)
+					K16.candidates.drawSearchResults(response);
 				});
 				return false; // Don't submit it
 			});
 			// Superawesome suggestions!
-			$("#search-name").autocomplete(K16.config.url+"/kandidaadid/autocomplete")
+			$("#search-name").autocomplete(K16.config.url+"/kandidaadid/autocomplete");
 			// Row click listener
-			$("#candidate-list tbody tr").click(K16.candidates.rowListener)
+			$("#candidate-list tbody tr").click(K16.candidates.rowListener);
 		},
 		register: function () {
 			// Candidate Register page
 			$("#register-form").submit(function () {
-				$(".error", document["register-form"]).remove()
+				$(".error", document["register-form"]).remove();
 				var korras = true;
 
-				if (document["register-form"].birthplace.value == "") {
+				if (document["register-form"].birthplace.value === "") {
 					//	 alert( "Sisestage oma sunnikoht!" );
-					$(document["register-form"].birthplace).after("<div class=\"error\">Sisestage oma sunnikoht!</div>")
+					$(document["register-form"].birthplace).after("<div class=\"error\">Sisestage oma sunnikoht!</div>");
 					korras = false;
 				}
 
-				if (document["register-form"].address.value == "") {
+				if (document["register-form"].address.value === "") {
 					//	 alert( "Sisestage oma elukoha aadress!" );
-					$(document["register-form"].address).after("<div class=\"error\">Sisestage oma elukoha aadress!</div>")
+					$(document["register-form"].address).after("<div class=\"error\">Sisestage oma elukoha aadress!</div>");
 					korras = false;
 				}
-				if (document["register-form"].party.value == -1) {
+				if (document["register-form"].party.value === "-1") {
 					//	 alert( "Te pole valinud Erakonna" );
-					$(document["register-form"].party).after("<div class=\"error\">Valige palun Erakonna!</div>")
+					$(document["register-form"].party).after("<div class=\"error\">Valige palun Erakonna!</div>");
 					korras = false;
 				}
-				if (document["register-form"].piirkond.value == -1) {
+				if (document["register-form"].piirkond.value === "-1") {
 					//	 alert( "Te pole valinud Piirkonna" );
-					$(document["register-form"].piirkond).after("<div class=\"error\">Valige palun Piirkonna!</div>")
+					$(document["register-form"].piirkond).after("<div class=\"error\">Valige palun Piirkonna!</div>");
 					korras = false;
 				}
 
 
 				var haridus_len = document["register-form"].haridus.value.length;
-				if (document["register-form"].haridus.value == "" || lastname_len > 50 || lastname_len < 3) {
+				if (document["register-form"].haridus.value === "" || haridus_len > 50 || haridus_len < 3) {
 					//	 alert( "Sisestage oma haridus! (3 kuni 50 marki)" );
-					$(document["register-form"].haridus).after("<div class=\"error\">Sisestage oma haridus!(3 kuni 50 marki) </div>")
+					$(document["register-form"].haridus).after("<div class=\"error\">Sisestage oma haridus!(3 kuni 50 marki) </div>");
 					korras = false;
 				}
 				var academicdegree_len = document["register-form"].academicdegree.value.length;
-				if (document["register-form"].academicdegree.value == "" || academicdegree_len > 50 || academicdegree_len < 3) {
+				if (document["register-form"].academicdegree.value === "" || academicdegree_len > 50 || academicdegree_len < 3) {
 					//	 alert( "Sisestage oma akadeemilise kraadi! (3 kuni 50 marki)" );
-					$(document["register-form"].academicdegree).after("<div class=\"error\">Sisestage oma akadeemilise kraadi (3 kuni 50 marki)</div>")
+					$(document["register-form"].academicdegree).after("<div class=\"error\">Sisestage oma akadeemilise kraadi (3 kuni 50 marki)</div>");
 					korras = false;
 				}
 				var occupation_len = document["register-form"].occupation.value.length;
-				if (document["register-form"].occupation.value == "" || occupation_len > 50 || occupation_len < 3) {
+				if (document["register-form"].occupation.value === "" || occupation_len > 50 || occupation_len < 3) {
 					//	 alert( "Sisestage oma elukutse! (3 kuni 50 marki)" );
-					$(document["register-form"].occupation).after("<div class=\"error\">Sisestage oma elukutse (3 kuni 50 marki)</div>")
+					$(document["register-form"].occupation).after("<div class=\"error\">Sisestage oma elukutse (3 kuni 50 marki)</div>");
 					korras = false;
 				}
 				var work_len = document["register-form"].work.value.length;
-				if (document["register-form"].work.value == "" || work_len > 30 || work_len < 3) {
+				if (document["register-form"].work.value === "" || work_len > 30 || work_len < 3) {
 					//	 alert( "Sisestage oma tookoht! (3 kuni 30 marki" );
-					$(document["register-form"].work).after("<div class=\"error\">Sisestage oma tookoht (3 kuni 30 marki)</div>")
+					$(document["register-form"].work).after("<div class=\"error\">Sisestage oma tookoht (3 kuni 30 marki)</div>");
 					korras = false;
 				}
 
 				var phone_len = document["register-form"].phone.value.length;
-				if (document["register-form"].phone.value == "" ||
+				if (document["register-form"].phone.value === "" ||
 					isNaN(document["register-form"].phone.value) ||
 					phone_len < 4 || phone_len > 12) {
 					//	alert( "Sisestage oma telefoninumbri (4 kuni 12 marki)" );
-					$(document["register-form"].phone).after("<div class=\"error\">Sisestage oma telefoninumbri (4 kuni 12 marki)</div>")
+					$(document["register-form"].phone).after("<div class=\"error\">Sisestage oma telefoninumbri (4 kuni 12 marki)</div>");
 					korras = false;
 				}
 
 
 				if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document["register-form"].email.value)) {
 					//	 alert("E-mail on sisestatud valesti.")
-					$(document["register-form"].email).after("<div class=\"error\">E-mail on sisestatud valesti</div>")
-					korras = false
+					$(document["register-form"].email).after("<div class=\"error\">E-mail on sisestatud valesti</div>");
+					korras = false;
 				}
 
-				return korras
+				return korras;
 			});
 		},
 		view: function () {
