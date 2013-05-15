@@ -568,7 +568,7 @@ var K16 = {
 				return K16.storage.cache[name];
 			}
 			if(Modernizr.localstorage && window.JSON) {
-				if(data = window.localStorage[name]) {
+				if(var data = window.localStorage[name]) {
 					return K16.storage.cache[name] = JSON.parse(data)
 				}
 			}
