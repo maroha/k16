@@ -564,11 +564,12 @@ var K16 = {
 	storage: {
 		cache: {},
 		get: function (name) {
+			var data;
 			if(K16.storage.cache[name]) {
 				return K16.storage.cache[name];
 			}
 			if(Modernizr.localstorage && window.JSON) {
-				if(var data = window.localStorage[name]) {
+				if(data = window.localStorage[name]) {
 					return K16.storage.cache[name] = JSON.parse(data)
 				}
 			}
