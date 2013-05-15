@@ -253,11 +253,11 @@ var K16 = {
 
 				// UPDATE LOCAL URL
 				if(Modernizr.history) {
-					var arguments = $(this).serialize()
-					history.pushState({}, "", K16.config.url+"/tulemused?"+arguments)
+					var args = $(this).serialize()
+					history.pushState({}, "", K16.config.url+"/tulemused?"+args)
 				}
 				// And just hand it off
-				// K16.common.navigateTo(K16.config.url+"/tulemused?"+arguments)
+				// K16.common.navigateTo(K16.config.url+"/tulemused?"+args)
 				return false;
 			}
 			$('#tulemused-filter').submit(onChangeDo);
