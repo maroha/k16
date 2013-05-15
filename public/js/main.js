@@ -17,7 +17,7 @@ var K16 = {
 			// ajax navigation
 			$(document).on("click", "a", function () { // Listen for all link tags, even in the future!
 				var targetURL = $(this).get(0).href;
-				if(targetURL.indexOf(location.protocol+"//"+location.hostname) > -1 && targetURL.indexOf(location.href+"#") === -1) {
+				if(targetURL.indexOf(location.protocol+"//"+location.hostname) > -1 && targetURL.indexOf(location.href+"#") === -1 && !K16.config.debug) {
 					// Ignores external links and links just #
 					K16.common.navigateTo(targetURL);
 					return false;
@@ -104,6 +104,9 @@ var K16 = {
 		list: function () {
 			// Candidate list page
 			$("#search-form").submit(function () {
+				if(K16.config.debug) {
+					return;
+				}
 				var searchForm = this, search = {};
 				if(searchForm.children.name.value) { // Must use children because name is a dom property
 					search.name = searchForm.children.name.value;
@@ -248,6 +251,9 @@ var K16 = {
 			K16.results.update_data()
 			/* Search filter thingy */
 			var onChangeDo = function() {
+				if(K16.config.debug) {
+					return;
+				}
 				K16.results.update_filters()
 				K16.results.render_results()
 
@@ -262,7 +268,9 @@ var K16 = {
 			}
 			$('#tulemused-filter').submit(onChangeDo);
 			$('#tulemused-filter select, #tulemused-filter input').change(onChangeDo);
-			$('#tulemused-submit').hide() // No need for you with javascript enabled
+			if(!K16.config.debug) {
+				$('#tulemused-submit').hide() // No need for you with javascript enabled
+			}
 			/* Google Maps */
 			var styles = [
 				{featureType: "administrative", elementType: "labels", stylers: [{ visibility: "off" }]},

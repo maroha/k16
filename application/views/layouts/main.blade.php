@@ -15,9 +15,9 @@
 
 		<script src="{{ asset("js/vendor/modernizr-2.6.2-respond-1.1.0.min.js") }}"></script>
 	</head>
-	<body{{ isset($javascript[0]) ? " data-controller=\"{$javascript[0]}\"" : null }}{{ isset($javascript[1]) ? " data-action=\"{$javascript[1]}\"" : null }} data-url="{{ URL::base() }}" data-live="{{ Config::get("live.client.full_url") }}">
+	<body{{ isset($javascript[0]) ? " data-controller=\"{$javascript[0]}\"" : null }}{{ isset($javascript[1]) ? " data-action=\"{$javascript[1]}\"" : null }} data-url="{{ URL::base() }}" data-live="{{ Config::get("live.client.full_url") }}"{{ Config::get("application.profiler") ? ' data-debug="true"' : '' }}>
 		<!--[if lt IE 7]>
-			<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+			<p class="chromeframe">Te kasutate <strong>vananenud</strong> veebibrauserit. Palun <a href="http://browsehappy.com/">uuendage oma brauserit</a> või <a href="http://www.google.com/chromeframe/?redirect=true">installeerige Google Chrome Frame</a> et parandada oma valimiskogemust.</p>
 		<![endif]-->
 		<div class="header-container">
 			<div class="disclaimer">Antud rakendus ei ole mõeldud kasutamiseks reaalsetel valimistel</div>

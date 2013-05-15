@@ -102,7 +102,6 @@ EOL;
 
 	public function get_info($kandidaat_id)
 	{
-list($parteid, $ringkonnad) = $this->parteid_and_ringkonnad();
 		$sql = <<<EOL
 SELECT k.ID, k.Valimisringkonna_ID, h.Eesnimi, h.Perekonnanimi, k.Sunnikoht, k.Haridus, k.Akadeemiline_kraad, k.Elukutse, k.Tookoht, p.Nimetus as partei_nimetus, k.Email, k.Telefoninumber, k.Pilt
 FROM  `kandidaat` AS k
