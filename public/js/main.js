@@ -312,7 +312,7 @@ var K16 = {
 			var a_re = /[cdu]\_\d+\_[cdu]/, a_color = 1
 			function hc(s, c) {return (" " + s + " ").indexOf(" " + c + " ") !== -1}
 			function ac(e, c) {var s = e.className; if (!hc(s, c)) e.className += " " + c}
-			prepTabs = function (t){
+			var prepTabs = function (t){
 				var el, th, cs, c, cell, axis, ts = (t && t.className) ? [t] : document.getElementsByTagName("table")
 				for (var e in ts) {
 					el = ts[e]
@@ -361,7 +361,7 @@ var K16 = {
 				for (j = 0; j < l; j++) tb.appendChild(t.sarr[j][1])
 				//obj.title = "Sorteeritud " + ((verse) ? "kahanevalt" : "kasvavalt")
 			}
-			prepTabs()
+			prepTabs();
 		},
 		current_filters: {},
 		update_data: function () {
